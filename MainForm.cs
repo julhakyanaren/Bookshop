@@ -20,6 +20,7 @@ namespace Bookshop
         }
         public void TSMI_Connection_OpenClose_Click(object sender, EventArgs e)
         {
+            bool exception = false;
             switch (TSMI_Connection_OpenClose.Checked)
             {
                 case true:
@@ -33,6 +34,7 @@ namespace Bookshop
                             }
                             catch (Exception ex)
                             {
+                                exception = true;
                                 // Форма обработки иисключении
                             }
                             break;
@@ -50,6 +52,7 @@ namespace Bookshop
                                         }
                                         catch (Exception ex)
                                         {
+                                            exception = true;
                                             // Форма обработки иисключении
                                         }
                                         break;
@@ -74,6 +77,7 @@ namespace Bookshop
                             }
                             catch (Exception ex)
                             {
+                                exception = true;
                                 // Форма обработки иисключении
                             }
                             break;
@@ -91,6 +95,7 @@ namespace Bookshop
                                         }
                                         catch (Exception ex)
                                         {
+                                            exception = true;
                                             // Форма обработки иисключении
                                         }
                                         break;
@@ -105,7 +110,14 @@ namespace Bookshop
                         break;
                     }
             }
-            Connections.Direct.StatusToMB(Connections.Direct.Connected);
+            if (!exception)
+            {
+                Connections.Direct.StatusToMB(Connections.Direct.Connected);
+            }
+            else
+            {
+                MessageBox.Show("Соеденение не установлено", "Диспечер Соеденения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
