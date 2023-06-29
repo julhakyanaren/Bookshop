@@ -55,6 +55,28 @@ namespace Bookshop
                     }
                 }
             }
+            public static void DissconnectDB(OleDbConnection FormConnection)
+            {
+                bool Connected = false;
+                if (FormConnection.State != ConnectionState.Closed)
+                {
+                    try
+                    {
+                        FormConnection.Close();
+                        Connected = true;
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Handlers.ErrorProvider.ExcaptionShowMessages(ex, 0);
+                        Connected = false;
+                    }
+                    finally
+                    {
+                        Connections.Direct.StatusToMB(Connected);
+                    }
+                }
+            }
         }
     }
 }

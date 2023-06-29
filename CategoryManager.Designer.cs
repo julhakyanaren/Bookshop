@@ -42,11 +42,12 @@
             // 
             this.MS_Category.BackColor = System.Drawing.Color.DarkOrange;
             this.MS_Category.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.MS_Category.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.MS_Category.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSMI_CM_File});
             this.MS_Category.Location = new System.Drawing.Point(0, 0);
             this.MS_Category.Name = "MS_Category";
-            this.MS_Category.Size = new System.Drawing.Size(800, 25);
+            this.MS_Category.Size = new System.Drawing.Size(800, 29);
             this.MS_Category.TabIndex = 0;
             this.MS_Category.Text = "menuStrip1";
             // 
@@ -55,40 +56,46 @@
             this.TSMI_CM_File.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSMI_CM_Connection});
             this.TSMI_CM_File.Name = "TSMI_CM_File";
-            this.TSMI_CM_File.Size = new System.Drawing.Size(45, 21);
+            this.TSMI_CM_File.Size = new System.Drawing.Size(57, 25);
             this.TSMI_CM_File.Text = "Файл";
             // 
             // TSMI_CM_Connection
             // 
+            this.TSMI_CM_Connection.BackColor = System.Drawing.Color.DarkOrange;
             this.TSMI_CM_Connection.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSMI_CM_Status,
             this.TSMI_CM_CheckConnection,
             this.TSMI_CM_Connect});
             this.TSMI_CM_Connection.Name = "TSMI_CM_Connection";
-            this.TSMI_CM_Connection.Size = new System.Drawing.Size(180, 22);
+            this.TSMI_CM_Connection.Size = new System.Drawing.Size(224, 26);
             this.TSMI_CM_Connection.Text = "Соеденение";
             // 
             // TSMI_CM_Status
             // 
+            this.TSMI_CM_Status.BackColor = System.Drawing.Color.DarkOrange;
             this.TSMI_CM_Status.Name = "TSMI_CM_Status";
-            this.TSMI_CM_Status.Size = new System.Drawing.Size(180, 22);
+            this.TSMI_CM_Status.Size = new System.Drawing.Size(224, 26);
             this.TSMI_CM_Status.Text = "Статус:";
             // 
             // TSMI_CM_CheckConnection
             // 
+            this.TSMI_CM_CheckConnection.BackColor = System.Drawing.Color.DarkOrange;
             this.TSMI_CM_CheckConnection.Name = "TSMI_CM_CheckConnection";
-            this.TSMI_CM_CheckConnection.Size = new System.Drawing.Size(180, 22);
+            this.TSMI_CM_CheckConnection.Size = new System.Drawing.Size(224, 26);
             this.TSMI_CM_CheckConnection.Text = "Проверить";
+            this.TSMI_CM_CheckConnection.Click += new System.EventHandler(this.TSMI_CM_CheckConnection_Click);
             // 
             // TSMI_CM_Connect
             // 
+            this.TSMI_CM_Connect.BackColor = System.Drawing.Color.DarkOrange;
             this.TSMI_CM_Connect.Name = "TSMI_CM_Connect";
-            this.TSMI_CM_Connect.Size = new System.Drawing.Size(180, 22);
+            this.TSMI_CM_Connect.Size = new System.Drawing.Size(224, 26);
             this.TSMI_CM_Connect.Text = "Подключить";
+            this.TSMI_CM_Connect.Click += new System.EventHandler(this.TSMI_CM_Connect_Click);
             // 
             // CategoryManager
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SandyBrown;
             this.ClientSize = new System.Drawing.Size(800, 554);
