@@ -94,7 +94,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BSDBDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="CategoryManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CategoryManager.Designer.cs">
+      <DependentUpon>CategoryManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="Connection.cs" />
+    <Compile Include="Datas.cs" />
     <Compile Include="Draw.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -104,6 +111,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CategoryManager.resx">
+      <DependentUpon>CategoryManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -115,6 +125,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="BSDBDataSet.xsc">
       <DependentUpon>BSDBDataSet.xsd</DependentUpon>
@@ -144,6 +155,7 @@
     <Content Include="BSDB.mdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\BSManager_MainLogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

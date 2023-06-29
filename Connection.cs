@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.OleDb;
 using System.Windows.Forms;
+using System.Data;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Bookshop
 {
@@ -29,6 +31,28 @@ namespace Bookshop
                             MessageBox.Show("Соеденение Откючено", "Диспечер соеденения", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             break;
                         }
+                }
+            }
+            public static void ConnectToDB(OleDbConnection FormConnection)
+            {
+                bool Connected = false;
+                if (FormConnection.State == ConnectionState.Closed)
+                {
+                    try
+                    {
+                        FormConnection.Open();
+                        Connected = true;
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Handlers.ErrorProvider.ExcaptionShowMessages(ex, 0);
+                        Connected = false;
+                    }
+                    finally
+                    {
+                        Connections.Direct.StatusToMB(Connected);
+                    }
                 }
             }
         }

@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -31,11 +32,15 @@ namespace Bookshop
                             {
                                 MSConnection.Open();
                                 Connections.Direct.Connected = true;
+                                TSMI_Connection_OpenClose.Text = "Отключить соединение";
+                                TSMI_ConnectionStatus.Enabled = true;
+                                TSMI_ConnectionStatus.Text = "Статус: Установлено";
+                                TSMI_ConnectionStatus.ForeColor = Color.Green;
                             }
                             catch (Exception ex)
                             {
                                 exception = true;
-                                // Форма обработки иисключении
+                                Handlers.ErrorProvider.ExcaptionShowMessages(ex, 0);
                             }
                             break;
                         }
@@ -53,7 +58,7 @@ namespace Bookshop
                                         catch (Exception ex)
                                         {
                                             exception = true;
-                                            // Форма обработки иисключении
+                                            Handlers.ErrorProvider.ExcaptionShowMessages(ex, 0);
                                         }
                                         break;
                                     }
@@ -74,11 +79,15 @@ namespace Bookshop
                             {
                                 MSConnection.Close();
                                 Connections.Direct.Connected = false;
+                                TSMI_Connection_OpenClose.Text = "Установить соединение";
+                                TSMI_ConnectionStatus.Enabled = false;
+                                TSMI_ConnectionStatus.Text = "Статус: Отключено";
+                                TSMI_ConnectionStatus.ForeColor = Color.Firebrick;
                             }
                             catch (Exception ex)
                             {
                                 exception = true;
-                                // Форма обработки иисключении
+                                Handlers.ErrorProvider.ExcaptionShowMessages(ex, 0);
                             }
                             break;
                         }
@@ -96,7 +105,7 @@ namespace Bookshop
                                         catch (Exception ex)
                                         {
                                             exception = true;
-                                            // Форма обработки иисключении
+                                            Handlers.ErrorProvider.ExcaptionShowMessages(ex, 0);
                                         }
                                         break;
                                     }
@@ -118,6 +127,17 @@ namespace Bookshop
             {
                 MessageBox.Show("Соеденение не установлено", "Диспечер Соеденения", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            Methods.LoadComponents();
+        }
+
+        private void TSMI_Category_Add_Click(object sender, EventArgs e)
+        {
+            CategoryManager CMF = new CategoryManager();
+            CMF.Show();
         }
     }
 }
