@@ -139,5 +139,22 @@ namespace Bookshop
             CategoryManager CMF = new CategoryManager();
             CMF.Show();
         }
+
+        private void TSMI_TopMost_Click(object sender, EventArgs e)
+        {
+            switch (TSMI_TopMost.Checked)
+            {
+                case true:
+                    {
+                        this.TopMost = true;
+                        break;
+                    }
+                case false:
+                    {
+                        this.TopMost = false;
+                        break;
+                    }
+            }
+        }
     }
 }
