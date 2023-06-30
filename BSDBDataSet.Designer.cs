@@ -24,7 +24,7 @@ namespace Bookshop {
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
     public partial class BSDBDataSet : global::System.Data.DataSet {
         
-        private GoodsDataTable tableGoods;
+        private CategoryDataTable tableCategory;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -54,8 +54,8 @@ namespace Bookshop {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["Goods"] != null)) {
-                    base.Tables.Add(new GoodsDataTable(ds.Tables["Goods"]));
+                if ((ds.Tables["Category"] != null)) {
+                    base.Tables.Add(new CategoryDataTable(ds.Tables["Category"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +79,9 @@ namespace Bookshop {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public GoodsDataTable Goods {
+        public CategoryDataTable Category {
             get {
-                return this.tableGoods;
+                return this.tableCategory;
             }
         }
         
@@ -152,8 +152,8 @@ namespace Bookshop {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["Goods"] != null)) {
-                    base.Tables.Add(new GoodsDataTable(ds.Tables["Goods"]));
+                if ((ds.Tables["Category"] != null)) {
+                    base.Tables.Add(new CategoryDataTable(ds.Tables["Category"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +188,10 @@ namespace Bookshop {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tableGoods = ((GoodsDataTable)(base.Tables["Goods"]));
+            this.tableCategory = ((CategoryDataTable)(base.Tables["Category"]));
             if ((initTable == true)) {
-                if ((this.tableGoods != null)) {
-                    this.tableGoods.InitVars();
+                if ((this.tableCategory != null)) {
+                    this.tableCategory.InitVars();
                 }
             }
         }
@@ -204,13 +204,13 @@ namespace Bookshop {
             this.Namespace = "http://tempuri.org/BSDBDataSet.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableGoods = new GoodsDataTable();
-            base.Tables.Add(this.tableGoods);
+            this.tableCategory = new CategoryDataTable();
+            base.Tables.Add(this.tableCategory);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        private bool ShouldSerializeGoods() {
+        private bool ShouldSerializeCategory() {
             return false;
         }
         
@@ -270,27 +270,25 @@ namespace Bookshop {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public delegate void GoodsRowChangeEventHandler(object sender, GoodsRowChangeEvent e);
+        public delegate void CategoryRowChangeEventHandler(object sender, CategoryRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class GoodsDataTable : global::System.Data.TypedTableBase<GoodsRow> {
+        public partial class CategoryDataTable : global::System.Data.TypedTableBase<CategoryRow> {
             
-            private global::System.Data.DataColumn columnGoodsID;
+            private global::System.Data.DataColumn columnID;
             
-            private global::System.Data.DataColumn columnTitle;
+            private global::System.Data.DataColumn columnНазвание;
             
-            private global::System.Data.DataColumn columnType;
-            
-            private global::System.Data.DataColumn columnCount;
+            private global::System.Data.DataColumn columnКоличевство;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public GoodsDataTable() {
-                this.TableName = "Goods";
+            public CategoryDataTable() {
+                this.TableName = "Category";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -298,7 +296,7 @@ namespace Bookshop {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal GoodsDataTable(global::System.Data.DataTable table) {
+            internal CategoryDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -315,40 +313,32 @@ namespace Bookshop {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected GoodsDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected CategoryDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn GoodsIDColumn {
+            public global::System.Data.DataColumn IDColumn {
                 get {
-                    return this.columnGoodsID;
+                    return this.columnID;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn TitleColumn {
+            public global::System.Data.DataColumn НазваниеColumn {
                 get {
-                    return this.columnTitle;
+                    return this.columnНазвание;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn TypeColumn {
+            public global::System.Data.DataColumn КоличевствоColumn {
                 get {
-                    return this.columnType;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn CountColumn {
-                get {
-                    return this.columnCount;
+                    return this.columnКоличевство;
                 }
             }
             
@@ -363,55 +353,54 @@ namespace Bookshop {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public GoodsRow this[int index] {
+            public CategoryRow this[int index] {
                 get {
-                    return ((GoodsRow)(this.Rows[index]));
+                    return ((CategoryRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event GoodsRowChangeEventHandler GoodsRowChanging;
+            public event CategoryRowChangeEventHandler CategoryRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event GoodsRowChangeEventHandler GoodsRowChanged;
+            public event CategoryRowChangeEventHandler CategoryRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event GoodsRowChangeEventHandler GoodsRowDeleting;
+            public event CategoryRowChangeEventHandler CategoryRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event GoodsRowChangeEventHandler GoodsRowDeleted;
+            public event CategoryRowChangeEventHandler CategoryRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void AddGoodsRow(GoodsRow row) {
+            public void AddCategoryRow(CategoryRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public GoodsRow AddGoodsRow(string Title, string Type, int Count) {
-                GoodsRow rowGoodsRow = ((GoodsRow)(this.NewRow()));
+            public CategoryRow AddCategoryRow(string Название, int Количевство) {
+                CategoryRow rowCategoryRow = ((CategoryRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
-                        Title,
-                        Type,
-                        Count};
-                rowGoodsRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowGoodsRow);
-                return rowGoodsRow;
+                        Название,
+                        Количевство};
+                rowCategoryRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowCategoryRow);
+                return rowCategoryRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public GoodsRow FindByGoodsID(int GoodsID) {
-                return ((GoodsRow)(this.Rows.Find(new object[] {
-                            GoodsID})));
+            public CategoryRow FindByID(int ID) {
+                return ((CategoryRow)(this.Rows.Find(new object[] {
+                            ID})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                GoodsDataTable cln = ((GoodsDataTable)(base.Clone()));
+                CategoryDataTable cln = ((CategoryDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -419,64 +408,60 @@ namespace Bookshop {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new GoodsDataTable();
+                return new CategoryDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             internal void InitVars() {
-                this.columnGoodsID = base.Columns["GoodsID"];
-                this.columnTitle = base.Columns["Title"];
-                this.columnType = base.Columns["Type"];
-                this.columnCount = base.Columns["Count"];
+                this.columnID = base.Columns["ID"];
+                this.columnНазвание = base.Columns["Название"];
+                this.columnКоличевство = base.Columns["Количевство"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             private void InitClass() {
-                this.columnGoodsID = new global::System.Data.DataColumn("GoodsID", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnGoodsID);
-                this.columnTitle = new global::System.Data.DataColumn("Title", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnTitle);
-                this.columnType = new global::System.Data.DataColumn("Type", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnType);
-                this.columnCount = new global::System.Data.DataColumn("Count", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCount);
+                this.columnID = new global::System.Data.DataColumn("ID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnID);
+                this.columnНазвание = new global::System.Data.DataColumn("Название", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnНазвание);
+                this.columnКоличевство = new global::System.Data.DataColumn("Количевство", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnКоличевство);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnGoodsID}, true));
-                this.columnGoodsID.AutoIncrement = true;
-                this.columnGoodsID.AutoIncrementSeed = -1;
-                this.columnGoodsID.AutoIncrementStep = -1;
-                this.columnGoodsID.AllowDBNull = false;
-                this.columnGoodsID.Unique = true;
-                this.columnTitle.MaxLength = 255;
-                this.columnType.MaxLength = 255;
+                                this.columnID}, true));
+                this.columnID.AutoIncrement = true;
+                this.columnID.AutoIncrementSeed = -1;
+                this.columnID.AutoIncrementStep = -1;
+                this.columnID.AllowDBNull = false;
+                this.columnID.Unique = true;
+                this.columnНазвание.MaxLength = 255;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public GoodsRow NewGoodsRow() {
-                return ((GoodsRow)(this.NewRow()));
+            public CategoryRow NewCategoryRow() {
+                return ((CategoryRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new GoodsRow(builder);
+                return new CategoryRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(GoodsRow);
+                return typeof(CategoryRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.GoodsRowChanged != null)) {
-                    this.GoodsRowChanged(this, new GoodsRowChangeEvent(((GoodsRow)(e.Row)), e.Action));
+                if ((this.CategoryRowChanged != null)) {
+                    this.CategoryRowChanged(this, new CategoryRowChangeEvent(((CategoryRow)(e.Row)), e.Action));
                 }
             }
             
@@ -484,8 +469,8 @@ namespace Bookshop {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.GoodsRowChanging != null)) {
-                    this.GoodsRowChanging(this, new GoodsRowChangeEvent(((GoodsRow)(e.Row)), e.Action));
+                if ((this.CategoryRowChanging != null)) {
+                    this.CategoryRowChanging(this, new CategoryRowChangeEvent(((CategoryRow)(e.Row)), e.Action));
                 }
             }
             
@@ -493,8 +478,8 @@ namespace Bookshop {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.GoodsRowDeleted != null)) {
-                    this.GoodsRowDeleted(this, new GoodsRowChangeEvent(((GoodsRow)(e.Row)), e.Action));
+                if ((this.CategoryRowDeleted != null)) {
+                    this.CategoryRowDeleted(this, new CategoryRowChangeEvent(((CategoryRow)(e.Row)), e.Action));
                 }
             }
             
@@ -502,14 +487,14 @@ namespace Bookshop {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.GoodsRowDeleting != null)) {
-                    this.GoodsRowDeleting(this, new GoodsRowChangeEvent(((GoodsRow)(e.Row)), e.Action));
+                if ((this.CategoryRowDeleting != null)) {
+                    this.CategoryRowDeleting(this, new CategoryRowChangeEvent(((CategoryRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void RemoveGoodsRow(GoodsRow row) {
+            public void RemoveCategoryRow(CategoryRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -536,7 +521,7 @@ namespace Bookshop {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "GoodsDataTable";
+                attribute2.FixedValue = "CategoryDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -580,110 +565,82 @@ namespace Bookshop {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class GoodsRow : global::System.Data.DataRow {
+        public partial class CategoryRow : global::System.Data.DataRow {
             
-            private GoodsDataTable tableGoods;
+            private CategoryDataTable tableCategory;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal GoodsRow(global::System.Data.DataRowBuilder rb) : 
+            internal CategoryRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableGoods = ((GoodsDataTable)(this.Table));
+                this.tableCategory = ((CategoryDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public int GoodsID {
+            public int ID {
                 get {
-                    return ((int)(this[this.tableGoods.GoodsIDColumn]));
+                    return ((int)(this[this.tableCategory.IDColumn]));
                 }
                 set {
-                    this[this.tableGoods.GoodsIDColumn] = value;
+                    this[this.tableCategory.IDColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string Title {
-                get {
-                    try {
-                        return ((string)(this[this.tableGoods.TitleColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Title\' в таблице \'Goods\' равно DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableGoods.TitleColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string Type {
+            public string Название {
                 get {
                     try {
-                        return ((string)(this[this.tableGoods.TypeColumn]));
+                        return ((string)(this[this.tableCategory.НазваниеColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Type\' в таблице \'Goods\' равно DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Название\' в таблице \'Category\' равно DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableGoods.TypeColumn] = value;
+                    this[this.tableCategory.НазваниеColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public int Count {
+            public int Количевство {
                 get {
                     try {
-                        return ((int)(this[this.tableGoods.CountColumn]));
+                        return ((int)(this[this.tableCategory.КоличевствоColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Count\' в таблице \'Goods\' равно DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Количевство\' в таблице \'Category\' равно DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableGoods.CountColumn] = value;
+                    this[this.tableCategory.КоличевствоColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsTitleNull() {
-                return this.IsNull(this.tableGoods.TitleColumn);
+            public bool IsНазваниеNull() {
+                return this.IsNull(this.tableCategory.НазваниеColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetTitleNull() {
-                this[this.tableGoods.TitleColumn] = global::System.Convert.DBNull;
+            public void SetНазваниеNull() {
+                this[this.tableCategory.НазваниеColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsTypeNull() {
-                return this.IsNull(this.tableGoods.TypeColumn);
+            public bool IsКоличевствоNull() {
+                return this.IsNull(this.tableCategory.КоличевствоColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetTypeNull() {
-                this[this.tableGoods.TypeColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsCountNull() {
-                return this.IsNull(this.tableGoods.CountColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetCountNull() {
-                this[this.tableGoods.CountColumn] = global::System.Convert.DBNull;
+            public void SetКоличевствоNull() {
+                this[this.tableCategory.КоличевствоColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -691,22 +648,22 @@ namespace Bookshop {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public class GoodsRowChangeEvent : global::System.EventArgs {
+        public class CategoryRowChangeEvent : global::System.EventArgs {
             
-            private GoodsRow eventRow;
+            private CategoryRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public GoodsRowChangeEvent(GoodsRow row, global::System.Data.DataRowAction action) {
+            public CategoryRowChangeEvent(CategoryRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public GoodsRow Row {
+            public CategoryRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -734,7 +691,7 @@ namespace Bookshop.BSDBDataSetTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class GoodsTableAdapter : global::System.ComponentModel.Component {
+    public partial class CategoryTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.OleDb.OleDbDataAdapter _adapter;
         
@@ -748,7 +705,7 @@ namespace Bookshop.BSDBDataSetTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public GoodsTableAdapter() {
+        public CategoryTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -845,48 +802,41 @@ namespace Bookshop.BSDBDataSetTableAdapters {
             this._adapter = new global::System.Data.OleDb.OleDbDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "Goods";
-            tableMapping.ColumnMappings.Add("GoodsID", "GoodsID");
-            tableMapping.ColumnMappings.Add("Title", "Title");
-            tableMapping.ColumnMappings.Add("Type", "Type");
-            tableMapping.ColumnMappings.Add("Count", "Count");
+            tableMapping.DataSetTable = "Category";
+            tableMapping.ColumnMappings.Add("ID", "ID");
+            tableMapping.ColumnMappings.Add("Название", "Название");
+            tableMapping.ColumnMappings.Add("Количевство", "Количевство");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.OleDb.OleDbCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM `Goods` WHERE ((`GoodsID` = ?) AND ((? = 1 AND `Title` IS NULL) OR (`" +
-                "Title` = ?)) AND ((? = 1 AND `Type` IS NULL) OR (`Type` = ?)) AND ((? = 1 AND `C" +
-                "ount` IS NULL) OR (`Count` = ?)))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM `Category` WHERE ((`ID` = ?) AND ((? = 1 AND `Название` IS NULL) OR (" +
+                "`Название` = ?)) AND ((? = 1 AND `Количевство` IS NULL) OR (`Количевство` = ?)))" +
+                "";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_GoodsID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "GoodsID", global::System.Data.DataRowVersion.Original, false, null));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Title", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Title", global::System.Data.DataRowVersion.Original, true, null));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Title", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Title", global::System.Data.DataRowVersion.Original, false, null));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Type", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Type", global::System.Data.DataRowVersion.Original, true, null));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Type", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Type", global::System.Data.DataRowVersion.Original, false, null));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Count", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Count", global::System.Data.DataRowVersion.Original, true, null));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Count", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Count", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ID", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Название", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Название", global::System.Data.DataRowVersion.Original, true, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Название", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Название", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Количевство", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количевство", global::System.Data.DataRowVersion.Original, true, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Количевство", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количевство", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.InsertCommand = new global::System.Data.OleDb.OleDbCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `Goods` (`Title`, `Type`, `Count`) VALUES (?, ?, ?)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `Category` (`Название`, `Количевство`) VALUES (?, ?)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Title", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Title", global::System.Data.DataRowVersion.Current, false, null));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Type", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Type", global::System.Data.DataRowVersion.Current, false, null));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Count", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Count", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Название", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Название", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Количевство", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количевство", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand = new global::System.Data.OleDb.OleDbCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE `Goods` SET `Title` = ?, `Type` = ?, `Count` = ? WHERE ((`GoodsID` = ?) AN" +
-                "D ((? = 1 AND `Title` IS NULL) OR (`Title` = ?)) AND ((? = 1 AND `Type` IS NULL)" +
-                " OR (`Type` = ?)) AND ((? = 1 AND `Count` IS NULL) OR (`Count` = ?)))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE `Category` SET `Название` = ?, `Количевство` = ? WHERE ((`ID` = ?) AND ((?" +
+                " = 1 AND `Название` IS NULL) OR (`Название` = ?)) AND ((? = 1 AND `Количевство` " +
+                "IS NULL) OR (`Количевство` = ?)))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Title", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Title", global::System.Data.DataRowVersion.Current, false, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Type", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Type", global::System.Data.DataRowVersion.Current, false, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Count", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Count", global::System.Data.DataRowVersion.Current, false, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_GoodsID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "GoodsID", global::System.Data.DataRowVersion.Original, false, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Title", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Title", global::System.Data.DataRowVersion.Original, true, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Title", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Title", global::System.Data.DataRowVersion.Original, false, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Type", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Type", global::System.Data.DataRowVersion.Original, true, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Type", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Type", global::System.Data.DataRowVersion.Original, false, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Count", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Count", global::System.Data.DataRowVersion.Original, true, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Count", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Count", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Название", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Название", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Количевство", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количевство", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ID", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Название", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Название", global::System.Data.DataRowVersion.Original, true, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Название", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Название", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Количевство", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количевство", global::System.Data.DataRowVersion.Original, true, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Количевство", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количевство", global::System.Data.DataRowVersion.Original, false, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -902,7 +852,7 @@ namespace Bookshop.BSDBDataSetTableAdapters {
             this._commandCollection = new global::System.Data.OleDb.OleDbCommand[1];
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT GoodsID, Title, Type, [Count] FROM Goods";
+            this._commandCollection[0].CommandText = "SELECT ID, Название, Количевство FROM Category";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -910,7 +860,7 @@ namespace Bookshop.BSDBDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(BSDBDataSet.GoodsDataTable dataTable) {
+        public virtual int Fill(BSDBDataSet.CategoryDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -923,9 +873,9 @@ namespace Bookshop.BSDBDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual BSDBDataSet.GoodsDataTable GetData() {
+        public virtual BSDBDataSet.CategoryDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            BSDBDataSet.GoodsDataTable dataTable = new BSDBDataSet.GoodsDataTable();
+            BSDBDataSet.CategoryDataTable dataTable = new BSDBDataSet.CategoryDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -933,7 +883,7 @@ namespace Bookshop.BSDBDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(BSDBDataSet.GoodsDataTable dataTable) {
+        public virtual int Update(BSDBDataSet.CategoryDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
@@ -941,7 +891,7 @@ namespace Bookshop.BSDBDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         public virtual int Update(BSDBDataSet dataSet) {
-            return this.Adapter.Update(dataSet, "Goods");
+            return this.Adapter.Update(dataSet, "Category");
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -963,31 +913,23 @@ namespace Bookshop.BSDBDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_GoodsID, string Original_Title, string Original_Type, global::System.Nullable<int> Original_Count) {
-            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_GoodsID));
-            if ((Original_Title == null)) {
+        public virtual int Delete(int Original_ID, string Original_Название, global::System.Nullable<int> Original_Количевство) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_ID));
+            if ((Original_Название == null)) {
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_Title));
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_Название));
             }
-            if ((Original_Type == null)) {
+            if ((Original_Количевство.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((int)(Original_Количевство.Value));
+            }
+            else {
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[4].Value = ((string)(Original_Type));
-            }
-            if ((Original_Count.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((int)(Original_Count.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -1009,24 +951,18 @@ namespace Bookshop.BSDBDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string Title, string Type, global::System.Nullable<int> Count) {
-            if ((Title == null)) {
+        public virtual int Insert(string Название, global::System.Nullable<int> Количевство) {
+            if ((Название == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[0].Value = ((string)(Title));
+                this.Adapter.InsertCommand.Parameters[0].Value = ((string)(Название));
             }
-            if ((Type == null)) {
+            if ((Количевство.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[1].Value = ((int)(Количевство.Value));
+            }
+            else {
                 this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(Type));
-            }
-            if ((Count.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((int)(Count.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -1048,49 +984,35 @@ namespace Bookshop.BSDBDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Title, string Type, global::System.Nullable<int> Count, int Original_GoodsID, string Original_Title, string Original_Type, global::System.Nullable<int> Original_Count) {
-            if ((Title == null)) {
+        public virtual int Update(string Название, global::System.Nullable<int> Количевство, int Original_ID, string Original_Название, global::System.Nullable<int> Original_Количевство) {
+            if ((Название == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(Title));
+                this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(Название));
             }
-            if ((Type == null)) {
+            if ((Количевство.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(Количевство.Value));
+            }
+            else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(Type));
-            }
-            if ((Count.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(Count.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Original_GoodsID));
-            if ((Original_Title == null)) {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(Original_ID));
+            if ((Original_Название == null)) {
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(Original_Title));
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Original_Название));
             }
-            if ((Original_Type == null)) {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_Type));
-            }
-            if ((Original_Count.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(Original_Count.Value));
+            if ((Original_Количевство.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_Количевство.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -1121,7 +1043,7 @@ namespace Bookshop.BSDBDataSetTableAdapters {
         
         private UpdateOrderOption _updateOrder;
         
-        private GoodsTableAdapter _goodsTableAdapter;
+        private CategoryTableAdapter _categoryTableAdapter;
         
         private bool _backupDataSetBeforeUpdate;
         
@@ -1143,12 +1065,12 @@ namespace Bookshop.BSDBDataSetTableAdapters {
         [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
             "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
             "a", "System.Drawing.Design.UITypeEditor")]
-        public GoodsTableAdapter GoodsTableAdapter {
+        public CategoryTableAdapter CategoryTableAdapter {
             get {
-                return this._goodsTableAdapter;
+                return this._categoryTableAdapter;
             }
             set {
-                this._goodsTableAdapter = value;
+                this._categoryTableAdapter = value;
             }
         }
         
@@ -1171,9 +1093,9 @@ namespace Bookshop.BSDBDataSetTableAdapters {
                 if ((this._connection != null)) {
                     return this._connection;
                 }
-                if (((this._goodsTableAdapter != null) 
-                            && (this._goodsTableAdapter.Connection != null))) {
-                    return this._goodsTableAdapter.Connection;
+                if (((this._categoryTableAdapter != null) 
+                            && (this._categoryTableAdapter.Connection != null))) {
+                    return this._categoryTableAdapter.Connection;
                 }
                 return null;
             }
@@ -1188,7 +1110,7 @@ namespace Bookshop.BSDBDataSetTableAdapters {
         public int TableAdapterInstanceCount {
             get {
                 int count = 0;
-                if ((this._goodsTableAdapter != null)) {
+                if ((this._categoryTableAdapter != null)) {
                     count = (count + 1);
                 }
                 return count;
@@ -1202,12 +1124,12 @@ namespace Bookshop.BSDBDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private int UpdateUpdatedRows(BSDBDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._goodsTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.Goods.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._categoryTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.Category.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._goodsTableAdapter.Update(updatedRows));
+                    result = (result + this._categoryTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -1221,11 +1143,11 @@ namespace Bookshop.BSDBDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private int UpdateInsertedRows(BSDBDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._goodsTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.Goods.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._categoryTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.Category.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._goodsTableAdapter.Update(addedRows));
+                    result = (result + this._categoryTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -1239,11 +1161,11 @@ namespace Bookshop.BSDBDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private int UpdateDeletedRows(BSDBDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._goodsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Goods.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._categoryTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Category.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._goodsTableAdapter.Update(deletedRows));
+                    result = (result + this._categoryTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -1286,8 +1208,8 @@ namespace Bookshop.BSDBDataSetTableAdapters {
             if ((dataSet.HasChanges() == false)) {
                 return 0;
             }
-            if (((this._goodsTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._goodsTableAdapter.Connection) == false))) {
+            if (((this._categoryTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._categoryTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("Все адаптеры таблицы, управляемые диспетчером адаптера таблицы TableAdapterManage" +
                         "r, должны использовать одинаковую строку подключения.");
             }
@@ -1323,13 +1245,13 @@ namespace Bookshop.BSDBDataSetTableAdapters {
             try {
                 // ---- Prepare for update -----------
                 //
-                if ((this._goodsTableAdapter != null)) {
-                    revertConnections.Add(this._goodsTableAdapter, this._goodsTableAdapter.Connection);
-                    this._goodsTableAdapter.Connection = ((global::System.Data.OleDb.OleDbConnection)(workConnection));
-                    this._goodsTableAdapter.Transaction = ((global::System.Data.OleDb.OleDbTransaction)(workTransaction));
-                    if (this._goodsTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._goodsTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._goodsTableAdapter.Adapter);
+                if ((this._categoryTableAdapter != null)) {
+                    revertConnections.Add(this._categoryTableAdapter, this._categoryTableAdapter.Connection);
+                    this._categoryTableAdapter.Connection = ((global::System.Data.OleDb.OleDbConnection)(workConnection));
+                    this._categoryTableAdapter.Transaction = ((global::System.Data.OleDb.OleDbTransaction)(workTransaction));
+                    if (this._categoryTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._categoryTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._categoryTableAdapter.Adapter);
                     }
                 }
                 // 
@@ -1390,9 +1312,9 @@ namespace Bookshop.BSDBDataSetTableAdapters {
                 if (workConnOpened) {
                     workConnection.Close();
                 }
-                if ((this._goodsTableAdapter != null)) {
-                    this._goodsTableAdapter.Connection = ((global::System.Data.OleDb.OleDbConnection)(revertConnections[this._goodsTableAdapter]));
-                    this._goodsTableAdapter.Transaction = null;
+                if ((this._categoryTableAdapter != null)) {
+                    this._categoryTableAdapter.Connection = ((global::System.Data.OleDb.OleDbConnection)(revertConnections[this._categoryTableAdapter]));
+                    this._categoryTableAdapter.Transaction = null;
                 }
                 if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
                     global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];

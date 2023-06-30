@@ -10,6 +10,11 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Bookshop
 {
+    public static class DataSource
+    {
+
+    }
+
     public static class Connections
     {
         public static class Direct
@@ -33,7 +38,7 @@ namespace Bookshop
                         }
                 }
             }
-            public static void ConnectToDB(OleDbConnection FormConnection)
+            public static void DB_Connect(OleDbConnection FormConnection)
             {
                 bool Connected = false;
                 if (FormConnection.State == ConnectionState.Closed)
@@ -55,7 +60,7 @@ namespace Bookshop
                     }
                 }
             }
-            public static void DissconnectDB(OleDbConnection FormConnection)
+            public static void DB_Dissconnect(OleDbConnection FormConnection)
             {
                 bool Connected = false;
                 if (FormConnection.State != ConnectionState.Closed)
@@ -63,13 +68,13 @@ namespace Bookshop
                     try
                     {
                         FormConnection.Close();
-                        Connected = true;
+                        Connected = false;
 
                     }
                     catch (Exception ex)
                     {
                         Handlers.ErrorProvider.ExcaptionShowMessages(ex, 0);
-                        Connected = false;
+                        Connected = true;
                     }
                     finally
                     {

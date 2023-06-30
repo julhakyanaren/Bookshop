@@ -91,6 +91,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BSDBDataSet.cs">
+      <DependentUpon>BSDBDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="BSDBDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -154,10 +157,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\BSManager_MainLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="BSDB.mdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\BSManager_MainLogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
