@@ -57,6 +57,7 @@
             this.L_Info_CategoryName = new System.Windows.Forms.Label();
             this.TB_CategoryName = new System.Windows.Forms.TextBox();
             this.PNL_CM_AddRedact = new System.Windows.Forms.Panel();
+            this.B_CM_UpdateDable = new System.Windows.Forms.Button();
             this.B_CM_CategoryRename = new System.Windows.Forms.Button();
             this.L_Info_CategoryNameNew = new System.Windows.Forms.Label();
             this.B_CM_CheckNewName = new System.Windows.Forms.Button();
@@ -70,7 +71,6 @@
             this.PNL_LoadingData = new System.Windows.Forms.Panel();
             this.PB_CM_LoadingData = new System.Windows.Forms.ProgressBar();
             this.TA_CategoryBS = new Bookshop.BSDBDataSetTableAdapters.CategoryTableAdapter();
-            this.B_CM_UpdateDable = new System.Windows.Forms.Button();
             this.MS_Category.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PB_LogoMain)).BeginInit();
             this.PNL_CM_DGV.SuspendLayout();
@@ -97,7 +97,7 @@
             this.TSMI_CM_ConnectionData});
             this.MS_Category.Location = new System.Drawing.Point(0, 0);
             this.MS_Category.Name = "MS_Category";
-            this.MS_Category.Size = new System.Drawing.Size(687, 25);
+            this.MS_Category.Size = new System.Drawing.Size(687, 29);
             this.MS_Category.TabIndex = 0;
             this.MS_Category.Text = "menuStrip1";
             // 
@@ -107,7 +107,7 @@
             this.TSMI_CM_File.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSMI_CM_TopMost});
             this.TSMI_CM_File.Name = "TSMI_CM_File";
-            this.TSMI_CM_File.Size = new System.Drawing.Size(45, 21);
+            this.TSMI_CM_File.Size = new System.Drawing.Size(57, 25);
             this.TSMI_CM_File.Text = "Файл";
             // 
             // TSMI_CM_TopMost
@@ -115,7 +115,7 @@
             this.TSMI_CM_TopMost.BackColor = System.Drawing.Color.SandyBrown;
             this.TSMI_CM_TopMost.CheckOnClick = true;
             this.TSMI_CM_TopMost.Name = "TSMI_CM_TopMost";
-            this.TSMI_CM_TopMost.Size = new System.Drawing.Size(172, 22);
+            this.TSMI_CM_TopMost.Size = new System.Drawing.Size(224, 26);
             this.TSMI_CM_TopMost.Text = "Поверх других окон";
             this.TSMI_CM_TopMost.Click += new System.EventHandler(this.TSMI_TopMost_Click);
             // 
@@ -124,7 +124,7 @@
             this.TSMI_CM_ConnectionData.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSMI_CM_Connection});
             this.TSMI_CM_ConnectionData.Name = "TSMI_CM_ConnectionData";
-            this.TSMI_CM_ConnectionData.Size = new System.Drawing.Size(129, 21);
+            this.TSMI_CM_ConnectionData.Size = new System.Drawing.Size(164, 25);
             this.TSMI_CM_ConnectionData.Text = "Данные подключения";
             // 
             // TSMI_CM_Connection
@@ -135,21 +135,21 @@
             this.TSMI_CM_CheckConnection,
             this.TSMI_CM_Connect});
             this.TSMI_CM_Connection.Name = "TSMI_CM_Connection";
-            this.TSMI_CM_Connection.Size = new System.Drawing.Size(137, 22);
+            this.TSMI_CM_Connection.Size = new System.Drawing.Size(175, 26);
             this.TSMI_CM_Connection.Text = "Соеденение";
             // 
             // TSMI_CM_Status
             // 
             this.TSMI_CM_Status.BackColor = System.Drawing.Color.SandyBrown;
             this.TSMI_CM_Status.Name = "TSMI_CM_Status";
-            this.TSMI_CM_Status.Size = new System.Drawing.Size(137, 22);
+            this.TSMI_CM_Status.Size = new System.Drawing.Size(170, 26);
             this.TSMI_CM_Status.Text = "Статус:";
             // 
             // TSMI_CM_CheckConnection
             // 
             this.TSMI_CM_CheckConnection.BackColor = System.Drawing.Color.SandyBrown;
             this.TSMI_CM_CheckConnection.Name = "TSMI_CM_CheckConnection";
-            this.TSMI_CM_CheckConnection.Size = new System.Drawing.Size(137, 22);
+            this.TSMI_CM_CheckConnection.Size = new System.Drawing.Size(170, 26);
             this.TSMI_CM_CheckConnection.Text = "Проверить";
             this.TSMI_CM_CheckConnection.Click += new System.EventHandler(this.TSMI_CM_CheckConnection_Click);
             // 
@@ -157,7 +157,7 @@
             // 
             this.TSMI_CM_Connect.BackColor = System.Drawing.Color.SandyBrown;
             this.TSMI_CM_Connect.Name = "TSMI_CM_Connect";
-            this.TSMI_CM_Connect.Size = new System.Drawing.Size(137, 22);
+            this.TSMI_CM_Connect.Size = new System.Drawing.Size(170, 26);
             this.TSMI_CM_Connect.Text = "Подключить";
             this.TSMI_CM_Connect.Click += new System.EventHandler(this.TSMI_CM_Connect_Click);
             // 
@@ -202,6 +202,7 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.DarkOrange;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
             this.DGV_CM_Category.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.DGV_CM_Category.RowHeadersWidth = 51;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.PeachPuff;
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.DarkOrange;
@@ -216,6 +217,7 @@
             this.iDDataGridViewTextBoxColumn.DataPropertyName = "ID";
             this.iDDataGridViewTextBoxColumn.FillWeight = 50F;
             this.iDDataGridViewTextBoxColumn.HeaderText = "ID";
+            this.iDDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.iDDataGridViewTextBoxColumn.Name = "iDDataGridViewTextBoxColumn";
             this.iDDataGridViewTextBoxColumn.Width = 50;
             // 
@@ -224,6 +226,7 @@
             this.названиеDataGridViewTextBoxColumn.DataPropertyName = "Название";
             this.названиеDataGridViewTextBoxColumn.FillWeight = 250F;
             this.названиеDataGridViewTextBoxColumn.HeaderText = "Название";
+            this.названиеDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.названиеDataGridViewTextBoxColumn.Name = "названиеDataGridViewTextBoxColumn";
             this.названиеDataGridViewTextBoxColumn.Width = 250;
             // 
@@ -232,8 +235,9 @@
             this.количевствоDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.количевствоDataGridViewTextBoxColumn.DataPropertyName = "Количевство";
             this.количевствоDataGridViewTextBoxColumn.HeaderText = "Количевство";
+            this.количевствоDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.количевствоDataGridViewTextBoxColumn.Name = "количевствоDataGridViewTextBoxColumn";
-            this.количевствоDataGridViewTextBoxColumn.Width = 91;
+            this.количевствоDataGridViewTextBoxColumn.Width = 111;
             // 
             // BS_CategoryBS
             // 
@@ -311,13 +315,14 @@
             this.B_CM_Check.Text = "Проверить";
             this.TT_CM.SetToolTip(this.B_CM_Check, "Проверить существует ли введённое имя категории");
             this.B_CM_Check.UseVisualStyleBackColor = false;
+            this.B_CM_Check.Click += new System.EventHandler(this.B_CM_Check_Click);
             // 
             // L_Info_AddCategory
             // 
             this.L_Info_AddCategory.AutoSize = true;
             this.L_Info_AddCategory.Location = new System.Drawing.Point(58, 0);
             this.L_Info_AddCategory.Name = "L_Info_AddCategory";
-            this.L_Info_AddCategory.Size = new System.Drawing.Size(104, 16);
+            this.L_Info_AddCategory.Size = new System.Drawing.Size(127, 20);
             this.L_Info_AddCategory.TabIndex = 0;
             this.L_Info_AddCategory.Text = "Добавить категорию";
             this.L_Info_AddCategory.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -327,7 +332,7 @@
             this.L_Info_CategoryName.AutoSize = true;
             this.L_Info_CategoryName.Location = new System.Drawing.Point(3, 24);
             this.L_Info_CategoryName.Name = "L_Info_CategoryName";
-            this.L_Info_CategoryName.Size = new System.Drawing.Size(104, 16);
+            this.L_Info_CategoryName.Size = new System.Drawing.Size(126, 20);
             this.L_Info_CategoryName.TabIndex = 1;
             this.L_Info_CategoryName.Text = "Название категории";
             this.L_Info_CategoryName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -339,7 +344,7 @@
             this.TB_CategoryName.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.TB_CategoryName.Location = new System.Drawing.Point(3, 43);
             this.TB_CategoryName.Name = "TB_CategoryName";
-            this.TB_CategoryName.Size = new System.Drawing.Size(200, 21);
+            this.TB_CategoryName.Size = new System.Drawing.Size(200, 25);
             this.TB_CategoryName.TabIndex = 2;
             this.TT_CM.SetToolTip(this.TB_CategoryName, "Название категории");
             // 
@@ -361,6 +366,18 @@
             this.PNL_CM_AddRedact.Size = new System.Drawing.Size(210, 196);
             this.PNL_CM_AddRedact.TabIndex = 1;
             // 
+            // B_CM_UpdateDable
+            // 
+            this.B_CM_UpdateDable.BackColor = System.Drawing.Color.SandyBrown;
+            this.B_CM_UpdateDable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.B_CM_UpdateDable.Location = new System.Drawing.Point(108, 20);
+            this.B_CM_UpdateDable.Name = "B_CM_UpdateDable";
+            this.B_CM_UpdateDable.Size = new System.Drawing.Size(95, 26);
+            this.B_CM_UpdateDable.TabIndex = 5;
+            this.B_CM_UpdateDable.Text = "Обнавить";
+            this.TT_CM.SetToolTip(this.B_CM_UpdateDable, "Обновить таблицу категории");
+            this.B_CM_UpdateDable.UseVisualStyleBackColor = false;
+            // 
             // B_CM_CategoryRename
             // 
             this.B_CM_CategoryRename.BackColor = System.Drawing.Color.SandyBrown;
@@ -378,7 +395,7 @@
             this.L_Info_CategoryNameNew.AutoSize = true;
             this.L_Info_CategoryNameNew.Location = new System.Drawing.Point(6, 104);
             this.L_Info_CategoryNameNew.Name = "L_Info_CategoryNameNew";
-            this.L_Info_CategoryNameNew.Size = new System.Drawing.Size(135, 16);
+            this.L_Info_CategoryNameNew.Size = new System.Drawing.Size(164, 20);
             this.L_Info_CategoryNameNew.TabIndex = 7;
             this.L_Info_CategoryNameNew.Text = "Новое название категории";
             this.L_Info_CategoryNameNew.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -402,7 +419,7 @@
             this.TB_CM_NewCategoryName.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.TB_CM_NewCategoryName.Location = new System.Drawing.Point(6, 123);
             this.TB_CM_NewCategoryName.Name = "TB_CM_NewCategoryName";
-            this.TB_CM_NewCategoryName.Size = new System.Drawing.Size(200, 21);
+            this.TB_CM_NewCategoryName.Size = new System.Drawing.Size(200, 25);
             this.TB_CM_NewCategoryName.TabIndex = 8;
             this.TT_CM.SetToolTip(this.TB_CM_NewCategoryName, "Новое название категории");
             // 
@@ -411,7 +428,7 @@
             this.L_Info_CategoryNameOld.AutoSize = true;
             this.L_Info_CategoryNameOld.Location = new System.Drawing.Point(3, 57);
             this.L_Info_CategoryNameOld.Name = "L_Info_CategoryNameOld";
-            this.L_Info_CategoryNameOld.Size = new System.Drawing.Size(104, 16);
+            this.L_Info_CategoryNameOld.Size = new System.Drawing.Size(126, 20);
             this.L_Info_CategoryNameOld.TabIndex = 5;
             this.L_Info_CategoryNameOld.Text = "Название категории";
             this.L_Info_CategoryNameOld.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -423,7 +440,7 @@
             this.CB_CM_Categories.FormattingEnabled = true;
             this.CB_CM_Categories.Location = new System.Drawing.Point(6, 76);
             this.CB_CM_Categories.Name = "CB_CM_Categories";
-            this.CB_CM_Categories.Size = new System.Drawing.Size(197, 24);
+            this.CB_CM_Categories.Size = new System.Drawing.Size(197, 28);
             this.CB_CM_Categories.TabIndex = 6;
             // 
             // B_CM_GetCategory
@@ -443,7 +460,7 @@
             this.L_Info_RedactCategory.AutoSize = true;
             this.L_Info_RedactCategory.Location = new System.Drawing.Point(58, 1);
             this.L_Info_RedactCategory.Name = "L_Info_RedactCategory";
-            this.L_Info_RedactCategory.Size = new System.Drawing.Size(104, 16);
+            this.L_Info_RedactCategory.Size = new System.Drawing.Size(128, 20);
             this.L_Info_RedactCategory.TabIndex = 5;
             this.L_Info_RedactCategory.Text = "Изменить категорию";
             this.L_Info_RedactCategory.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -456,7 +473,7 @@
             this.TB_LoadingData.Location = new System.Drawing.Point(285, 6);
             this.TB_LoadingData.Name = "TB_LoadingData";
             this.TB_LoadingData.ReadOnly = true;
-            this.TB_LoadingData.Size = new System.Drawing.Size(141, 21);
+            this.TB_LoadingData.Size = new System.Drawing.Size(141, 25);
             this.TB_LoadingData.TabIndex = 9;
             this.TT_CM.SetToolTip(this.TB_LoadingData, "Новое название категории");
             // 
@@ -483,21 +500,9 @@
             // 
             this.TA_CategoryBS.ClearBeforeFill = true;
             // 
-            // B_CM_UpdateDable
-            // 
-            this.B_CM_UpdateDable.BackColor = System.Drawing.Color.SandyBrown;
-            this.B_CM_UpdateDable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.B_CM_UpdateDable.Location = new System.Drawing.Point(108, 20);
-            this.B_CM_UpdateDable.Name = "B_CM_UpdateDable";
-            this.B_CM_UpdateDable.Size = new System.Drawing.Size(95, 26);
-            this.B_CM_UpdateDable.TabIndex = 5;
-            this.B_CM_UpdateDable.Text = "Обнавить";
-            this.TT_CM.SetToolTip(this.B_CM_UpdateDable, "Обновить таблицу категории");
-            this.B_CM_UpdateDable.UseVisualStyleBackColor = false;
-            // 
             // CategoryManager
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.PeachPuff;

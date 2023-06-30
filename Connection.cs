@@ -19,6 +19,26 @@ namespace Bookshop
     {
         public static class Direct
         {
+            public static class Query
+            {
+                public static int GetRowsCount(string Table, OleDbConnection InstanceConnection)
+                {
+                    int rowsCount;
+                    string rowscountquery = "SELECT COUNT(*) FROM @Table";
+                    OleDbCommand rowcountcmd = new OleDbCommand(rowscountquery, InstanceConnection);
+                    try
+                    {
+                        rowsCount = rowcountcmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                        rowsCount = -1;
+                    }
+                    return rowsCount;
+                }
+            }
+
             public static string ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=BSDB.mdb";
             public static OleDbConnection Connection = new OleDbConnection(ConnectionString);
             public static bool Connected = false;

@@ -116,5 +116,79 @@ namespace Bookshop
                     }
             }
         }
+
+        public void B_CM_Check_Click(object sender, EventArgs e)
+        {
+            bool nameexist;
+            bool excaption;
+            string tablename = "Category";
+            int rowscount = Connections.Direct.Query.GetRowsCount(tablename, ConnectionCM);
+            switch (rowscount)
+            {
+                case < 0:
+                    {
+                        excaption = true;
+                        break;
+                    }
+                case 0:
+                    {
+                        excaption = false;
+                        nameexist = false;
+                        break;
+                    }
+                case > 0:
+                    {
+                        excaption = false;
+                        for (int i = 0; i < rowscount; i++)
+                        {
+                            string query = "SELECT @Column FROM @Table WHERE ID = @Value";
+                            OleDbCommand cmd = new OleDbCommand(query, ConnectionCM);
+                            cmd.Parameters.Add("@Column", OleDbType.VarChar).Value = "Название";
+                            cmd.Parameters.Add("@Table", OleDbType.VarChar).Value = "Category";
+                            cmd.Parameters.Add("@Value", OleDbType.Variant).Value = Convert.ToInt32(i);
+                            try
+                            {
+                                OleDbDataReader reader = cmd.ExecuteReader();
+                                if (!reader.Read())
+                                {
+                                    reader.Close();
+                                    nameexist = false;
+                                    continue;
+                                }
+                                else
+                                {
+                                    nameexist = true;
+                                    reader.Close();
+                                    break;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                            }
+                        }
+                        if (excaption)
+                        {
+                            //Ошибка
+                        }
+                        else
+                        {
+                            switch (excaption)
+                            {
+                                case true:
+                                    {
+                                        break;
+                                    }
+                                case false:
+                                    {
+                                        break;
+                                    }
+                            }
+
+                        }
+                        break;
+                    }
+            }
+        }
     }
 }
