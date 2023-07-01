@@ -283,7 +283,7 @@ namespace Bookshop {
             
             private global::System.Data.DataColumn columnНазвание;
             
-            private global::System.Data.DataColumn columnКоличевство;
+            private global::System.Data.DataColumn columnКоличество;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
@@ -336,9 +336,9 @@ namespace Bookshop {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn КоличевствоColumn {
+            public global::System.Data.DataColumn КоличествоColumn {
                 get {
-                    return this.columnКоличевство;
+                    return this.columnКоличество;
                 }
             }
             
@@ -379,12 +379,12 @@ namespace Bookshop {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public CategoryRow AddCategoryRow(string Название, int Количевство) {
+            public CategoryRow AddCategoryRow(string Название, int Количество) {
                 CategoryRow rowCategoryRow = ((CategoryRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         Название,
-                        Количевство};
+                        Количество};
                 rowCategoryRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCategoryRow);
                 return rowCategoryRow;
@@ -416,7 +416,7 @@ namespace Bookshop {
             internal void InitVars() {
                 this.columnID = base.Columns["ID"];
                 this.columnНазвание = base.Columns["Название"];
-                this.columnКоличевство = base.Columns["Количевство"];
+                this.columnКоличество = base.Columns["Количество"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -426,8 +426,8 @@ namespace Bookshop {
                 base.Columns.Add(this.columnID);
                 this.columnНазвание = new global::System.Data.DataColumn("Название", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnНазвание);
-                this.columnКоличевство = new global::System.Data.DataColumn("Количевство", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnКоличевство);
+                this.columnКоличество = new global::System.Data.DataColumn("Количество", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnКоличество);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnID}, true));
                 this.columnID.AutoIncrement = true;
@@ -605,17 +605,17 @@ namespace Bookshop {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public int Количевство {
+            public int Количество {
                 get {
                     try {
-                        return ((int)(this[this.tableCategory.КоличевствоColumn]));
+                        return ((int)(this[this.tableCategory.КоличествоColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Количевство\' в таблице \'Category\' равно DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Количество\' в таблице \'Category\' равно DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableCategory.КоличевствоColumn] = value;
+                    this[this.tableCategory.КоличествоColumn] = value;
                 }
             }
             
@@ -633,14 +633,14 @@ namespace Bookshop {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsКоличевствоNull() {
-                return this.IsNull(this.tableCategory.КоличевствоColumn);
+            public bool IsКоличествоNull() {
+                return this.IsNull(this.tableCategory.КоличествоColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetКоличевствоNull() {
-                this[this.tableCategory.КоличевствоColumn] = global::System.Convert.DBNull;
+            public void SetКоличествоNull() {
+                this[this.tableCategory.КоличествоColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -805,38 +805,37 @@ namespace Bookshop.BSDBDataSetTableAdapters {
             tableMapping.DataSetTable = "Category";
             tableMapping.ColumnMappings.Add("ID", "ID");
             tableMapping.ColumnMappings.Add("Название", "Название");
-            tableMapping.ColumnMappings.Add("Количевство", "Количевство");
+            tableMapping.ColumnMappings.Add("Количество", "Количество");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.OleDb.OleDbCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
             this._adapter.DeleteCommand.CommandText = "DELETE FROM `Category` WHERE ((`ID` = ?) AND ((? = 1 AND `Название` IS NULL) OR (" +
-                "`Название` = ?)) AND ((? = 1 AND `Количевство` IS NULL) OR (`Количевство` = ?)))" +
-                "";
+                "`Название` = ?)) AND ((? = 1 AND `Количество` IS NULL) OR (`Количество` = ?)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ID", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Название", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Название", global::System.Data.DataRowVersion.Original, true, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Название", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Название", global::System.Data.DataRowVersion.Original, false, null));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Количевство", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количевство", global::System.Data.DataRowVersion.Original, true, null));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Количевство", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количевство", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Количество", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количество", global::System.Data.DataRowVersion.Original, true, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Количество", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количество", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.InsertCommand = new global::System.Data.OleDb.OleDbCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO `Category` (`Название`, `Количевство`) VALUES (?, ?)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO `Category` (`Название`, `Количество`) VALUES (?, ?)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Название", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Название", global::System.Data.DataRowVersion.Current, false, null));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Количевство", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количевство", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Количество", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количество", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand = new global::System.Data.OleDb.OleDbCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE `Category` SET `Название` = ?, `Количевство` = ? WHERE ((`ID` = ?) AND ((?" +
-                " = 1 AND `Название` IS NULL) OR (`Название` = ?)) AND ((? = 1 AND `Количевство` " +
-                "IS NULL) OR (`Количевство` = ?)))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE `Category` SET `Название` = ?, `Количество` = ? WHERE ((`ID` = ?) AND ((? " +
+                "= 1 AND `Название` IS NULL) OR (`Название` = ?)) AND ((? = 1 AND `Количество` IS" +
+                " NULL) OR (`Количество` = ?)))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Название", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Название", global::System.Data.DataRowVersion.Current, false, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Количевство", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количевство", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Количество", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количество", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ID", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Название", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Название", global::System.Data.DataRowVersion.Original, true, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Название", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Название", global::System.Data.DataRowVersion.Original, false, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Количевство", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количевство", global::System.Data.DataRowVersion.Original, true, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Количевство", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количевство", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_Количество", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количество", global::System.Data.DataRowVersion.Original, true, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_Количество", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "Количество", global::System.Data.DataRowVersion.Original, false, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -852,7 +851,7 @@ namespace Bookshop.BSDBDataSetTableAdapters {
             this._commandCollection = new global::System.Data.OleDb.OleDbCommand[1];
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT ID, Название, Количевство FROM Category";
+            this._commandCollection[0].CommandText = "SELECT ID, Название, Количество FROM Category";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -913,7 +912,7 @@ namespace Bookshop.BSDBDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_ID, string Original_Название, global::System.Nullable<int> Original_Количевство) {
+        public virtual int Delete(int Original_ID, string Original_Название, global::System.Nullable<int> Original_Количество) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_ID));
             if ((Original_Название == null)) {
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(1));
@@ -923,9 +922,9 @@ namespace Bookshop.BSDBDataSetTableAdapters {
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_Название));
             }
-            if ((Original_Количевство.HasValue == true)) {
+            if ((Original_Количество.HasValue == true)) {
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[4].Value = ((int)(Original_Количевство.Value));
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((int)(Original_Количество.Value));
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(1));
@@ -951,15 +950,15 @@ namespace Bookshop.BSDBDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string Название, global::System.Nullable<int> Количевство) {
+        public virtual int Insert(string Название, global::System.Nullable<int> Количество) {
             if ((Название == null)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.InsertCommand.Parameters[0].Value = ((string)(Название));
             }
-            if ((Количевство.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[1].Value = ((int)(Количевство.Value));
+            if ((Количество.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[1].Value = ((int)(Количество.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
@@ -984,15 +983,15 @@ namespace Bookshop.BSDBDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Название, global::System.Nullable<int> Количевство, int Original_ID, string Original_Название, global::System.Nullable<int> Original_Количевство) {
+        public virtual int Update(string Название, global::System.Nullable<int> Количество, int Original_ID, string Original_Название, global::System.Nullable<int> Original_Количество) {
             if ((Название == null)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(Название));
             }
-            if ((Количевство.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(Количевство.Value));
+            if ((Количество.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(Количество.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
@@ -1006,9 +1005,9 @@ namespace Bookshop.BSDBDataSetTableAdapters {
                 this.Adapter.UpdateCommand.Parameters[3].Value = ((object)(0));
                 this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Original_Название));
             }
-            if ((Original_Количевство.HasValue == true)) {
+            if ((Original_Количество.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_Количевство.Value));
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_Количество.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(1));

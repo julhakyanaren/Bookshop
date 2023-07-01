@@ -24,11 +24,12 @@ namespace Bookshop
                 public static int GetRowsCount(string Table, OleDbConnection InstanceConnection)
                 {
                     int rowsCount;
-                    string rowscountquery = "SELECT COUNT(*) FROM @Table";
+                    string TableName = "Category";
+                    string rowscountquery = "SELECT COUNT(*) FROM " + Table + "";
                     OleDbCommand rowcountcmd = new OleDbCommand(rowscountquery, InstanceConnection);
                     try
                     {
-                        rowsCount = rowcountcmd.ExecuteNonQuery();
+                        rowsCount = (int)rowcountcmd.ExecuteScalar();
                     }
                     catch (Exception ex)
                     {
@@ -38,7 +39,6 @@ namespace Bookshop
                     return rowsCount;
                 }
             }
-
             public static string ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=BSDB.mdb";
             public static OleDbConnection Connection = new OleDbConnection(ConnectionString);
             public static bool Connected = false;

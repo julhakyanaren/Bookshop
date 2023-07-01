@@ -132,6 +132,8 @@ namespace Bookshop
         private void MainForm_Load(object sender, EventArgs e)
         {
             Methods.LoadComponents();
+            Options.FormOpened[0] = true;
+            Methods.FormsStateRegister();
         }
 
         private void TSMI_Category_Add_Click(object sender, EventArgs e)

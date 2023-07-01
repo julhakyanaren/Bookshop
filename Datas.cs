@@ -7,51 +7,32 @@ using System.Windows.Forms;
 
 namespace Bookshop
 {
+    public static class Options
+    {
+        public static bool[] FormOpened = new bool[3];
+        public static bool[] FormClosed = new bool[3];
+    }
     public static class Config
     {
         public static string[] Managers = new string[5];
+        public static bool[] NameExist = new bool[2];
     }
-    public static class Methods
+    public static class Data
     {
-        public static void InitializeManagers()
+        public static class Categories
         {
-            Config.Managers[0] = "Диспечер соединения";
-            Config.Managers[1] = "Диспечер данных";
+            public static int FirstID = 1;
+            public static int LastID;
+            public static int IDCount;
+            public static string[] NameByID = new string[0];
+            public static string[] EnteredName = new string[2];
+            public static string[] ExistingNames = new string[0];
+            public static string[] NewName = new string[2];
+            public static string OldName;
         }
-        public static void LoadComponents()
+        public static class Products
         {
-            InitializeManagers();
-        }
-    }
-    public static class Handlers
-    {
-        public static class ErrorProvider
-        {
-            public static void ExcaptionShowMessages(Exception InputException, int ManagerID)
-            {
-                DialogResult result = new DialogResult();
-                switch (ManagerID)
-                {
-                    case 0:
-                        {
-                            result = MessageBox.Show("Возникла ошибка при подключении данных\r\n\r\nПоказать подробности?", "" + Config.Managers[ManagerID] + "", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-                            if (result == DialogResult.Yes)
-                            {
-                                MessageBox.Show("Сообщение исключении:\r\n" + InputException.Message.ToString() + "\r\n\r\nПодробности исключении:\r\n" + InputException.ToString() + "", "" + Config.Managers[ManagerID] + "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                            break;
-                        }
-                    case 1:
-                        {
-                            result = MessageBox.Show("Возникла ошибка при чтении данных\r\n\r\nПоказать подробности?", "" + Config.Managers[ManagerID] + "", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-                            if (result == DialogResult.Yes)
-                            {
-                                MessageBox.Show("Сообщение исключении:\r\n" + InputException.Message.ToString() + "\r\n\r\nПодробности исключении:\r\n" + InputException.ToString() + "", "" + Config.Managers[ManagerID] + "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                            break;
-                        }
-                }
-            }
+
         }
     }
 }

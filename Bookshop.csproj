@@ -106,6 +106,7 @@
       <DependentUpon>CategoryManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Connection.cs" />
+    <Compile Include="Components.cs" />
     <Compile Include="Datas.cs" />
     <Compile Include="Draw.cs" />
     <Compile Include="MainForm.cs">
