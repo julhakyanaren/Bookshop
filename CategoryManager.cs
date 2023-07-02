@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Data.Common;
 using System.Data.OleDb;
-using System.Data.SqlTypes;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.ExceptionServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using DAO = Microsoft.Office.Interop.Access.Dao;
 
 namespace Bookshop
 {
@@ -46,8 +38,7 @@ namespace Bookshop
         private void CategoryManager_Load(object sender, EventArgs e)
         {
             // TODO: данная строка кода позволяет загрузить данные в таблицу "bSDBDataSet.Category". При необходимости она может быть перемещена или удалена.
-            this.TA_CategoryBS.Fill(this.BSDataSetBM.Category);
-            //Methods.LoadComponents();
+            this.categoryTableAdapter.Fill(this.bSDBDataSet.Category);
             ChangeConnectionState();
             BindingSource BindingSource = new BindingSource();
             var columnHeaderStyle = DGV_CM_Category.ColumnHeadersDefaultCellStyle;
@@ -135,7 +126,7 @@ namespace Bookshop
             }
             bool excaption;
             string tablename = "Category";
-            int rowscount = Connections.Direct.Query.GetRowsCount(tablename, ConnectionCM);
+            int rowscount = Connections.Direct.Queries.GetRowsCount(tablename, ConnectionCM);
             switch (rowscount)
             {
                 case < 0:
@@ -230,12 +221,11 @@ namespace Bookshop
             else
             {
                 string Table = "Category";
-                Data.Categories.IDCount = Connections.Direct.Query.GetRowsCount(Table, ConnectionCM);
+                Data.Categories.IDCount = Connections.Direct.Queries.GetRowsCount(Table, ConnectionCM);
                 Data.Categories.LastID = Data.Categories.FirstID + Data.Categories.IDCount - 1;
                 bool successfullinsert = false;
-                string newcategoryinsertquery = "INSERT INTO " + Table + " (ID, Название, Количество) VALUES (@Value1, @Value2, @Value3)";
+                string newcategoryinsertquery = "INSERT INTO " + Table + " (Название, Количество) VALUES (@Value2, @Value3)"; //@Value1
                 OleDbCommand newcategoryinsertcmd = new OleDbCommand (newcategoryinsertquery, ConnectionCM);
-                newcategoryinsertcmd.Parameters.Add("@Values", OleDbType.VarChar).Value = Convert.ToString(Data.Categories.LastID + 1);
                 newcategoryinsertcmd.Parameters.Add("@Value2", OleDbType.VarChar).Value = Convert.ToString(Data.Categories.EnteredName[0]);
                 newcategoryinsertcmd.Parameters.Add("@Value3", OleDbType.VarChar).Value = Convert.ToString(0);
                 try
@@ -252,9 +242,18 @@ namespace Bookshop
                 {
                     if (successfullinsert)
                     {
-                        Handlers.InformationProvider.DataOperationState(0, 0, 1);
-                        TB_CategoryName.Clear();
-                        B_CM_Add.Enabled = false;
+                        if (Connections.Direct.Queries.TableOperationsCore(Connections.Direct.Queries.CreateCategoryTable(Data.Categories.EnteredName[0]), ConnectionCM))
+                        {
+                            Handlers.InformationProvider.DataOperationState(0, 0, 1);
+                            TB_CategoryName.Clear();
+                            B_CM_Add.Enabled = false;
+                        }
+                        else
+                        {
+                            Handlers.InformationProvider.DataOperationState(1, 0, 1);
+                            TB_CategoryName.Clear();
+                            B_CM_Add.Enabled = false;
+                        }
                     }
                     else
                     {
@@ -268,45 +267,53 @@ namespace Bookshop
 
         private void B_CM_GetCategory_Click(object sender, EventArgs e)
         {
-            string selectquery;
-            string tablename = "Category";
+            CB_CM_Categories.Items.Clear();
+            string Table = "Category";
             bool readen = false;
-            int rowscount = Connections.Direct.Query.GetRowsCount(tablename, ConnectionCM);
+            int rowscount = Connections.Direct.Queries.GetRowsCount(Table, ConnectionCM);
             Array.Resize(ref Data.Categories.ExistingNames, 0);
-            for (int r = 0; r < rowscount; r++)
+            string selectallnamesquery = "SELECT * FROM " + Table + " WHERE ID > 0";
+            try
             {
-                selectquery = "SELECT * FROM " + tablename + " WHERE ID = " + Convert.ToString(r + 1) + "";
-                OleDbCommand selectcmd = new OleDbCommand(selectquery, ConnectionCM);
-                try
+                using (OleDbCommand selectallnamescmd = new OleDbCommand(selectallnamesquery, ConnectionCM))
                 {
-                    OleDbDataReader selectreader = selectcmd.ExecuteReader();
-                    while (selectreader.Read())
+                    using (OleDbDataReader selectallnamesreader = selectallnamescmd.ExecuteReader())
                     {
-                        Array.Resize(ref Data.Categories.ExistingNames, Data.Categories.ExistingNames.Length + 1);
-                        Data.Categories.ExistingNames[r] = Convert.ToString(selectreader[1]);
+                        while (selectallnamesreader.Read())
+                        {
+                            CB_CM_Categories.Items.Add(Convert.ToString(selectallnamesreader[1]));
+                        }
                     }
-                    selectreader.Close();
-                    readen = true;
                 }
-                catch (Exception ex)
+                int lenght = CB_CM_Categories.Items.Count;
+                Array.Resize(ref Data.Categories.ExistingNames, lenght);
+                for (int l = 0; l < lenght; l++)
                 {
-                    Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
-                    readen = false;
+                    Data.Categories.ExistingNames[l] = Convert.ToString(CB_CM_Categories.Items[l]);
                 }
+                readen = true;
             }
-            if (readen)
+            catch (Exception ex)
             {
-                CB_CM_Categories.Items.Clear();
-                for (int i = 0; i < Data.Categories.ExistingNames.Length; i++)
+                Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                readen = false;
+            }
+            finally
+            {
+                if (readen)
                 {
-                    CB_CM_Categories.Items.Add(Convert.ToString(Data.Categories.ExistingNames[i]));
+                    CB_CM_Categories.Items.Clear();
+                    for (int i = 0; i < Data.Categories.ExistingNames.Length; i++)
+                    {
+                        CB_CM_Categories.Items.Add(Convert.ToString(Data.Categories.ExistingNames[i]));
+                    }
+                    Handlers.InformationProvider.DataOperationState(0, 3, 1);
                 }
-                Handlers.InformationProvider.DataOperationState(0, 3, 1);
-            }
-            else
-            {
-                CB_CM_Categories.Items.Clear();
-                Handlers.InformationProvider.DataOperationState(1, 3, 1);
+                else
+                {
+                    CB_CM_Categories.Items.Clear();
+                    Handlers.InformationProvider.DataOperationState(1, 3, 1);
+                }
             }
         }
 
@@ -335,7 +342,7 @@ namespace Bookshop
             {
                 bool excaption;
                 string tablename = "Category";
-                int rowscount = Connections.Direct.Query.GetRowsCount(tablename, ConnectionCM);
+                int rowscount = Connections.Direct.Queries.GetRowsCount(tablename, ConnectionCM);
                 switch (rowscount)
                 {
                     case < 0:
@@ -351,34 +358,33 @@ namespace Bookshop
                         }
                     case > 0:
                         {
-                            excaption = false;
-                            string Table = "Category";
-                            for (int i = 0; i < rowscount; i++)
+                            excaption = true;
+                            try
                             {
-                                string query = "SELECT @Column FROM " + Table + " WHERE ID = @Value";
-                                OleDbCommand cmd = new OleDbCommand(query, ConnectionCM);
-                                cmd.Parameters.Add("@Column", OleDbType.VarChar).Value = "Название";
-                                cmd.Parameters.Add("@Value", OleDbType.Variant).Value = Convert.ToInt32(i);
-                                try
+                                string Table = "Category";
+                                string comparenamesquery = $"SELECT ID FROM {Table} WHERE @Name = @EnteredName";
+                                using (OleDbCommand comparenamescmd = new OleDbCommand(comparenamesquery, ConnectionCM))
                                 {
-                                    OleDbDataReader reader = cmd.ExecuteReader();
-                                    if (!reader.Read())
+                                    comparenamescmd.Parameters.Add("@Name", OleDbType.VarChar).Value = "Название";
+                                    comparenamescmd.Parameters.Add("@EnteredName", OleDbType.VarChar).Value = Convert.ToString(Data.Categories.NewName[0]);
+                                    using (OleDbDataReader comparenamesreader = comparenamescmd.ExecuteReader())
                                     {
-                                        reader.Close();
-                                        Config.NameExist[1] = false;
-                                        continue;
-                                    }
-                                    else
-                                    {
-                                        Config.NameExist[1] = true;
-                                        reader.Close();
-                                        break;
+                                        if (comparenamesreader.Read())
+                                        {
+                                            Config.NameExist[1] = true;
+                                        }
+                                        else
+                                        {
+                                            Config.NameExist[1] = false;
+                                        }
                                     }
                                 }
-                                catch (Exception ex)
-                                {
-                                    Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
-                                }
+                                excaption = false;
+                            }
+                            catch (Exception ex)
+                            {
+                                Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                                excaption = true;
                             }
                             break;
                         }
@@ -397,6 +403,7 @@ namespace Bookshop
                             }
                         case false:
                             {
+                                Data.Categories.OldName = CB_CM_Categories.SelectedItem.ToString();
                                 B_CM_CategoryRename.Enabled = true;
                                 break;
                             }
@@ -419,28 +426,20 @@ namespace Bookshop
             }
             else
             {
-                Data.Categories.OldName = CB_CM_Categories.SelectedItem.ToString();
-                bool IDreaden = false;
                 bool renamed = false;
-                string Table = "Category";
-                string ID = null;
-                string findrowIDquery = "SELECT * FROM " + Table + " WHERE Название = @Value1";
-                OleDbCommand findrowIDcmd = new OleDbCommand(findrowIDquery, ConnectionCM);
-                findrowIDcmd.Parameters.Add("@Value", OleDbType.VarChar).Value = Data.Categories.OldName;
                 try
                 {
-                    OleDbDataReader findrowIDreader = findrowIDcmd.ExecuteReader();
-                    while (findrowIDreader.Read())
+                    string Table = "Category";
+                    int ID = 0;
+                    if (ID == 0)
                     {
-                        ID = Convert.ToString(findrowIDreader[0]);
-                        IDreaden = true;
-                    }
-                    findrowIDreader.Close();
-                    if (IDreaden)
-                    {
-                        string renamequery = "UPDATE " + Table + "SET Название = @P1 WHERE ID = @Value2";
-                        OleDbCommand renamecmd = new OleDbCommand(renamequery, ConnectionCM);
-                        renamecmd.Parameters.Add("@Value2", OleDbType.VarChar).Value = Convert.ToString(ID);
+                        string renamequery = $"UPDATE {Table} SET Название = @NewName WHERE Название = @OldName";
+                        using (OleDbCommand renamecmd = new OleDbCommand(renamequery, ConnectionCM))
+                        {
+                            renamecmd.Parameters.Add("@NewName", OleDbType.VarChar).Value = Convert.ToString(Data.Categories.NewName[0]);
+                            renamecmd.Parameters.Add("@OldName", OleDbType.VarChar).Value = Convert.ToString(Data.Categories.OldName);
+                            renamecmd.ExecuteNonQuery();
+                        }
                         renamed = true;
                     }
                     else
@@ -457,7 +456,28 @@ namespace Bookshop
                 {
                     if (renamed)
                     {
-                        Handlers.InformationProvider.DataOperationState(0, 1, 1);
+                        bool tableranamed = true;
+                        string[] renamequeries = { Connections.Direct.Queries.RenameCategoryTableStage1(Data.Categories.OldName, Data.Categories.NewName[0]), Connections.Direct.Queries.RenameCategoryTableStage2(Data.Categories.OldName) };
+                        for (int b = 0; b < renamequeries.Length; b++)
+                        {
+                            if (Connections.Direct.Queries.TableOperationsCore(renamequeries[1], ConnectionCM))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                tableranamed = false;
+                                break;
+                            }
+                        }
+                        if (tableranamed)
+                        {
+                            Handlers.InformationProvider.DataOperationState(0, 1, 1);
+                        }
+                        else
+                        {
+                            Handlers.InformationProvider.DataOperationState(1, 1, 1);
+                        }
                     }
                     else
                     {
@@ -531,51 +551,15 @@ namespace Bookshop
                 {
                     case true:
                         {
-                            bool IDupdated = false;
-                            try
+                            if (Connections.Direct.Queries.TableOperationsCore(Connections.Direct.Queries.DeleteCategoryTable(Data.Categories.OldName), ConnectionCM))
                             {
-                                string Table = "Category";
-                                int rowscount = Connections.Direct.Query.GetRowsCount(Table, ConnectionCM);
-                                Array.Resize(ref Data.Categories.NameByID, rowscount);
-                                for (int d = 1; d <= rowscount; d++)
-                                {
-                                    string namesbyIDquery = "SELECT * FROM " + Table + " WHERE ID = @ID1";
-                                    OleDbCommand namesbyIDcmd = new OleDbCommand(namesbyIDquery, ConnectionCM);
-                                    namesbyIDcmd.Parameters.Add("@ID1", OleDbType.VarChar).Value = Convert.ToString(d);
-                                    OleDbDataReader namesbyIDreader = namesbyIDcmd.ExecuteReader();
-                                    if (namesbyIDreader.Read())
-                                    {
-                                        Data.Categories.NameByID[d - 1] = Convert.ToString(namesbyIDreader[1]);
-                                    }
-                                    else
-                                    {
-                                        rowscount++;
-                                        d++;
-                                        continue;
-                                    }
-                                    namesbyIDreader.Close();
-                                }
-                                IDupdated = true;
-
+                                CB_CM_Categories.Items.Clear();
+                                Array.Resize(ref Data.Categories.ExistingNames, 0);
+                                Handlers.InformationProvider.DataOperationState(0, 2, 1);
                             }
-                            catch (Exception ex)
+                            else
                             {
-                                Handlers.ErrorProvider.ExcaptionShowMessages(ex, 3);
-                                IDupdated = false;
-                            }
-                            finally
-                            {
-                                if (IDupdated)
-                                {
-                                    CB_CM_Categories.Items.Clear();
-                                    //Array.Resize(ref Data.Categories.ExistingNames, 1);
-                                    Array.Resize(ref Data.Categories.ExistingNames, 0);
-                                    Handlers.InformationProvider.DataOperationState(0, 2, 1);
-                                }
-                                else
-                                {
-                                    Handlers.InformationProvider.DataOperationState(1, 2, 1);
-                                }
+                                Handlers.InformationProvider.DataOperationState(1, 2, 1);
                             }
                             break;
                         }

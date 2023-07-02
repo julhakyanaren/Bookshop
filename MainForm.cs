@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Access = Microsoft.Office.Interop.Access;
 
 namespace Bookshop
 {
@@ -128,12 +129,26 @@ namespace Bookshop
                 MessageBox.Show("Соеденение не установлено", "Диспечер Соеденения", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        public void SetDesignParameters()
+        {
+            SetLableInCenterOfPanel(L_Info_AddProduct, PNL_DataOperation);
+            SetLableInCenterOfPanel(L_Info_RedactUpdate, PNL_Redact_Update);
+            SetLableInCenterOfPanel(L_Info_RedactRename, PNL_Redact_Rename);
+            SetLableInCenterOfPanel(L_Info_RedactDelete, PNL_Redact_Delete);
+        }
+        public void SetLableInCenterOfPanel(Label inputlable, Panel inputpanel)
+        {
+            inputlable.Location = new Point((inputpanel.Width - inputlable.Width) / 2, 0);
+        }
         private void MainForm_Load(object sender, EventArgs e)
         {
             Methods.LoadComponents();
             Options.FormOpened[0] = true;
             Methods.FormsStateRegister();
+            var columnHeaderStyle = DGV_MS_Product.ColumnHeadersDefaultCellStyle;
+            columnHeaderStyle.BackColor = Color.SandyBrown;
+            columnHeaderStyle.ForeColor = Color.Black;
+            SetDesignParameters();
         }
 
         private void TSMI_Category_Add_Click(object sender, EventArgs e)
@@ -154,6 +169,24 @@ namespace Bookshop
                 case false:
                     {
                         this.TopMost = false;
+                        break;
+                    }
+            }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            switch (MSConnection.State)
+            {
+                case ConnectionState.Open:
+                    {
+                        MSConnection.Close();
+                        break;
+                    }
+                case ConnectionState.Closed:
+                    {
+                        MSConnection.Open();
+                        MSConnection.Close();
                         break;
                     }
             }

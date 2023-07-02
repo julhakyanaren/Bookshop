@@ -145,6 +145,15 @@ namespace Bookshop
                             }
                             break;
                         }
+                    case 5:
+                        {
+                            result = MessageBox.Show("Возникла ошибка при работе с таблицами в БД\r\n\r\nПоказать подробности?", "" + Config.Managers[ManagerID - 4] + "", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                            if (result == DialogResult.Yes)
+                            {
+                                MessageBox.Show("Сообщение исключении:\r\n" + InputException.Message.ToString() + "\r\n\r\nПодробности исключении:\r\n" + InputException.ToString() + "", "" + Config.Managers[ManagerID - 4] + "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            break;
+                        }
                 }
             }
         }

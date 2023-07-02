@@ -44,11 +44,6 @@
             this.PB_LogoMain = new System.Windows.Forms.PictureBox();
             this.PNL_CM_DGV = new System.Windows.Forms.Panel();
             this.DGV_CM_Category = new System.Windows.Forms.DataGridView();
-            this.iDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.названиеDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.количествоDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.categoryBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.BSDataSetBM = new Bookshop.BSDBDataSet();
             this.PNL_CM_ControlElements = new System.Windows.Forms.Panel();
             this.SC_CM_ControlElement = new System.Windows.Forms.SplitContainer();
             this.PNL_CM_AddCategory = new System.Windows.Forms.Panel();
@@ -73,14 +68,16 @@
             this.TB_LoadingData = new System.Windows.Forms.TextBox();
             this.PNL_LoadingData = new System.Windows.Forms.Panel();
             this.PB_CM_LoadingData = new System.Windows.Forms.ProgressBar();
-            this.BS_CategoryBS = new System.Windows.Forms.BindingSource(this.components);
-            this.TA_CategoryBS = new Bookshop.BSDBDataSetTableAdapters.CategoryTableAdapter();
+            this.bSDBDataSet = new Bookshop.BSDBDataSet();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.categoryTableAdapter = new Bookshop.BSDBDataSetTableAdapters.CategoryTableAdapter();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MS_Category.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PB_LogoMain)).BeginInit();
             this.PNL_CM_DGV.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_CM_Category)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.categoryBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BSDataSetBM)).BeginInit();
             this.PNL_CM_ControlElements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SC_CM_ControlElement)).BeginInit();
             this.SC_CM_ControlElement.Panel1.SuspendLayout();
@@ -89,7 +86,8 @@
             this.PNL_CM_AddCategory.SuspendLayout();
             this.PNL_CM_AddRedact.SuspendLayout();
             this.PNL_LoadingData.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BS_CategoryBS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bSDBDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // MS_Category
@@ -195,10 +193,10 @@
             this.DGV_CM_Category.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(200)))), ((int)(((byte)(145)))));
             this.DGV_CM_Category.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_CM_Category.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.iDDataGridViewTextBoxColumn,
-            this.названиеDataGridViewTextBoxColumn,
-            this.количествоDataGridViewTextBoxColumn});
-            this.DGV_CM_Category.DataSource = this.categoryBindingSource;
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn5});
+            this.DGV_CM_Category.DataSource = this.bindingSource1;
             this.DGV_CM_Category.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGV_CM_Category.EnableHeadersVisualStyles = false;
             this.DGV_CM_Category.GridColor = System.Drawing.Color.Black;
@@ -221,40 +219,6 @@
             this.DGV_CM_Category.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.DGV_CM_Category.Size = new System.Drawing.Size(431, 304);
             this.DGV_CM_Category.TabIndex = 0;
-            // 
-            // iDDataGridViewTextBoxColumn
-            // 
-            this.iDDataGridViewTextBoxColumn.DataPropertyName = "ID";
-            this.iDDataGridViewTextBoxColumn.FillWeight = 50F;
-            this.iDDataGridViewTextBoxColumn.HeaderText = "ID";
-            this.iDDataGridViewTextBoxColumn.Name = "iDDataGridViewTextBoxColumn";
-            this.iDDataGridViewTextBoxColumn.Width = 50;
-            // 
-            // названиеDataGridViewTextBoxColumn
-            // 
-            this.названиеDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.названиеDataGridViewTextBoxColumn.DataPropertyName = "Название";
-            this.названиеDataGridViewTextBoxColumn.FillWeight = 200F;
-            this.названиеDataGridViewTextBoxColumn.HeaderText = "Название";
-            this.названиеDataGridViewTextBoxColumn.Name = "названиеDataGridViewTextBoxColumn";
-            // 
-            // количествоDataGridViewTextBoxColumn
-            // 
-            this.количествоDataGridViewTextBoxColumn.DataPropertyName = "Количество";
-            this.количествоDataGridViewTextBoxColumn.FillWeight = 90F;
-            this.количествоDataGridViewTextBoxColumn.HeaderText = "Количество";
-            this.количествоDataGridViewTextBoxColumn.Name = "количествоDataGridViewTextBoxColumn";
-            this.количествоDataGridViewTextBoxColumn.Width = 90;
-            // 
-            // categoryBindingSource
-            // 
-            this.categoryBindingSource.DataMember = "Category";
-            this.categoryBindingSource.DataSource = this.BSDataSetBM;
-            // 
-            // BSDataSetBM
-            // 
-            this.BSDataSetBM.DataSetName = "BSDBDataSet";
-            this.BSDataSetBM.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // PNL_CM_ControlElements
             // 
@@ -543,14 +507,42 @@
             this.PB_CM_LoadingData.Size = new System.Drawing.Size(276, 23);
             this.PB_CM_LoadingData.TabIndex = 0;
             // 
-            // BS_CategoryBS
+            // bSDBDataSet
             // 
-            this.BS_CategoryBS.DataMember = "Category";
-            this.BS_CategoryBS.DataSource = this.BSDataSetBM;
+            this.bSDBDataSet.DataSetName = "BSDBDataSet";
+            this.bSDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
-            // TA_CategoryBS
+            // bindingSource1
             // 
-            this.TA_CategoryBS.ClearBeforeFill = true;
+            this.bindingSource1.DataMember = "Category";
+            this.bindingSource1.DataSource = this.bSDBDataSet;
+            // 
+            // categoryTableAdapter
+            // 
+            this.categoryTableAdapter.ClearBeforeFill = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "ID";
+            this.dataGridViewTextBoxColumn3.FillWeight = 50F;
+            this.dataGridViewTextBoxColumn3.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.DataPropertyName = "Название";
+            this.dataGridViewTextBoxColumn4.FillWeight = 200F;
+            this.dataGridViewTextBoxColumn4.HeaderText = "Название";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "Количество";
+            this.dataGridViewTextBoxColumn5.HeaderText = "Количество";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             // 
             // CategoryManager
             // 
@@ -579,8 +571,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_LogoMain)).EndInit();
             this.PNL_CM_DGV.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_CM_Category)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.categoryBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BSDataSetBM)).EndInit();
             this.PNL_CM_ControlElements.ResumeLayout(false);
             this.SC_CM_ControlElement.Panel1.ResumeLayout(false);
             this.SC_CM_ControlElement.Panel2.ResumeLayout(false);
@@ -592,7 +582,8 @@
             this.PNL_CM_AddRedact.PerformLayout();
             this.PNL_LoadingData.ResumeLayout(false);
             this.PNL_LoadingData.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BS_CategoryBS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bSDBDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -631,16 +622,22 @@
         public System.Windows.Forms.ToolStripMenuItem TSMI_CM_TopMost;
         public System.Windows.Forms.ToolStripMenuItem TSMI_CM_ConnectionData;
         public System.Windows.Forms.ToolStripMenuItem TSMI_CM_File;
-        public BSDBDataSet BSDataSetBM;
-        public System.Windows.Forms.BindingSource BS_CategoryBS;
-        public BSDBDataSetTableAdapters.CategoryTableAdapter TA_CategoryBS;
         public System.Windows.Forms.DataGridView DGV_CM_Category;
         private System.Windows.Forms.Button B_CM_UpdateDable;
-        private System.Windows.Forms.BindingSource categoryBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn iDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn названиеDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn количествоDataGridViewTextBoxColumn;
         private System.Windows.Forms.Button B_CM_Delete;
         private System.Windows.Forms.Button B_CM_Turnicate;
+        private System.Windows.Forms.BindingSource categoryBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn количевствоDataGridViewTextBoxColumn;
+        private BSDBDataSet bSDBDataSet;
+        private System.Windows.Forms.BindingSource bindingSource1;
+        private BSDBDataSetTableAdapters.CategoryTableAdapter categoryTableAdapter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
     }
 }

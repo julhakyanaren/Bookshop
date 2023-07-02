@@ -68,18 +68,18 @@
   <xs:element name="BSDBDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="BSDBDataSet" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="BSDBDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Category" msprop:Generator_RowEvHandlerName="CategoryRowChangeEventHandler" msprop:Generator_RowDeletedName="CategoryRowDeleted" msprop:Generator_RowDeletingName="CategoryRowDeleting" msprop:Generator_RowEvArgName="CategoryRowChangeEvent" msprop:Generator_TablePropName="Category" msprop:Generator_RowChangedName="CategoryRowChanged" msprop:Generator_UserTableName="Category" msprop:Generator_RowChangingName="CategoryRowChanging" msprop:Generator_RowClassName="CategoryRow" msprop:Generator_TableClassName="CategoryDataTable" msprop:Generator_TableVarName="tableCategory">
+        <xs:element name="Category" msprop:Generator_RowClassName="CategoryRow" msprop:Generator_RowEvHandlerName="CategoryRowChangeEventHandler" msprop:Generator_RowDeletedName="CategoryRowDeleted" msprop:Generator_RowDeletingName="CategoryRowDeleting" msprop:Generator_RowEvArgName="CategoryRowChangeEvent" msprop:Generator_TablePropName="Category" msprop:Generator_RowChangedName="CategoryRowChanged" msprop:Generator_UserTableName="Category" msprop:Generator_RowChangingName="CategoryRowChanging" msprop:Generator_TableClassName="CategoryDataTable" msprop:Generator_TableVarName="tableCategory">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_UserColumnName="ID" msprop:Generator_ColumnVarNameInTable="columnID" type="xs:int" />
-              <xs:element name="Название" msprop:Generator_ColumnPropNameInTable="НазваниеColumn" msprop:Generator_ColumnPropNameInRow="Название" msprop:Generator_UserColumnName="Название" msprop:Generator_ColumnVarNameInTable="columnНазвание" minOccurs="0">
+              <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_UserColumnName="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnVarNameInTable="columnID" type="xs:int" />
+              <xs:element name="Название" msprop:Generator_UserColumnName="Название" msprop:Generator_ColumnPropNameInTable="НазваниеColumn" msprop:Generator_ColumnPropNameInRow="Название" msprop:Generator_ColumnVarNameInTable="columnНазвание" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="255" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Количество" msprop:Generator_UserColumnName="Количество" msprop:Generator_ColumnPropNameInTable="КоличествоColumn" msprop:Generator_ColumnPropNameInRow="Количество" msprop:Generator_ColumnVarNameInTable="columnКоличество" type="xs:int" minOccurs="0" />
+              <xs:element name="Количество" msprop:Generator_ColumnPropNameInRow="Количество" msprop:Generator_ColumnPropNameInTable="КоличествоColumn" msprop:Generator_ColumnVarNameInTable="columnКоличество" msprop:Generator_UserColumnName="Количество" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
