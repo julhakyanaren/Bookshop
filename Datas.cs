@@ -30,6 +30,7 @@ namespace Bookshop
             public static string[] ExistingNames = new string[0];
             public static string[] NewName = new string[2];
             public static string OldName;
+            public static string[] AllCategories = new string[0];
         }
         public static class Products
         {

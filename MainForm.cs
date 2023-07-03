@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Access.Dao;
+using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -476,7 +477,38 @@ namespace Bookshop
 
         private void TSMI_Synchronize_Click(object sender, EventArgs e)
         {
-            if (ConnectionMF)
+            if (Connections.Direct.ConnectionReset(ConnectionMF))
+            {
+                string Table = "Categories";
+                int categoriescount = Connections.Direct.Queries.GetRowsCount(Table, ConnectionMF);
+                Array.Resize(ref Data.Categories.AllCategories, categoriescount);
+                for (int r = 0; r < categoriescount; r++)
+                {
+                    Data.Categories.AllCategories[r] = String.Empty;
+                }
+                string getcategoriesquery = $"SELECT * FROM {Table} WHERE ID > 0";
+                string readenrow;
+                int index = 0;
+                using (OleDbCommand getcategoriescmd = new OleDbCommand(getcategoriesquery, ConnectionMF))
+                {
+                    using (OleDbDataReader getcategoriesreader = getcategoriescmd.ExecuteReader())
+                    {
+                        if (getcategoriesreader.Read())
+                        {
+                            do
+                            {
+                                readenrow = Convert.ToString(getcategoriesreader[1]);
+                                Data.Categories.AllCategories[index] = readenrow;
+                                index++;
+                            }
+                            while(getcategoriesreader.Read());
+                        }
+                    }
+                }
+            }
+            else
+            {
+            }
         }
     }
 }
