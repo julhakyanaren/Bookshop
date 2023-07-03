@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Data;
 using System.Security.Cryptography.X509Certificates;
 using System.Diagnostics;
+using System.Linq.Expressions;
 
 namespace Bookshop
 { 
@@ -150,6 +151,68 @@ namespace Bookshop
                     {
                         Connections.Direct.StatusToMB(Connected);
                     }
+                }
+            }
+            public static bool ConnectionReset(OleDbConnection InstanceConnection)
+            {
+                Exception extern_ex = null;
+                bool refreshed = false;
+                switch (InstanceConnection.State)
+                {
+                    case ConnectionState.Open:
+                        {
+                            try
+                            {
+                                InstanceConnection.Close();
+                                InstanceConnection.Open();
+                                refreshed = true;
+                            }
+                            catch (Exception ex)
+                            {
+                                Handlers.ErrorProvider.ExcaptionShowMessages(ex, 0);
+                                refreshed = false;
+                                extern_ex = ex;
+                            }
+                            break;
+                        }
+                    case ConnectionState.Closed:
+                        {
+                            try
+                            {
+                                InstanceConnection.Open();
+                                InstanceConnection.Close();
+                                refreshed = true;
+                            }
+                            catch (Exception ex)
+                            {
+                                Handlers.ErrorProvider.ExcaptionShowMessages(ex, 0);
+                                refreshed = false;
+                                extern_ex = ex;
+                            }
+                            break;
+                        }
+                }
+                if (refreshed)
+                {
+                    MessageBox.Show("Соеденение обновлено", "" + Config.Managers[0] + "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return true;
+                }
+                else
+                {
+                    DialogResult DR = new DialogResult();
+                    switch (DR = MessageBox.Show("Обновление соединения провалено\r\n\r\nПокозать подробности ошибки?", "" + Config.Managers[0] + "", MessageBoxButtons.YesNo, MessageBoxIcon.Error))
+                    {
+                        case DialogResult.Yes:
+                            {
+                                MessageBox.Show("Сообщение исключении:\r\n" + extern_ex.Message.ToString() + "\r\n\r\nПодробности исключении:\r\n" + extern_ex.ToString() + "", "" + Config.Managers[0] + "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                break;
+                            }
+                        case DialogResult.No:
+                            {
+                                break;
+                            }
+                    }
+                    return false;
                 }
             }
         }

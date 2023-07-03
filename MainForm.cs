@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,7 +16,7 @@ namespace Bookshop
 {
     public partial class MainForm : Form
     {
-        public OleDbConnection MSConnection = Connections.Direct.Connection;
+        public OleDbConnection ConnectionMF = Connections.Direct.Connection;
         public MainForm()
         {
             InitializeComponent();
@@ -27,11 +28,11 @@ namespace Bookshop
             {
                 case true:
                     {
-                        if (MSConnection.State != ConnectionState.Open)
+                        if (ConnectionMF.State != ConnectionState.Open)
                         {
                             try
                             {
-                                MSConnection.Open();
+                                ConnectionMF.Open();
                                 Connections.Direct.Connected = true;
                                 TSMI_Connection_OpenClose.Text = "Отключить соединение";
                                 TSMI_ConnectionStatus.Enabled = true;
@@ -53,7 +54,7 @@ namespace Bookshop
                                     {
                                         try
                                         {
-                                            MSConnection.Close();
+                                            ConnectionMF.Close();
                                             Connections.Direct.Connected = false;
                                         }
                                         catch (Exception ex)
@@ -74,11 +75,11 @@ namespace Bookshop
                     }
                 case false:
                     {
-                        if (MSConnection.State != ConnectionState.Closed)
+                        if (ConnectionMF.State != ConnectionState.Closed)
                         {
                             try
                             {
-                                MSConnection.Close();
+                                ConnectionMF.Close();
                                 Connections.Direct.Connected = false;
                                 TSMI_Connection_OpenClose.Text = "Установить соединение";
                                 TSMI_ConnectionStatus.Enabled = false;
@@ -100,7 +101,7 @@ namespace Bookshop
                                     {
                                         try
                                         {
-                                            MSConnection.Open();
+                                            ConnectionMF.Open();
                                             Connections.Direct.Connected = true;
                                         }
                                         catch (Exception ex)
@@ -133,7 +134,7 @@ namespace Bookshop
         {
             SetLableInCenterOfPanel(L_Info_AddProduct, PNL_DataOperation);
             SetLableInCenterOfPanel(L_Info_RedactUpdate, PNL_Redact_Update);
-            SetLableInCenterOfPanel(L_Info_RedactRename, PNL_Redact_Rename);
+            SetLableInCenterOfPanel(L_Info_RedactRename, CHB_ProdRename_Code);
             SetLableInCenterOfPanel(L_Info_RedactDelete, PNL_Redact_Delete);
         }
         public void SetLableInCenterOfPanel(Label inputlable, Panel inputpanel)
@@ -142,6 +143,8 @@ namespace Bookshop
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
+            // TODO: данная строка кода позволяет загрузить данные в таблицу "bSDBDataSet.Product". При необходимости она может быть перемещена или удалена.
+            this.productTableAdapter.Fill(this.bSDBDataSet.Product);
             Methods.LoadComponents();
             Options.FormOpened[0] = true;
             Methods.FormsStateRegister();
@@ -176,20 +179,304 @@ namespace Bookshop
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            switch (MSConnection.State)
+            switch (ConnectionMF.State)
             {
                 case ConnectionState.Open:
                     {
-                        MSConnection.Close();
+                        ConnectionMF.Close();
                         break;
                     }
                 case ConnectionState.Closed:
                     {
-                        MSConnection.Open();
-                        MSConnection.Close();
+                        ConnectionMF.Open();
+                        ConnectionMF.Close();
                         break;
                     }
             }
+        }
+        private void CHB_ProdUpdate_ByCode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHB_ProdUpdate_ByCode.Checked)
+            {
+                CHB_ProdUpdate_ByCategory.Checked = false;
+                CHB_ProdUpdate_ByName.Checked = false;
+                Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdUpdate_ByCode, GB_SearchType_Update);
+                L_NameCode_Update.Text = "Код";
+                TB_InpudDataForSearch_Update.Enabled = true;
+                L_InfoCatregorySearch_Update.Visible = false;
+                CB_CategorySearch_Update.Visible = false;
+            }
+            else
+            {
+                if (!CHB_ProdUpdate_ByName.Checked)
+                {
+                    TB_InpudDataForSearch_Update.Enabled = false;
+                }
+            }
+        }
+        private void CHB_ProdUpdate_ByCategory_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHB_ProdUpdate_ByCategory.Checked)
+            {
+                CHB_ProdUpdate_ByCode.Checked = false;
+                CHB_ProdUpdate_ByName.Checked = false;
+                Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdUpdate_ByCategory, GB_SearchType_Update);
+                L_NameCode_Update.Text = "Код";
+                TB_InpudDataForSearch_Update.Enabled = false;
+                L_InfoCatregorySearch_Update.Visible = true;
+                CB_CategorySearch_Update.Visible = true;
+            }
+            else
+            {
+                L_InfoCatregorySearch_Update.Visible = false;
+                CB_CategorySearch_Update.Visible = false;
+            }
+        }
+        private void CHB_ProdUpdate_ByName_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHB_ProdUpdate_ByName.Checked)
+            {
+                CHB_ProdUpdate_ByCode.Checked = false;
+                CHB_ProdUpdate_ByCategory.Checked = false;
+                Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdUpdate_ByName, GB_SearchType_Update);
+                L_NameCode_Update.Text = "Название";
+                TB_InpudDataForSearch_Update.Enabled = true;
+                L_InfoCatregorySearch_Update.Visible = false;
+                CB_CategorySearch_Update.Visible = false;
+            }
+            else
+            {
+                if (!CHB_ProdUpdate_ByCode.Checked)
+                {
+                    TB_InpudDataForSearch_Update.Enabled = false;
+                }
+            }
+        }
+        private void CHB_ProdRename_ByCode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHB_ProdRename_ByCode.Checked)
+            {
+                CHB_ProdRename_ByCategory.Checked = false;
+                CHB_ProdRename_ByName.Checked = false;
+                Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdRename_ByCode, GB_SearchType_Rename);
+                L_NameCode_Rename.Text = "Код";
+                TB_InpudDataForSearch_Rename.Enabled = true;
+                L_InfoCatregorySearch_Rename.Visible = false;
+                CB_CategorySearch_Rename.Visible = false;
+            }
+            else
+            {
+                if (!CHB_ProdRename_ByName.Checked)
+                {
+                    TB_InpudDataForSearch_Rename.Enabled = false;
+                }
+            }
+        }
+        private void CHB_ProdRename_ByCategory_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHB_ProdRename_ByCategory.Checked)
+            {
+                CHB_ProdRename_ByCode.Checked = false;
+                CHB_ProdRename_ByName.Checked = false;
+                Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdRename_ByCategory, GB_SearchType_Rename);
+                L_NameCode_Rename.Text = "Код";
+                TB_InpudDataForSearch_Rename.Enabled = false;
+                L_InfoCatregorySearch_Rename.Visible = true;
+                CB_CategorySearch_Rename.Visible = true;
+            }
+            else
+            {
+                L_InfoCatregorySearch_Rename.Visible = false;
+                CB_CategorySearch_Rename.Visible = false;
+            }
+        }
+        private void CHB_ProdRename_ByName_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHB_ProdRename_ByName.Checked)
+            {
+                CHB_ProdRename_ByCode.Checked = false;
+                CHB_ProdRename_ByCategory.Checked = false;
+                Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdRename_ByName, GB_SearchType_Rename);
+                L_NameCode_Rename.Text = "Название";
+                TB_InpudDataForSearch_Rename.Enabled = true;
+                L_InfoCatregorySearch_Rename.Visible = false;
+                CB_CategorySearch_Rename.Visible = false;
+            }
+            else
+            {
+                if (!CHB_ProdRename_ByCode.Checked)
+                {
+                    TB_InpudDataForSearch_Rename.Enabled = false;
+                }
+            }
+        }
+        private void CHB_ProdDelete_ByName_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHB_ProdDelete_ByName.Checked)
+            {
+                CHB_ProdDelete_ByCode.Checked = false;
+                CHB_ProdDelete_ByCategory.Checked = false;
+                Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdDelete_ByName, GB_SearchType_Delete);
+                L_NameCode_Delete.Text = "Название";
+                TB_InpudDataForSearch_Delete.Enabled = true;
+                L_InfoCatregorySearch_Delete.Visible = false;
+                CB_CategorySearch_Delete.Visible = false;
+            }
+            else
+            {
+                if (!CHB_ProdDelete_ByCode.Checked)
+                {
+                    TB_InpudDataForSearch_Delete.Enabled = false;
+                }
+            }
+        }
+        private void CHB_ProdDelete_ByCategory_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHB_ProdDelete_ByCategory.Checked)
+            {
+                CHB_ProdDelete_ByCode.Checked = false;
+                CHB_ProdDelete_ByName.Checked = false;
+                Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdDelete_ByCategory, GB_SearchType_Delete);
+                L_NameCode_Delete.Text = "Код";
+                TB_InpudDataForSearch_Delete.Enabled = false;
+                L_InfoCatregorySearch_Delete.Visible = true;
+                CB_CategorySearch_Delete.Visible = true;
+            }
+            else
+            {
+                L_InfoCatregorySearch_Delete.Visible = false;
+                CB_CategorySearch_Delete.Visible = false;
+            }
+
+        }
+        private void CHB_ProdDelete_ByCode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHB_ProdDelete_ByCode.Checked)
+            {
+                CHB_ProdDelete_ByCategory.Checked = false;
+                CHB_ProdDelete_ByName.Checked = false;
+                Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdDelete_ByCode, GB_SearchType_Delete);
+                L_NameCode_Delete.Text = "Код";
+                TB_InpudDataForSearch_Delete.Enabled = true;
+                L_InfoCatregorySearch_Delete.Visible = false;
+                CB_CategorySearch_Delete.Visible = false;
+            }
+            else
+            {
+                if (!CHB_ProdDelete_ByName.Checked)
+                {
+                    TB_InpudDataForSearch_Delete.Enabled = false;
+                }
+            }
+        }
+
+        private void CHB_SelectAll_Delete_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHB_SelectAll_Delete.Checked)
+            {
+                CB_Products_Delete.Enabled = false;
+                CB_Products_Delete.Items.Clear();
+                CB_Products_Delete.Text = "Удатиь все данные в категории";
+                B_ProductDelete.Text = "Удалить товары";
+            }
+            else
+            {
+                CB_Products_Delete.Enabled = true;
+                CB_Products_Delete.Items.Clear();
+                B_ProductDelete.Text = "Удалить товар";
+            }
+        }
+        private void CHB_PriceOver100_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHB_PriceOver100.Checked)
+            {
+                CHB_PriceOver1000.Enabled = true;
+                NUD_Price.Maximum = 999;
+                if (NUD_Price.Value > 99)
+                {
+                    NUD_Price.Value = 99;
+                }
+            }
+            else
+            {
+                CHB_PriceOver1000.Enabled = false;
+                CHB_PriceOver1000.Checked = false;
+                NUD_Price.Maximum = 99;
+            }
+        }
+
+        private void CHB_CountOver100_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHB_CountOver100.Checked)
+            {
+                CHB_CountOver1000.Enabled = true;
+                NUD_Count.Maximum = 999;
+            }
+            else
+            {
+                CHB_CountOver1000.Enabled = false;
+                CHB_CountOver1000.Checked = false;
+                if (NUD_Count.Value > 99)
+                {
+                    NUD_Count.Value = 99;
+                }
+                NUD_Count.Maximum = 99;
+            }
+        }
+
+        private void CHB_PriceOver1000_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHB_PriceOver1000.Checked)
+            {
+                NUD_Price.Maximum = 9999;
+            }
+            else
+            {
+                if (NUD_Price.Value > 999)
+                {
+                    NUD_Price.Value = 999;
+                    NUD_Price.Maximum = 999;
+                }
+            }
+        }
+
+        private void CHB_CountOver1000_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHB_CountOver1000.Checked)
+            {
+                NUD_Count.Maximum = 9999;
+            }
+            else
+            {
+                if (NUD_Count.Value > 999)
+                {
+                    NUD_Count.Value = 999;
+                    NUD_Count.Maximum = 999;
+                }
+            }
+
+        }
+
+        private void NUD_Price_ValueChanged(object sender, EventArgs e)
+        {
+            if (NUD_Price.Value >= NUD_Price.Maximum)
+            {
+                NUD_Price.Value = NUD_Price.Maximum;
+            }
+        }
+
+        private void NUD_Count_ValueChanged(object sender, EventArgs e)
+        {
+            if (NUD_Count.Value >= NUD_Count.Maximum)
+            {
+                NUD_Count.Value = NUD_Count.Maximum;
+            }
+
+        }
+
+        private void TSMI_Synchronize_Click(object sender, EventArgs e)
+        {
+            if (ConnectionMF)
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Bookshop
     {
         public static bool[] FormOpened = new bool[3];
         public static bool[] FormClosed = new bool[3];
+
     }
     public static class Config
     {
@@ -32,7 +33,7 @@ namespace Bookshop
         }
         public static class Products
         {
-
+            public static int[] SearchWithUniqueCode = { 0, 0, 0 };
         }
     }
 }

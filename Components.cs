@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -155,6 +156,19 @@ namespace Bookshop
                             break;
                         }
                 }
+            }
+        }
+        public static class SetConfiguration
+        {
+            public static int StringToInt(string String)
+            {
+                return Convert.ToInt32(Char.GetNumericValue(Convert.ToChar(String)));
+            }
+            public static void SetSearchTypeThrowCheckBox(CheckBox CHB, GroupBox GB)
+            {
+                int CHBTagInt = StringToInt(Convert.ToString(CHB.Tag));
+                int GBTagInt = StringToInt(Convert.ToString(GB.Tag));
+                Data.Products.SearchWithUniqueCode[GBTagInt] = CHBTagInt;
             }
         }
     }
