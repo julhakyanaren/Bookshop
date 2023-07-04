@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace Bookshop
@@ -648,84 +649,87 @@ namespace Bookshop
                     TB_ProductName.Focus();
                 }
             }
-            bool excaption;
-            int rowscount = Data.Products.ProductsCount;
-            switch (rowscount)
-            {
-                case < 0:
-                    {
-                        excaption = true;
-                        break;
-                    }
-                case 0:
-                    {
-                        excaption = false;
-                        Data.Products.NameExist[0] = false;
-                        break;
-                    }
-                case > 0:
-                    {
-                        excaption = false;
-                        string getproductnamequery = $"SELECT @Column FROM {Options.Table[1]} WHERE Название = @Name";
-                        try
-                        {
-                            using (OleDbCommand getproductnamecmd = new OleDbCommand(getproductnamequery, ConnectionMF))
-                            {
-                                getproductnamecmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(Data.Products.EnteredName[0]);
-                                getproductnamecmd.Parameters.Add("@Column", OleDbType.VarChar).Value = Convert.ToString("Название");
-                                OleDbDataReader getproductnamereader = getproductnamecmd.ExecuteReader();
-                                if (!getproductnamereader.Read())
-                                {
-                                    Data.Products.NameExist[0] = true;
-                                }
-                                else
-                                {
-                                    Data.Products.NameExist[0] = false;
-                                    Data.Products.ProductNameOverOne[0] = true;
-                                    Data.Products.SameNameProductsCount = 0;
-                                    while (getproductnamereader.Read())
-                                    {
-                                        Data.Products.SameNameProductsCount++;
-                                    }
-                                }
-                                getproductnamereader.Close();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
-                            excaption = true;
-                        }
-                        break;
-                    }
-            }
-            if (excaption)
-            {
-                //Ошибка
-            }
             else
             {
-                switch (Data.Products.NameExist[0])
+                bool excaption;
+                int rowscount = Data.Products.ProductsCount;
+                switch (rowscount)
                 {
-                    case true:
+                    case < 0:
                         {
-                            B_GetCategoryData.Enabled = false;
-                            Data.Products.CodeGenerator.EnableGenerator[0] = false;
-                            Data.Products.ProductNameOverOne[1] = false;
+                            excaption = true;
                             break;
                         }
-                    case false:
+                    case 0:
                         {
-                            DialogResult =  MessageBox.Show($"Обноружено {Data.Products.SameNameProductsCount} продуктов под именем {Data.Products.EnteredName[0]}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            if (DialogResult == DialogResult.OK)
+                            excaption = false;
+                            Data.Products.NameExist[0] = false;
+                            break;
+                        }
+                    case > 0:
+                        {
+                            excaption = false;
+                            string getproductnamequery = $"SELECT @Column FROM {Options.Table[1]} WHERE Название = @Name";
+                            try
                             {
-                                Data.Products.ProductNameOverOne[1] = true;
-                                B_GetCategoryData.Enabled = true;
-                                Data.Products.CodeGenerator.EnableGenerator[0] = true;
-                                B_GenerateUniqueID.Enabled = EnableCodeGenerator(0);
+                                using (OleDbCommand getproductnamecmd = new OleDbCommand(getproductnamequery, ConnectionMF))
+                                {
+                                    getproductnamecmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(Data.Products.EnteredName[0]);
+                                    getproductnamecmd.Parameters.Add("@Column", OleDbType.VarChar).Value = Convert.ToString("Название");
+                                    OleDbDataReader getproductnamereader = getproductnamecmd.ExecuteReader();
+                                    if (!getproductnamereader.Read())
+                                    {
+                                        Data.Products.NameExist[0] = true;
+                                    }
+                                    else
+                                    {
+                                        Data.Products.NameExist[0] = false;
+                                        Data.Products.ProductNameOverOne[0] = true;
+                                        Data.Products.SameNameProductsCount = 0;
+                                        while (getproductnamereader.Read())
+                                        {
+                                            Data.Products.SameNameProductsCount++;
+                                        }
+                                    }
+                                    getproductnamereader.Close();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                                excaption = true;
                             }
                             break;
                         }
+                }
+                if (excaption)
+                {
+                    //Ошибка
+                }
+                else
+                {
+                    switch (Data.Products.NameExist[0])
+                    {
+                        case true:
+                            {
+                                B_GetCategoryData.Enabled = false;
+                                Data.Products.CodeGenerator.EnableGenerator[0] = false;
+                                Data.Products.ProductNameOverOne[1] = false;
+                                break;
+                            }
+                        case false:
+                            {
+                                DialogResult = MessageBox.Show($"Обноружено {Data.Products.SameNameProductsCount} продуктов под именем {Data.Products.EnteredName[0]}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                if (DialogResult == DialogResult.OK)
+                                {
+                                    Data.Products.ProductNameOverOne[1] = true;
+                                    B_GetCategoryData.Enabled = true;
+                                    Data.Products.CodeGenerator.EnableGenerator[0] = true;
+                                    B_GenerateUniqueID.Enabled = EnableCodeGenerator(0);
+                                }
+                                break;
+                            }
+                    }
                 }
             }
         }
@@ -937,62 +941,8 @@ namespace Bookshop
 
         private void B_DEBUG_ADDCATEGORY_Click(object sender, EventArgs e)
         {
-            if (ConnectionMF.State != ConnectionState.Open)
-            {
-                ConnectionMF.Open();
-                string insert = $"INSERT INTO {Options.Table[0]} (Название, Количество) VALUES (@V1, @V2)";
-                using (OleDbCommand cmd = new OleDbCommand(insert, ConnectionMF))
-                {
-                    cmd.Parameters.Add("@V1", OleDbType.VarChar).Value = Convert.ToString("TestCategory");
-                    cmd.Parameters.Add("@V2", OleDbType.VarChar).Value = Convert.ToString(1);
-                    cmd.ExecuteNonQuery();
-                }
-                ConnectionMF.Close();
-            }
-            else
-            {
-                string insert = $"INSERT INTO {Options.Table[0]} (Название, Количество) VALUES (@V1, @V2)";
-                using (OleDbCommand cmd = new OleDbCommand(insert, ConnectionMF))
-                {
-                    cmd.Parameters.Add("@V1", OleDbType.VarChar).Value = Convert.ToString("Test");
-                    cmd.Parameters.Add("@V2", OleDbType.VarChar).Value = Convert.ToString(100);
-                    cmd.ExecuteNonQuery();
-                }
-            }
+            
         }
-
-        private void B_DEBUG_ADDPRODUCT_Click(object sender, EventArgs e)
-        {
-            if (ConnectionMF.State != ConnectionState.Open)
-            {
-                ConnectionMF.Open();
-                string insertquery = $"INSERT INTO {Options.Table[1]} (Название, Категория, Количество, Цена, Код, Изменение) VALUES (@Name, @Category, @Count, @Price, @Code, @Date)";
-                using (OleDbCommand insertcmd = new OleDbCommand(insertquery, ConnectionMF))
-                {
-                    insertcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(Data.Products.EnteredName[0]);
-                    insertcmd.Parameters.Add("@Category", OleDbType.VarChar).Value = Convert.ToString(Data.Products.SelectedCategory);
-                    insertcmd.Parameters.Add("@Count", OleDbType.Integer).Value = Convert.ToInt32(Data.Products.Count);
-                    insertcmd.Parameters.Add("@Price", OleDbType.Integer).Value = Convert.ToInt32(Data.Products.Price);
-                    insertcmd.Parameters.Add("@Code", OleDbType.VarChar).Value = Convert.ToString(Data.Products.CodeGenerator.UniqueCode);
-                    insertcmd.Parameters.Add("@Date", OleDbType.DBDate).Value = Convert.ToDateTime(DateTime.Now);
-                }
-                ConnectionMF.Close();
-            }
-            else
-            {
-                string insertquery = $"INSERT INTO {Options.Table[1]} (Название, Категория, Количество, Цена, Код, Изменение) VALUES (@Name, @Category, @Count, @Price, @Code, @Date)";
-                using (OleDbCommand insertcmd = new OleDbCommand(insertquery, ConnectionMF))
-                {
-                    insertcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString("TestProduct");
-                    insertcmd.Parameters.Add("@Category", OleDbType.VarChar).Value = Convert.ToString("TestCategory");
-                    insertcmd.Parameters.Add("@Count", OleDbType.Integer).Value = Convert.ToInt32(1);
-                    insertcmd.Parameters.Add("@Price", OleDbType.Integer).Value = Convert.ToInt32(2);
-                    insertcmd.Parameters.Add("@Code", OleDbType.VarChar).Value = Convert.ToString("TESTCODE001");
-                    insertcmd.Parameters.Add("@Date", OleDbType.DBDate).Value = Convert.ToDateTime(DateTime.Now);
-                }
-            }
-        }
-
         private void B_AcceptChoice_Update_Click(object sender, EventArgs e)
         {
             CB_Products_Update.Items.Clear();
@@ -1135,7 +1085,7 @@ namespace Bookshop
                         NUD_Price.Value = 1;
                         NUD_Count.Enabled = false;
                         NUD_Count.Value = 1;
-                        B_GenerateUniqueID.Enabled = EnableCodeGenerator(2);
+                        B_GenerateUniqueID.Enabled = EnableCodeGenerator(1);
                         TB_UniqueCode.Clear();
                         B_ApplyData.Enabled = false;
                         break;
@@ -1187,6 +1137,8 @@ namespace Bookshop
                             }
                             compareenteredcodereader.Close();
                         }
+                        CHB_SelectAll_Rename.Checked = false;
+                        CHB_SelectAll_Rename.Enabled = false;
                         break;
                     }
                 case 1:
@@ -1217,6 +1169,8 @@ namespace Bookshop
                                 CB_Products_Rename.Items.Add(Convert.ToString(Data.Products.Rename.ProductsByCategory[u]));
                             }
                         }
+                        CHB_SelectAll_Rename.Checked = true;
+                        CHB_SelectAll_Rename.Enabled = true;
                         break;
                     }
                 case 2:
@@ -1264,6 +1218,8 @@ namespace Bookshop
                             }
                             compareenteredcodereader.Close();
                         }
+                        CHB_SelectAll_Rename.Checked = true;
+                        CHB_SelectAll_Rename.Enabled = true;
                         break;
                     }
             }
@@ -1281,103 +1237,106 @@ namespace Bookshop
                     TB_NewName_Rename.Focus();
                 }
             }
-            bool excaption;
-            int rowscount = Data.Products.ProductsCount;
-            switch (rowscount)
+            else
             {
-                case < 0:
-                    {
-                        excaption = true;
-                        break;
-                    }
-                case 0:
-                    {
-                        excaption = false;
-                        Data.Products.NameExist[0] = false;
-                        break;
-                    }
-                case > 0:
-                    {
-                        excaption = false;
-                        string getproductnamequery = $"SELECT @Column FROM {Options.Table[1]} WHERE ID > 0";
-                        try
+                bool excaption;
+                int rowscount = Data.Products.ProductsCount;
+                switch (rowscount)
+                {
+                    case < 0:
                         {
-                            using (OleDbCommand getproductnamecmd = new OleDbCommand(getproductnamequery, ConnectionMF))
+                            excaption = true;
+                            break;
+                        }
+                    case 0:
+                        {
+                            excaption = false;
+                            Data.Products.NameExist[0] = false;
+                            break;
+                        }
+                    case > 0:
+                        {
+                            excaption = false;
+                            string getproductnamequery = $"SELECT @Column FROM {Options.Table[1]} WHERE ID > 0";
+                            try
                             {
-                                getproductnamecmd.Parameters.Add("@Column", OleDbType.VarChar).Value = Convert.ToString("Название");
-                                OleDbDataReader getproductnamereader = getproductnamecmd.ExecuteReader();
-                                if (!getproductnamereader.Read())
+                                using (OleDbCommand getproductnamecmd = new OleDbCommand(getproductnamequery, ConnectionMF))
                                 {
-                                    Data.Products.NameExist[0] = false;
+                                    getproductnamecmd.Parameters.Add("@Column", OleDbType.VarChar).Value = Convert.ToString("Название");
+                                    OleDbDataReader getproductnamereader = getproductnamecmd.ExecuteReader();
+                                    if (!getproductnamereader.Read())
+                                    {
+                                        Data.Products.NameExist[0] = false;
+                                    }
+                                    else
+                                    {
+                                        Data.Products.NameExist[0] = true;
+                                        Data.Products.ProductNameOverOne[0] = true;
+                                        Data.Products.SameNameProductsCount = 0;
+                                        string selectquery = $"SELECT * FROM {Options.Table[1]} WHERE Название = @Name";
+                                        using (OleDbCommand selectcmd = new OleDbCommand(selectquery, ConnectionMF))
+                                        {
+                                            selectcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Rename.NewName[0]);
+                                            OleDbDataReader selectreader = selectcmd.ExecuteReader();
+                                            Data.Products.Rename.NameEpty = true;
+                                            while (selectreader.Read())
+                                            {
+                                                Data.Products.SameNameProductsCount++;
+                                                Data.Products.Rename.NameEpty = false;
+                                            }
+                                            selectreader.Close();
+                                        }
+
+                                    }
+                                    getproductnamereader.Close();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                                excaption = true;
+                            }
+                            break;
+                        }
+                }
+                if (excaption)
+                {
+                    //Ошибка
+                }
+                else
+                {
+                    switch (Data.Products.Rename.NameEpty)
+                    {
+                        case true:
+                            {
+                                DialogResult = MessageBox.Show($"Не обноружен продукт под именем {Data.Products.EnteredName[0]}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                if (DialogResult == DialogResult.OK)
+                                {
+                                    B_GetCategoryData.Enabled = true;
+                                }
+                                break;
+                            }
+                        case false:
+                            {
+                                if (Data.Products.SameNameProductsCount == 1)
+                                {
+                                    DialogResult = MessageBox.Show($"Обноружен {Data.Products.SameNameProductsCount} продукт под именем {Data.Products.EnteredName[0]}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    if (DialogResult == DialogResult.OK)
+                                    {
+                                        B_GetCategoryData.Enabled = true;
+                                    }
                                 }
                                 else
                                 {
-                                    Data.Products.NameExist[0] = true;
-                                    Data.Products.ProductNameOverOne[0] = true;
-                                    Data.Products.SameNameProductsCount = 0;
-                                    string selectquery = $"SELECT * FROM {Options.Table[1]} WHERE Название = @Name";
-                                    using (OleDbCommand selectcmd = new OleDbCommand(selectquery, ConnectionMF))
+                                    DialogResult = MessageBox.Show($"Обноружено {Data.Products.SameNameProductsCount} продуктов под именем {Data.Products.EnteredName[0]}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    if (DialogResult == DialogResult.OK)
                                     {
-                                        selectcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Rename.NewName[0]);
-                                        OleDbDataReader selectreader = selectcmd.ExecuteReader();
-                                        Data.Products.Rename.NameEpty = true;
-                                        while (selectreader.Read())
-                                        {
-                                            Data.Products.SameNameProductsCount++;
-                                            Data.Products.Rename.NameEpty = false;
-                                        }
-                                        selectreader.Close();
+                                        B_GetCategoryData.Enabled = true;
                                     }
-                                    
                                 }
-                                getproductnamereader.Close();
+                                break;
                             }
-                        }
-                        catch (Exception ex)
-                        {
-                            Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
-                            excaption = true;
-                        }
-                        break;
                     }
-            }
-            if (excaption)
-            {
-                //Ошибка
-            }
-            else
-            {
-                switch (Data.Products.Rename.NameEpty)
-                {
-                    case true:
-                        {
-                            DialogResult = MessageBox.Show($"Не обноружен продукт под именем {Data.Products.EnteredName[0]}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            if (DialogResult == DialogResult.OK)
-                            {
-                                B_GetCategoryData.Enabled = true;
-                            }
-                            break;
-                        }
-                    case false:
-                        {
-                            if (Data.Products.SameNameProductsCount == 1)
-                            {
-                                DialogResult = MessageBox.Show($"Обноружен {Data.Products.SameNameProductsCount} продукт под именем {Data.Products.EnteredName[0]}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                if (DialogResult == DialogResult.OK)
-                                {
-                                    B_GetCategoryData.Enabled = true;
-                                }
-                            }
-                            else
-                            {
-                                DialogResult = MessageBox.Show($"Обноружено {Data.Products.SameNameProductsCount} продуктов под именем {Data.Products.EnteredName[0]}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                if (DialogResult == DialogResult.OK)
-                                {
-                                    B_GetCategoryData.Enabled = true;
-                                }
-                            }
-                            break;
-                        }
                 }
             }
         }
@@ -1433,12 +1392,19 @@ namespace Bookshop
                                 {
                                     if (readen)
                                     {
-                                        MessageBox.Show($"Товар {Data.Products.Delete.SelectedName} обноружен под кодом {Data.Products.Delete.EnteredCode} ", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        DialogResult = MessageBox.Show($"Товар {Data.Products.Delete.SelectedName} обноружен под кодом {Data.Products.Delete.EnteredCode} ", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        if (DialogResult == DialogResult.OK)
+                                        {
+                                            CB_Products_Delete.Items.Clear();
+                                            CB_Products_Delete.Items.Add(Data.Products.Delete.SelectedName);
+                                        }
                                     }
                                 }
                             }
                             compareenteredcodereader.Close();
                         }
+                        CHB_SelectAll_Delete.Checked = false;
+                        CHB_SelectAll_Delete.Enabled = false;
                         break;
                     }
                 case 1:
@@ -1469,6 +1435,8 @@ namespace Bookshop
                                 CB_Products_Delete.Items.Add(Convert.ToString(Data.Products.Delete.ProductsByCategory[u]));
                             }
                         }
+                        CHB_SelectAll_Delete.Checked = true;
+                        CHB_SelectAll_Delete.Enabled = true;
                         break;
                     }
                 case 2:
@@ -1514,6 +1482,8 @@ namespace Bookshop
                                     }
                                 }
                             }
+                            CHB_SelectAll_Delete.Checked = false;
+                            CHB_SelectAll_Delete.Enabled = false;
                             compareenteredcodereader.Close();
                         }
                         break;
@@ -1554,6 +1524,259 @@ namespace Bookshop
                     IPU.Show();
                 }
             }
+        }
+
+        private void B_RenameProduct_Click(object sender, EventArgs e)
+        {
+            bool renamed = false;
+            try
+            {
+                switch (Data.Products.Rename.RanameAll)
+                {
+                    case false:
+                        {
+                            string updatequery = $"UPDATE {Options.Table[1]} SET Название = @NewName WHERE Код = @Code";
+                            using (OleDbCommand updatecmd = new OleDbCommand(updatequery, ConnectionMF))
+                            {
+                                updatecmd.Parameters.Add("@Code", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Rename.EnteredCode);
+                                updatecmd.Parameters.Add("@NewName", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Rename.NewName[0]);
+                                updatecmd.ExecuteNonQuery();
+                            }
+                            break;
+                        }
+                    case true:
+                        {
+                            string oldname = Convert.ToString(CB_Products_Rename.SelectedItem);
+                            string renamegetIDquery = $"SELECT * FROM {Options.Table[1]} WHERE Название = @Name";
+                            using (OleDbCommand renamegetIDcmd = new OleDbCommand(renamegetIDquery, ConnectionMF))
+                            {
+                                renamegetIDcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(oldname);
+                                using (OleDbDataReader renamegetIDreader = renamegetIDcmd.ExecuteReader())
+                                {
+                                    if (renamegetIDreader.Read())
+                                    {
+                                        int count = 1;
+                                        Array.Resize(ref Data.Products.Rename.SelectedNamesIDs, 0);
+                                        do
+                                        {
+                                            Array.Resize(ref Data.Products.Rename.SelectedNamesIDs, count);
+                                            Data.Products.Rename.SelectedNamesIDs[count - 1] = Convert.ToInt32(renamegetIDreader[0]);
+                                            count++;
+                                        }
+                                        while (renamegetIDreader.Read());
+                                    }
+                                }
+                                for (int r = 0; r < Data.Products.Rename.SelectedNamesIDs.Length; r++)
+                                {
+                                    string updatequery = $"UPDATE {Options.Table[1]} SET Название = @NewName WHERE ID = @ID";
+                                    using (OleDbCommand updatecmd = new OleDbCommand(updatequery, ConnectionMF))
+                                    {
+                                        updatecmd.Parameters.Add("@NewName", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Rename.NewName[0]);
+                                        updatecmd.Parameters.Add("@ID", OleDbType.Integer).Value = Convert.ToInt32(Data.Products.Rename.SelectedNamesIDs[r]);
+                                        updatecmd.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                }
+                renamed = true;
+            }
+            catch (Exception ex)
+            {
+                Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                renamed = false;
+            }
+            finally
+            {
+                int index1 = -1;
+                if (!renamed)
+                {
+                    index1 = 1;
+                }
+                else
+                {
+                    index1 = 0;
+                }
+                Handlers.InformationProvider.DataOperationState(index1, 1, 1);
+            }
+        }
+
+        private void B_ProductDelete_Click(object sender, EventArgs e)
+        {
+            switch (DialogResult = MessageBox.Show($"Удалить {Data.Products.Delete.EnteredName} из базы данных?\r\rПосле удаления данные нельзя востоновить!", $"{Config.Managers[1]}", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            {
+                case DialogResult.Yes:
+                    {
+                        int deleted = -1;
+                        try
+                        {
+                            switch (Data.Products.Delete.DeleteAll)
+                            {
+                                case false:
+                                    {
+                                        switch (Data.Products.SearchWithUniqueCode[2])
+                                        {
+                                            case 0:
+                                                {
+                                                    string deleteordinarquery = $"DELETE FROM {Options.Table[1]} WHERE Код = @Code";
+                                                    using (OleDbCommand deleteordinarcmd = new OleDbCommand(deleteordinarquery, ConnectionMF))
+                                                    {
+                                                        deleteordinarcmd.Parameters.Add("@Code", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Delete.EnteredCode);
+                                                        deleteordinarcmd.ExecuteNonQuery();
+                                                    }
+                                                    break;
+                                                }
+                                            case 2:
+                                                {
+                                                    string deleteordinarquery = $"DELETE FROM {Options.Table[1]} WHERE Название = @Name";
+                                                    using (OleDbCommand deleteordinarcmd = new OleDbCommand(deleteordinarquery, ConnectionMF))
+                                                    {
+                                                        deleteordinarcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Delete.SelectedName = Convert.ToString(CB_Products_Delete.SelectedItem));
+                                                        deleteordinarcmd.ExecuteNonQuery();
+                                                    }
+                                                    break;
+                                                }
+                                        }
+                                        break;
+                                    }
+                                case true:
+                                    {
+                                        string selectidquery = $"SELECT * FROM {Options.Table[1]} WHERE Название = @Name";
+                                        using (OleDbCommand selectcmd = new OleDbCommand(selectidquery, ConnectionMF))
+                                        {
+                                            selectcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Delete.SelectedName);
+                                            using (OleDbDataReader selectreader = selectcmd.ExecuteReader())
+                                            {
+                                                if (selectreader.Read())
+                                                {
+                                                    Array.Resize(ref Data.Products.Delete.SelectedNamesIDs, 0);
+                                                    int count = 1;
+                                                    do
+                                                    {
+                                                        Array.Resize(ref Data.Products.Delete.SelectedNamesIDs, count);
+                                                        Data.Products.Delete.SelectedNamesIDs[count - 1] = Convert.ToInt32(selectreader[0]);
+                                                        count++;
+                                                    }
+                                                    while (selectreader.Read());
+                                                    for (int i = 0; i < Data.Products.Delete.SelectedNames.Length; i++)
+                                                    {
+                                                        string deletequery = $"DELETE FROM {Options.Table[1]} WHERE ID = @ID";
+                                                        using (OleDbCommand deletecmd = new OleDbCommand(deletequery, ConnectionMF))
+                                                        {
+                                                            deletecmd.Parameters.Add("@ID", OleDbType.Integer).Value = Convert.ToInt32(Data.Products.Delete.SelectedNamesIDs[i]);
+                                                            deletecmd.ExecuteNonQuery();
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    }
+                            }
+                            deleted = 0;
+                        }
+                        catch (Exception ex)
+                        {
+                            Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                            deleted = 1;
+                        }
+                        finally
+                        {
+                            Handlers.InformationProvider.DataOperationState(deleted, 2, 1);
+                        }
+                        break;
+                    }
+            }
+        }
+
+        private void B_SelectName_Delete_Click(object sender, EventArgs e)
+        {
+            Data.Products.Delete.SelectedName = Convert.ToString(CB_Products_Delete.SelectedItem);
+        }
+
+        private void TSMI_ConnectionStatus_Click(object sender, EventArgs e)
+        {
+            if (!Config.Debug.DebugModON)
+            {
+                if (Config.Debug.DebugUnloackCount != 0)
+                {
+                    Config.Debug.DebugUnloackCount--;
+                }
+                else
+                {
+                    Config.Debug.DebugModON = true;
+                }
+            }
+            else
+            {
+                TSMI_DebugMode.Visible = true;
+            }
+        }
+
+        private void TSMI_DEBUG_ADDCATEGORY_Click(object sender, EventArgs e)
+        {
+            if (ConnectionMF.State != ConnectionState.Open)
+            {
+                ConnectionMF.Open();
+                string insert = $"INSERT INTO {Options.Table[0]} (Название, Количество) VALUES (@V1, @V2)";
+                using (OleDbCommand cmd = new OleDbCommand(insert, ConnectionMF))
+                {
+                    cmd.Parameters.Add("@V1", OleDbType.VarChar).Value = Convert.ToString("TestCategory");
+                    cmd.Parameters.Add("@V2", OleDbType.VarChar).Value = Convert.ToString(1);
+                    cmd.ExecuteNonQuery();
+                }
+                ConnectionMF.Close();
+            }
+            else
+            {
+                string insert = $"INSERT INTO {Options.Table[0]} (Название, Количество) VALUES (@V1, @V2)";
+                using (OleDbCommand cmd = new OleDbCommand(insert, ConnectionMF))
+                {
+                    cmd.Parameters.Add("@V1", OleDbType.VarChar).Value = Convert.ToString("Test");
+                    cmd.Parameters.Add("@V2", OleDbType.VarChar).Value = Convert.ToString(100);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void TSMI_DEBUG_ADDPRODUCT_Click(object sender, EventArgs e)
+        {
+            if (ConnectionMF.State != ConnectionState.Open)
+            {
+                ConnectionMF.Open();
+                string insertquery = $"INSERT INTO {Options.Table[1]} (Название, Категория, Количество, Цена, Код, Изменение) VALUES (@Name, @Category, @Count, @Price, @Code, @Date)";
+                using (OleDbCommand insertcmd = new OleDbCommand(insertquery, ConnectionMF))
+                {
+                    insertcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString("TestProduct");
+                    insertcmd.Parameters.Add("@Category", OleDbType.VarChar).Value = Convert.ToString("TestCategory");
+                    insertcmd.Parameters.Add("@Count", OleDbType.Integer).Value = Convert.ToInt32("-1");
+                    insertcmd.Parameters.Add("@Price", OleDbType.Integer).Value = Convert.ToInt32("-1");
+                    insertcmd.Parameters.Add("@Code", OleDbType.VarChar).Value = Convert.ToString("TEST-00001");
+                    insertcmd.Parameters.Add("@Date", OleDbType.DBDate).Value = Convert.ToDateTime(DateTime.MaxValue);
+                    insertcmd.ExecuteNonQuery();
+                }
+                ConnectionMF.Close();
+            }
+            else
+            {
+                string insertquery = $"INSERT INTO {Options.Table[1]} (Название, Категория, Количество, Цена, Код, Изменение) VALUES (@Name, @Category, @Count, @Price, @Code, @Date)";
+                using (OleDbCommand insertcmd = new OleDbCommand(insertquery, ConnectionMF))
+                {
+                    insertcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString("TestProduct");
+                    insertcmd.Parameters.Add("@Category", OleDbType.VarChar).Value = Convert.ToString("TestCategory");
+                    insertcmd.Parameters.Add("@Count", OleDbType.Integer).Value = Convert.ToInt32(0);
+                    insertcmd.Parameters.Add("@Price", OleDbType.Integer).Value = Convert.ToInt32(0);
+                    insertcmd.Parameters.Add("@Code", OleDbType.VarChar).Value = Convert.ToString("TESTCODE001");
+                    insertcmd.Parameters.Add("@Date", OleDbType.DBDate).Value = Convert.ToDateTime(DateTime.Now);
+                }
+            }
+        }
+
+        private void TSMI_Info_Click(object sender, EventArgs e)
+        {
+            InfoBox IB = new InfoBox();
+            IB.Show();
         }
     }
 }

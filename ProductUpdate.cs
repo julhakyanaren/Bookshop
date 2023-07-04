@@ -158,6 +158,10 @@ namespace Bookshop
             {
                 case true:
                     {
+                        using (MainForm IMF = new MainForm())
+                        {
+                            IMF.GetCategoriesforRedact(CB_New_ProductCategory);
+                        }
                         Data.Products.Update.ChangeMode[1] = true;
                         CB_New_ProductCategory.Enabled = true;
                         break;
@@ -208,13 +212,16 @@ namespace Bookshop
                     }
             }
         }
-
-        private void B_ResetChanges_Click(object sender, EventArgs e)
+        public void ResetToDefaultValues()
         {
             TB_New_ProductName.Clear();
             CB_New_ProductCategory.Text = string.Empty;
             NUD_New_ProductCount.Value = 1;
             NUD_New_ProductPrice.Value = 1;
+        }
+        private void B_ResetChanges_Click(object sender, EventArgs e)
+        {
+            ResetToDefaultValues();
         }
 
         private async void Timer_ForLable_Tick(object sender, EventArgs e)
@@ -224,8 +231,8 @@ namespace Bookshop
         public  async Task UpdateTimerAsync()
         {
             await Task.Delay(1000);
-            L_Timer.Text = "UTC + 4 " + DateTime.Now.ToString("HH:mm:ss");
-            L_Timer.Location = new Point((PNL_Time.Width - L_Timer.Width) / 2, 0);
+            L_Timer.Text = "(UTC + 4)\t" + DateTime.Now.ToString("HH:mm:ss");
+            L_Timer.Location = new Point((PNL_Time.Width - L_Timer.Width) / 2, (PNL_Time.Height - L_Timer.Height) / 2);
 
         }
 
@@ -261,7 +268,61 @@ namespace Bookshop
 
         private void B_OverwriteData_Click(object sender, EventArgs e)
         {
-            switch (DialogResult = MessageBox.Show("", $"{Config.Managers[1]}");
+            switch (DialogResult = MessageBox.Show("При перезаписе данных старые оброзцы данных кроме поля 'Код' будут безвозвратно удалены\r\nПродолжить", $"{Config.Managers[1]}"))
+            {
+                case DialogResult.Yes:
+                    {
+                        OverwriteData();
+                        break;
+                    }
+                case DialogResult.No:
+                    {
+                        break;
+                    }
+            }
+        }
+        public void OverwriteData()
+        {
+            int redacted = 1;
+            string[] redactquery = new string[2];
+            string[] keys = new string[6];
+            keys[0] = "Название";
+            keys[1] = "Категория";
+            keys[2] = "Количество";
+            keys[3] = "Цена";
+            keys[4] = "Код";
+            keys[5] = "Изменение";
+            Data.Products.Update.FinalOverwriteData[5] = Convert.ToString(DateTime.Now);
+            try
+            {
+                for (int c = 0; c < Data.Products.Update.ChangeMode.Length; c++)
+                {
+                    if (Data.Products.Update.ChangeMode[c])
+                    {
+                        redactquery[0] = $"UPDATE {Options.Table[1]} SET {keys[c]} = {Data.Products.Update.FinalOverwriteData[c]} WHERE ID = {Convert.ToString(Data.Products.Update.SelectedID)}";
+                        using (OleDbCommand redactcmd = new OleDbCommand(redactquery[0], ConnectionPU))
+                        {
+                            redactcmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                Data.Products.Update.FinalOverwriteData[5] = Convert.ToString(DateTime.Now);
+                redactquery[1] = $"UPDATE { Options.Table[1]} SET {keys[4]} = {Data.Products.Update.FinalOverwriteData[4]},{keys[5]} = {Data.Products.Update.FinalOverwriteData[5]} WHERE ID = {Convert.ToString(Data.Products.Update.SelectedID)}";
+                using (OleDbCommand redactcodedatecmd = new OleDbCommand(redactquery[1], ConnectionPU))
+                {
+                    redactcodedatecmd.ExecuteNonQuery();
+                }
+                redacted = 0;
+            }
+            catch (Exception ex)
+            {
+                Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+            }
+            finally
+            {
+                Handlers.InformationProvider.DataOperationState(redacted, 1, 1);
+                ResetToDefaultValues();
+            }
         }
     }
 }

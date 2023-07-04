@@ -17,6 +17,11 @@ namespace Bookshop
     {
         public static string[] Managers = new string[5];
         public static bool[] NameExist = new bool[2];
+        public static class Debug
+        {
+            public static int DebugUnloackCount = 5;
+            public static bool DebugModON = false;
+        }
     }
     public static class Data
     {
@@ -61,7 +66,7 @@ namespace Bookshop
                 public static string[] RedactCode = new string[2];
                 public static DateTime[] RedactDate = new DateTime[2];
                 public static bool[] ChangeMode = new bool[4];
-                public static string[] FinalOverwriteData = new string[5];
+                public static string[] FinalOverwriteData = new string[6];
             }
             public static class Rename
             {
@@ -74,6 +79,7 @@ namespace Bookshop
                 public static string[] NewName = new string[2];
                 public static bool NameEpty;
                 public static bool RanameAll;
+                public static int[] SelectedNamesIDs = new int[0];
             }
             public static class Delete
             {
@@ -85,6 +91,7 @@ namespace Bookshop
                 public static string[] SelectedNames = new string[0];
                 public static string[] NewName = new string[2];
                 public static bool DeleteAll;
+                public static int[] SelectedNamesIDs = new int[0];
             }
             public static class CodeGenerator
             {

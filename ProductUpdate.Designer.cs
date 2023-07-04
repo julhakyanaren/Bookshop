@@ -42,11 +42,9 @@
             this.SC_ProductUpdate = new System.Windows.Forms.SplitContainer();
             this.TLP_NewOldData = new System.Windows.Forms.TableLayoutPanel();
             this.PNL_NewData = new System.Windows.Forms.Panel();
-            this.B_OverwriteData = new System.Windows.Forms.Button();
-            this.B_ResetChanges = new System.Windows.Forms.Button();
-            this.B_ApplyChanges = new System.Windows.Forms.Button();
             this.CHB_ChangePrice = new System.Windows.Forms.CheckBox();
             this.CHB_ChangeCount = new System.Windows.Forms.CheckBox();
+            this.B_ResetChanges = new System.Windows.Forms.Button();
             this.CHB_ChangeCategory = new System.Windows.Forms.CheckBox();
             this.CHB_ChangeName = new System.Windows.Forms.CheckBox();
             this.NUD_New_ProductPrice = new System.Windows.Forms.NumericUpDown();
@@ -72,9 +70,14 @@
             this.TB_Old_ProductName = new System.Windows.Forms.TextBox();
             this.PNL_Operations = new System.Windows.Forms.Panel();
             this.SC_TimeDelete = new System.Windows.Forms.SplitContainer();
-            this.PNL_Delete = new System.Windows.Forms.Panel();
             this.PNL_Time = new System.Windows.Forms.Panel();
             this.L_Timer = new System.Windows.Forms.Label();
+            this.PNL_Redact = new System.Windows.Forms.Panel();
+            this.TLP_Redact = new System.Windows.Forms.TableLayoutPanel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.PNN_Buttons = new System.Windows.Forms.Panel();
+            this.B_ApplyChanges = new System.Windows.Forms.Button();
+            this.B_OverwriteData = new System.Windows.Forms.Button();
             this.Timer_ForLable = new System.Windows.Forms.Timer(this.components);
             this.MS_Main.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SC_ProductUpdate)).BeginInit();
@@ -92,6 +95,9 @@
             this.SC_TimeDelete.Panel2.SuspendLayout();
             this.SC_TimeDelete.SuspendLayout();
             this.PNL_Time.SuspendLayout();
+            this.PNL_Redact.SuspendLayout();
+            this.TLP_Redact.SuspendLayout();
+            this.PNN_Buttons.SuspendLayout();
             this.SuspendLayout();
             // 
             // MS_Main
@@ -172,7 +178,7 @@
             // 
             this.TSMI_PU_Synchronize.BackColor = System.Drawing.Color.SandyBrown;
             this.TSMI_PU_Synchronize.Name = "TSMI_PU_Synchronize";
-            this.TSMI_PU_Synchronize.Size = new System.Drawing.Size(180, 22);
+            this.TSMI_PU_Synchronize.Size = new System.Drawing.Size(169, 22);
             this.TSMI_PU_Synchronize.Text = "Синхронизировать";
             this.TSMI_PU_Synchronize.Click += new System.EventHandler(this.TSMI_PU_Synchronize_Click);
             // 
@@ -212,11 +218,9 @@
             // 
             this.PNL_NewData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(200)))), ((int)(((byte)(145)))));
             this.PNL_NewData.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PNL_NewData.Controls.Add(this.B_OverwriteData);
-            this.PNL_NewData.Controls.Add(this.B_ResetChanges);
-            this.PNL_NewData.Controls.Add(this.B_ApplyChanges);
             this.PNL_NewData.Controls.Add(this.CHB_ChangePrice);
             this.PNL_NewData.Controls.Add(this.CHB_ChangeCount);
+            this.PNL_NewData.Controls.Add(this.B_ResetChanges);
             this.PNL_NewData.Controls.Add(this.CHB_ChangeCategory);
             this.PNL_NewData.Controls.Add(this.CHB_ChangeName);
             this.PNL_NewData.Controls.Add(this.NUD_New_ProductPrice);
@@ -233,43 +237,6 @@
             this.PNL_NewData.Name = "PNL_NewData";
             this.PNL_NewData.Size = new System.Drawing.Size(458, 170);
             this.PNL_NewData.TabIndex = 1;
-            // 
-            // B_OverwriteData
-            // 
-            this.B_OverwriteData.BackColor = System.Drawing.Color.SandyBrown;
-            this.B_OverwriteData.Enabled = false;
-            this.B_OverwriteData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.B_OverwriteData.Location = new System.Drawing.Point(245, 126);
-            this.B_OverwriteData.Name = "B_OverwriteData";
-            this.B_OverwriteData.Size = new System.Drawing.Size(200, 26);
-            this.B_OverwriteData.TabIndex = 38;
-            this.B_OverwriteData.Text = "Перезаписать данные";
-            this.B_OverwriteData.UseVisualStyleBackColor = false;
-            this.B_OverwriteData.Click += new System.EventHandler(this.B_OverwriteData_Click);
-            // 
-            // B_ResetChanges
-            // 
-            this.B_ResetChanges.BackColor = System.Drawing.Color.SandyBrown;
-            this.B_ResetChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.B_ResetChanges.Location = new System.Drawing.Point(245, 89);
-            this.B_ResetChanges.Name = "B_ResetChanges";
-            this.B_ResetChanges.Size = new System.Drawing.Size(200, 26);
-            this.B_ResetChanges.TabIndex = 37;
-            this.B_ResetChanges.Text = "Сбростиь изменения";
-            this.B_ResetChanges.UseVisualStyleBackColor = false;
-            this.B_ResetChanges.Click += new System.EventHandler(this.B_ResetChanges_Click);
-            // 
-            // B_ApplyChanges
-            // 
-            this.B_ApplyChanges.BackColor = System.Drawing.Color.SandyBrown;
-            this.B_ApplyChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.B_ApplyChanges.Location = new System.Drawing.Point(245, 52);
-            this.B_ApplyChanges.Name = "B_ApplyChanges";
-            this.B_ApplyChanges.Size = new System.Drawing.Size(200, 26);
-            this.B_ApplyChanges.TabIndex = 36;
-            this.B_ApplyChanges.Text = "Принять изменения";
-            this.B_ApplyChanges.UseVisualStyleBackColor = false;
-            this.B_ApplyChanges.Click += new System.EventHandler(this.B_ApplyChanges_Click);
             // 
             // CHB_ChangePrice
             // 
@@ -296,6 +263,18 @@
             this.CHB_ChangeCount.Text = "Изменить";
             this.CHB_ChangeCount.UseVisualStyleBackColor = true;
             this.CHB_ChangeCount.CheckedChanged += new System.EventHandler(this.CHB_ChangeCount_CheckedChanged);
+            // 
+            // B_ResetChanges
+            // 
+            this.B_ResetChanges.BackColor = System.Drawing.Color.SandyBrown;
+            this.B_ResetChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.B_ResetChanges.Location = new System.Drawing.Point(245, 78);
+            this.B_ResetChanges.Name = "B_ResetChanges";
+            this.B_ResetChanges.Size = new System.Drawing.Size(200, 26);
+            this.B_ResetChanges.TabIndex = 37;
+            this.B_ResetChanges.Text = "Сбростиь изменения";
+            this.B_ResetChanges.UseVisualStyleBackColor = false;
+            this.B_ResetChanges.Click += new System.EventHandler(this.B_ResetChanges_Click);
             // 
             // CHB_ChangeCategory
             // 
@@ -375,7 +354,7 @@
             // 
             this.TB_New_ProductName.BackColor = System.Drawing.Color.PeachPuff;
             this.TB_New_ProductName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TB_New_ProductName.Cursor = System.Windows.Forms.Cursors.No;
+            this.TB_New_ProductName.Cursor = System.Windows.Forms.Cursors.Default;
             this.TB_New_ProductName.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.TB_New_ProductName.Location = new System.Drawing.Point(8, 27);
             this.TB_New_ProductName.Name = "TB_New_ProductName";
@@ -607,17 +586,10 @@
             // 
             // SC_TimeDelete.Panel2
             // 
-            this.SC_TimeDelete.Panel2.Controls.Add(this.PNL_Delete);
+            this.SC_TimeDelete.Panel2.Controls.Add(this.PNL_Redact);
             this.SC_TimeDelete.Size = new System.Drawing.Size(245, 349);
+            this.SC_TimeDelete.SplitterDistance = 70;
             this.SC_TimeDelete.TabIndex = 0;
-            // 
-            // PNL_Delete
-            // 
-            this.PNL_Delete.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PNL_Delete.Location = new System.Drawing.Point(0, 0);
-            this.PNL_Delete.Name = "PNL_Delete";
-            this.PNL_Delete.Size = new System.Drawing.Size(245, 295);
-            this.PNL_Delete.TabIndex = 0;
             // 
             // PNL_Time
             // 
@@ -625,18 +597,93 @@
             this.PNL_Time.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PNL_Time.Location = new System.Drawing.Point(0, 0);
             this.PNL_Time.Name = "PNL_Time";
-            this.PNL_Time.Size = new System.Drawing.Size(245, 50);
+            this.PNL_Time.Size = new System.Drawing.Size(245, 70);
             this.PNL_Time.TabIndex = 1;
             // 
             // L_Timer
             // 
             this.L_Timer.AutoSize = true;
             this.L_Timer.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.L_Timer.Location = new System.Drawing.Point(81, 7);
+            this.L_Timer.Location = new System.Drawing.Point(60, 13);
             this.L_Timer.Name = "L_Timer";
-            this.L_Timer.Size = new System.Drawing.Size(78, 34);
+            this.L_Timer.Size = new System.Drawing.Size(123, 34);
             this.L_Timer.TabIndex = 0;
-            this.L_Timer.Text = "label1";
+            this.L_Timer.Text = "HH:MM:SS";
+            // 
+            // PNL_Redact
+            // 
+            this.PNL_Redact.Controls.Add(this.TLP_Redact);
+            this.PNL_Redact.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PNL_Redact.Location = new System.Drawing.Point(0, 0);
+            this.PNL_Redact.Name = "PNL_Redact";
+            this.PNL_Redact.Size = new System.Drawing.Size(245, 275);
+            this.PNL_Redact.TabIndex = 0;
+            // 
+            // TLP_Redact
+            // 
+            this.TLP_Redact.ColumnCount = 1;
+            this.TLP_Redact.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.TLP_Redact.Controls.Add(this.textBox1, 0, 0);
+            this.TLP_Redact.Controls.Add(this.PNN_Buttons, 0, 1);
+            this.TLP_Redact.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TLP_Redact.Location = new System.Drawing.Point(0, 0);
+            this.TLP_Redact.Name = "TLP_Redact";
+            this.TLP_Redact.RowCount = 2;
+            this.TLP_Redact.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 52.36364F));
+            this.TLP_Redact.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.63636F));
+            this.TLP_Redact.Size = new System.Drawing.Size(245, 275);
+            this.TLP_Redact.TabIndex = 39;
+            // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.Color.PeachPuff;
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox1.Cursor = System.Windows.Forms.Cursors.No;
+            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.textBox1.Location = new System.Drawing.Point(3, 3);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(239, 138);
+            this.textBox1.TabIndex = 19;
+            this.textBox1.Text = "Изменённые данные будут сохранятся в базе данных. Поле последнее изменение покаже" +
+    "т время первого добавления в базу данных, или же время последнего изменения в эт" +
+    "ом интерфейсе, если таковое произошло.";
+            // 
+            // PNN_Buttons
+            // 
+            this.PNN_Buttons.Controls.Add(this.B_ApplyChanges);
+            this.PNN_Buttons.Controls.Add(this.B_OverwriteData);
+            this.PNN_Buttons.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PNN_Buttons.Location = new System.Drawing.Point(3, 147);
+            this.PNN_Buttons.Name = "PNN_Buttons";
+            this.PNN_Buttons.Size = new System.Drawing.Size(239, 125);
+            this.PNN_Buttons.TabIndex = 20;
+            // 
+            // B_ApplyChanges
+            // 
+            this.B_ApplyChanges.BackColor = System.Drawing.Color.SandyBrown;
+            this.B_ApplyChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.B_ApplyChanges.Location = new System.Drawing.Point(18, 33);
+            this.B_ApplyChanges.Name = "B_ApplyChanges";
+            this.B_ApplyChanges.Size = new System.Drawing.Size(200, 26);
+            this.B_ApplyChanges.TabIndex = 36;
+            this.B_ApplyChanges.Text = "Принять изменения";
+            this.B_ApplyChanges.UseVisualStyleBackColor = false;
+            this.B_ApplyChanges.Click += new System.EventHandler(this.B_ApplyChanges_Click);
+            // 
+            // B_OverwriteData
+            // 
+            this.B_OverwriteData.BackColor = System.Drawing.Color.SandyBrown;
+            this.B_OverwriteData.Enabled = false;
+            this.B_OverwriteData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.B_OverwriteData.Location = new System.Drawing.Point(18, 83);
+            this.B_OverwriteData.Name = "B_OverwriteData";
+            this.B_OverwriteData.Size = new System.Drawing.Size(200, 26);
+            this.B_OverwriteData.TabIndex = 38;
+            this.B_OverwriteData.Text = "Перезаписать данные";
+            this.B_OverwriteData.UseVisualStyleBackColor = false;
+            this.B_OverwriteData.Click += new System.EventHandler(this.B_OverwriteData_Click);
             // 
             // Timer_ForLable
             // 
@@ -676,6 +723,10 @@
             this.SC_TimeDelete.ResumeLayout(false);
             this.PNL_Time.ResumeLayout(false);
             this.PNL_Time.PerformLayout();
+            this.PNL_Redact.ResumeLayout(false);
+            this.TLP_Redact.ResumeLayout(false);
+            this.TLP_Redact.PerformLayout();
+            this.PNN_Buttons.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -725,9 +776,12 @@
         private System.Windows.Forms.Button B_ResetChanges;
         private System.Windows.Forms.Button B_OverwriteData;
         private System.Windows.Forms.SplitContainer SC_TimeDelete;
-        private System.Windows.Forms.Panel PNL_Delete;
+        private System.Windows.Forms.Panel PNL_Redact;
         private System.Windows.Forms.Panel PNL_Time;
         private System.Windows.Forms.Timer Timer_ForLable;
         public System.Windows.Forms.Label L_Timer;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TableLayoutPanel TLP_Redact;
+        private System.Windows.Forms.Panel PNN_Buttons;
     }
 }

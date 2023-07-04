@@ -45,6 +45,9 @@
             this.TSMI_Datas = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMI_Synchronize = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMI_Update_DGV = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMI_DebugMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMI_DEBUG_ADDCATEGORY = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMI_DEBUG_ADDPRODUCT = new System.Windows.Forms.ToolStripMenuItem();
             this.PNL_GridView = new System.Windows.Forms.Panel();
             this.DGV_MS_Product = new System.Windows.Forms.DataGridView();
             this.iDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -118,6 +121,7 @@
             this.PNL_Redact_Delete = new System.Windows.Forms.Panel();
             this.B_AcceptChoice_Delete = new System.Windows.Forms.Button();
             this.GB_SelectProduct_Delete = new System.Windows.Forms.GroupBox();
+            this.B_SelectName_Delete = new System.Windows.Forms.Button();
             this.CHB_SelectAll_Delete = new System.Windows.Forms.CheckBox();
             this.B_ProductDelete = new System.Windows.Forms.Button();
             this.CB_Products_Delete = new System.Windows.Forms.ComboBox();
@@ -133,6 +137,7 @@
             this.productTableAdapter = new Bookshop.BSDBDataSetTableAdapters.ProductTableAdapter();
             this.B_DEBUG_ADDCATEGORY = new System.Windows.Forms.Button();
             this.B_DEBUG_ADDPRODUCT = new System.Windows.Forms.Button();
+            this.TSMI_Info = new System.Windows.Forms.ToolStripMenuItem();
             this.PB_LogoMain = new System.Windows.Forms.PictureBox();
             this.MS_Main.SuspendLayout();
             this.PNL_GridView.SuspendLayout();
@@ -165,7 +170,9 @@
             this.TSMI_File,
             this.TSMI_ConnectionData,
             this.TSMI_Category,
-            this.TSMI_Datas});
+            this.TSMI_Datas,
+            this.TSMI_Info,
+            this.TSMI_DebugMode});
             this.MS_Main.Location = new System.Drawing.Point(0, 0);
             this.MS_Main.Name = "MS_Main";
             this.MS_Main.Size = new System.Drawing.Size(1366, 25);
@@ -223,6 +230,7 @@
             this.TSMI_ConnectionStatus.Name = "TSMI_ConnectionStatus";
             this.TSMI_ConnectionStatus.Size = new System.Drawing.Size(192, 22);
             this.TSMI_ConnectionStatus.Text = "Статус";
+            this.TSMI_ConnectionStatus.Click += new System.EventHandler(this.TSMI_ConnectionStatus_Click);
             // 
             // TSMI_Category
             // 
@@ -266,6 +274,34 @@
             this.TSMI_Update_DGV.Size = new System.Drawing.Size(169, 22);
             this.TSMI_Update_DGV.Text = "Обнавить таблицу";
             this.TSMI_Update_DGV.Click += new System.EventHandler(this.TSMI_Update_DGV_Click);
+            // 
+            // TSMI_DebugMode
+            // 
+            this.TSMI_DebugMode.BackColor = System.Drawing.Color.SandyBrown;
+            this.TSMI_DebugMode.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TSMI_DEBUG_ADDCATEGORY,
+            this.TSMI_DEBUG_ADDPRODUCT});
+            this.TSMI_DebugMode.Name = "TSMI_DebugMode";
+            this.TSMI_DebugMode.Size = new System.Drawing.Size(71, 21);
+            this.TSMI_DebugMode.Text = "ОТКЛАДКА";
+            this.TSMI_DebugMode.Visible = false;
+            // 
+            // TSMI_DEBUG_ADDCATEGORY
+            // 
+            this.TSMI_DEBUG_ADDCATEGORY.BackColor = System.Drawing.Color.SandyBrown;
+            this.TSMI_DEBUG_ADDCATEGORY.Name = "TSMI_DEBUG_ADDCATEGORY";
+            this.TSMI_DEBUG_ADDCATEGORY.Size = new System.Drawing.Size(211, 22);
+            this.TSMI_DEBUG_ADDCATEGORY.Text = "Добавить категорию Debug";
+            this.TSMI_DEBUG_ADDCATEGORY.Visible = false;
+            this.TSMI_DEBUG_ADDCATEGORY.Click += new System.EventHandler(this.TSMI_DEBUG_ADDCATEGORY_Click);
+            // 
+            // TSMI_DEBUG_ADDPRODUCT
+            // 
+            this.TSMI_DEBUG_ADDPRODUCT.BackColor = System.Drawing.Color.SandyBrown;
+            this.TSMI_DEBUG_ADDPRODUCT.Name = "TSMI_DEBUG_ADDPRODUCT";
+            this.TSMI_DEBUG_ADDPRODUCT.Size = new System.Drawing.Size(211, 22);
+            this.TSMI_DEBUG_ADDPRODUCT.Text = "Добавить Продукт Debug";
+            this.TSMI_DEBUG_ADDPRODUCT.Click += new System.EventHandler(this.TSMI_DEBUG_ADDPRODUCT_Click);
             // 
             // PNL_GridView
             // 
@@ -789,12 +825,12 @@
             // 
             this.CHB_SelectAll_Rename.AutoSize = true;
             this.CHB_SelectAll_Rename.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CHB_SelectAll_Rename.Location = new System.Drawing.Point(226, 48);
+            this.CHB_SelectAll_Rename.Location = new System.Drawing.Point(217, 51);
             this.CHB_SelectAll_Rename.Name = "CHB_SelectAll_Rename";
-            this.CHB_SelectAll_Rename.Size = new System.Drawing.Size(82, 21);
+            this.CHB_SelectAll_Rename.Size = new System.Drawing.Size(91, 21);
             this.CHB_SelectAll_Rename.TabIndex = 44;
             this.CHB_SelectAll_Rename.Tag = "2";
-            this.CHB_SelectAll_Rename.Text = "Удалить все";
+            this.CHB_SelectAll_Rename.Text = "Изменить все";
             this.CHB_SelectAll_Rename.UseVisualStyleBackColor = true;
             this.CHB_SelectAll_Rename.CheckedChanged += new System.EventHandler(this.CHB_SelectAll_Rename_CheckedChanged);
             // 
@@ -818,6 +854,7 @@
             this.B_RenameProduct.TabIndex = 43;
             this.B_RenameProduct.Text = "Переименовать товар";
             this.B_RenameProduct.UseVisualStyleBackColor = false;
+            this.B_RenameProduct.Click += new System.EventHandler(this.B_RenameProduct_Click);
             // 
             // TB_NewName_Rename
             // 
@@ -1158,6 +1195,7 @@
             // 
             // GB_SelectProduct_Delete
             // 
+            this.GB_SelectProduct_Delete.Controls.Add(this.B_SelectName_Delete);
             this.GB_SelectProduct_Delete.Controls.Add(this.CHB_SelectAll_Delete);
             this.GB_SelectProduct_Delete.Controls.Add(this.B_ProductDelete);
             this.GB_SelectProduct_Delete.Controls.Add(this.CB_Products_Delete);
@@ -1168,6 +1206,18 @@
             this.GB_SelectProduct_Delete.TabStop = false;
             this.GB_SelectProduct_Delete.Tag = "0";
             this.GB_SelectProduct_Delete.Text = "Выбрать Товар";
+            // 
+            // B_SelectName_Delete
+            // 
+            this.B_SelectName_Delete.BackColor = System.Drawing.Color.SandyBrown;
+            this.B_SelectName_Delete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.B_SelectName_Delete.Location = new System.Drawing.Point(2, 69);
+            this.B_SelectName_Delete.Name = "B_SelectName_Delete";
+            this.B_SelectName_Delete.Size = new System.Drawing.Size(145, 25);
+            this.B_SelectName_Delete.TabIndex = 43;
+            this.B_SelectName_Delete.Text = "Выбрать Товар";
+            this.B_SelectName_Delete.UseVisualStyleBackColor = false;
+            this.B_SelectName_Delete.Click += new System.EventHandler(this.B_SelectName_Delete_Click);
             // 
             // CHB_SelectAll_Delete
             // 
@@ -1186,12 +1236,13 @@
             // 
             this.B_ProductDelete.BackColor = System.Drawing.Color.SandyBrown;
             this.B_ProductDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.B_ProductDelete.Location = new System.Drawing.Point(166, 73);
+            this.B_ProductDelete.Location = new System.Drawing.Point(166, 69);
             this.B_ProductDelete.Name = "B_ProductDelete";
             this.B_ProductDelete.Size = new System.Drawing.Size(132, 25);
             this.B_ProductDelete.TabIndex = 43;
             this.B_ProductDelete.Text = "Удалить товар";
             this.B_ProductDelete.UseVisualStyleBackColor = false;
+            this.B_ProductDelete.Click += new System.EventHandler(this.B_ProductDelete_Click);
             // 
             // CB_Products_Delete
             // 
@@ -1324,7 +1375,6 @@
             this.B_DEBUG_ADDCATEGORY.TabIndex = 35;
             this.B_DEBUG_ADDCATEGORY.Text = "ОТКЛАДКА: ДОБАВИТЬ КАТЕГОРИЮ";
             this.B_DEBUG_ADDCATEGORY.UseVisualStyleBackColor = false;
-            this.B_DEBUG_ADDCATEGORY.Click += new System.EventHandler(this.B_DEBUG_ADDCATEGORY_Click);
             // 
             // B_DEBUG_ADDPRODUCT
             // 
@@ -1337,7 +1387,13 @@
             this.B_DEBUG_ADDPRODUCT.TabIndex = 36;
             this.B_DEBUG_ADDPRODUCT.Text = "ОТКЛАДКА: ДОБАВИТЬ ПРОДУКТ";
             this.B_DEBUG_ADDPRODUCT.UseVisualStyleBackColor = false;
-            this.B_DEBUG_ADDPRODUCT.Click += new System.EventHandler(this.B_DEBUG_ADDPRODUCT_Click);
+            // 
+            // TSMI_Info
+            // 
+            this.TSMI_Info.Name = "TSMI_Info";
+            this.TSMI_Info.Size = new System.Drawing.Size(46, 21);
+            this.TSMI_Info.Text = "Инфо";
+            this.TSMI_Info.Click += new System.EventHandler(this.TSMI_Info_Click);
             // 
             // PB_LogoMain
             // 
@@ -1512,5 +1568,10 @@
         private System.Windows.Forms.Button B_DEBUG_ADDCATEGORY;
         private System.Windows.Forms.Button B_UpdatePanel;
         public System.Windows.Forms.CheckBox CHB_SelectAll_Rename;
+        private System.Windows.Forms.Button B_SelectName_Delete;
+        private System.Windows.Forms.ToolStripMenuItem TSMI_DebugMode;
+        private System.Windows.Forms.ToolStripMenuItem TSMI_DEBUG_ADDCATEGORY;
+        private System.Windows.Forms.ToolStripMenuItem TSMI_DEBUG_ADDPRODUCT;
+        private System.Windows.Forms.ToolStripMenuItem TSMI_Info;
     }
 }
