@@ -1,17 +1,8 @@
-﻿using Microsoft.Office.Interop.Access.Dao;
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System;
 using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Access = Microsoft.Office.Interop.Access;
 
 namespace Bookshop
 {
@@ -39,6 +30,7 @@ namespace Bookshop
                                 TSMI_ConnectionStatus.Enabled = true;
                                 TSMI_ConnectionStatus.Text = "Статус: Установлено";
                                 TSMI_ConnectionStatus.ForeColor = Color.Green;
+                                TSMI_Synchronize.Enabled = true;
                             }
                             catch (Exception ex)
                             {
@@ -177,7 +169,69 @@ namespace Bookshop
                     }
             }
         }
+        public void GetCategoriesforRedact(ComboBox CB_Categories)
+        {
+            int categoriescount = Connections.Direct.Queries.GetRowsCount(Options.Table[0], ConnectionMF);
+            if (categoriescount > 0)
+            {
+                bool readen = false;
+                try
+                {
+                    Array.Resize(ref Data.Categories.AllCategories, categoriescount);
+                    for (int r = 0; r < categoriescount; r++)
+                    {
+                        Data.Categories.AllCategories[r] = String.Empty;
+                    }
+                    string getcategoriesquery = $"SELECT * FROM {Options.Table[0]} WHERE ID > 0";
+                    string readenrow;
+                    int index = 0;
+                    using (OleDbCommand getcategoriescmd = new OleDbCommand(getcategoriesquery, ConnectionMF))
+                    {
+                        using (OleDbDataReader getcategoriesreader = getcategoriescmd.ExecuteReader())
+                        {
+                            if (getcategoriesreader.Read())
+                            {
+                                do
+                                {
+                                    readenrow = Convert.ToString(getcategoriesreader[1]);
+                                    Data.Categories.AllCategories[index] = readenrow;
+                                    index++;
+                                }
+                                while (getcategoriesreader.Read());
+                            }
+                        }
+                    }
+                    readen = true;
+                }
+                catch (Exception ex)
+                {
+                    Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                    readen = false;
+                }
+                finally
+                {
+                    CB_Categories.Items.Clear();
+                    if (readen)
+                    {
+                        for (int i = 0; i < categoriescount; i++)
+                        {
+                            CB_Categories.Items.Add(Convert.ToString(Data.Categories.AllCategories[i]));
+                        }
+                        B_AcceptChoice_Update.Enabled = true;
+                    }
+                    else
+                    {
+                        B_AcceptChoice_Update.Enabled = false;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Нет доступных категории", $"{Config.Managers[0]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+               // PNL_DataOperation.Enabled = false;
+            }
 
+        }
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             switch (ConnectionMF.State)
@@ -203,7 +257,7 @@ namespace Bookshop
                 CHB_ProdUpdate_ByName.Checked = false;
                 Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdUpdate_ByCode, GB_SearchType_Update);
                 L_NameCode_Update.Text = "Код";
-                TB_InpudDataForSearch_Update.Enabled = true;
+                TB_InputDataForSearch_Update.Enabled = true;
                 L_InfoCatregorySearch_Update.Visible = false;
                 CB_CategorySearch_Update.Visible = false;
             }
@@ -211,7 +265,7 @@ namespace Bookshop
             {
                 if (!CHB_ProdUpdate_ByName.Checked)
                 {
-                    TB_InpudDataForSearch_Update.Enabled = false;
+                    TB_InputDataForSearch_Update.Enabled = false;
                 }
             }
         }
@@ -223,12 +277,14 @@ namespace Bookshop
                 CHB_ProdUpdate_ByName.Checked = false;
                 Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdUpdate_ByCategory, GB_SearchType_Update);
                 L_NameCode_Update.Text = "Код";
-                TB_InpudDataForSearch_Update.Enabled = false;
+                TB_InputDataForSearch_Update.Enabled = false;
                 L_InfoCatregorySearch_Update.Visible = true;
                 CB_CategorySearch_Update.Visible = true;
+                GetCategoriesforRedact(CB_CategorySearch_Update);
             }
             else
             {
+                CB_CategorySearch_Update.Items.Clear();
                 L_InfoCatregorySearch_Update.Visible = false;
                 CB_CategorySearch_Update.Visible = false;
             }
@@ -241,7 +297,7 @@ namespace Bookshop
                 CHB_ProdUpdate_ByCategory.Checked = false;
                 Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdUpdate_ByName, GB_SearchType_Update);
                 L_NameCode_Update.Text = "Название";
-                TB_InpudDataForSearch_Update.Enabled = true;
+                TB_InputDataForSearch_Update.Enabled = true;
                 L_InfoCatregorySearch_Update.Visible = false;
                 CB_CategorySearch_Update.Visible = false;
             }
@@ -249,7 +305,7 @@ namespace Bookshop
             {
                 if (!CHB_ProdUpdate_ByCode.Checked)
                 {
-                    TB_InpudDataForSearch_Update.Enabled = false;
+                    TB_InputDataForSearch_Update.Enabled = false;
                 }
             }
         }
@@ -261,7 +317,7 @@ namespace Bookshop
                 CHB_ProdRename_ByName.Checked = false;
                 Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdRename_ByCode, GB_SearchType_Rename);
                 L_NameCode_Rename.Text = "Код";
-                TB_InpudDataForSearch_Rename.Enabled = true;
+                TB_InputDataForSearch_Rename.Enabled = true;
                 L_InfoCatregorySearch_Rename.Visible = false;
                 CB_CategorySearch_Rename.Visible = false;
             }
@@ -269,7 +325,7 @@ namespace Bookshop
             {
                 if (!CHB_ProdRename_ByName.Checked)
                 {
-                    TB_InpudDataForSearch_Rename.Enabled = false;
+                    TB_InputDataForSearch_Rename.Enabled = false;
                 }
             }
         }
@@ -281,9 +337,10 @@ namespace Bookshop
                 CHB_ProdRename_ByName.Checked = false;
                 Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdRename_ByCategory, GB_SearchType_Rename);
                 L_NameCode_Rename.Text = "Код";
-                TB_InpudDataForSearch_Rename.Enabled = false;
+                TB_InputDataForSearch_Rename.Enabled = false;
                 L_InfoCatregorySearch_Rename.Visible = true;
                 CB_CategorySearch_Rename.Visible = true;
+                GetCategoriesforRedact(CB_CategorySearch_Rename);
             }
             else
             {
@@ -299,7 +356,7 @@ namespace Bookshop
                 CHB_ProdRename_ByCategory.Checked = false;
                 Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdRename_ByName, GB_SearchType_Rename);
                 L_NameCode_Rename.Text = "Название";
-                TB_InpudDataForSearch_Rename.Enabled = true;
+                TB_InputDataForSearch_Rename.Enabled = true;
                 L_InfoCatregorySearch_Rename.Visible = false;
                 CB_CategorySearch_Rename.Visible = false;
             }
@@ -307,7 +364,7 @@ namespace Bookshop
             {
                 if (!CHB_ProdRename_ByCode.Checked)
                 {
-                    TB_InpudDataForSearch_Rename.Enabled = false;
+                    TB_InputDataForSearch_Rename.Enabled = false;
                 }
             }
         }
@@ -319,7 +376,7 @@ namespace Bookshop
                 CHB_ProdDelete_ByCategory.Checked = false;
                 Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdDelete_ByName, GB_SearchType_Delete);
                 L_NameCode_Delete.Text = "Название";
-                TB_InpudDataForSearch_Delete.Enabled = true;
+                TB_InputDataForSearch_Delete.Enabled = true;
                 L_InfoCatregorySearch_Delete.Visible = false;
                 CB_CategorySearch_Delete.Visible = false;
             }
@@ -327,7 +384,7 @@ namespace Bookshop
             {
                 if (!CHB_ProdDelete_ByCode.Checked)
                 {
-                    TB_InpudDataForSearch_Delete.Enabled = false;
+                    TB_InputDataForSearch_Delete.Enabled = false;
                 }
             }
         }
@@ -339,9 +396,10 @@ namespace Bookshop
                 CHB_ProdDelete_ByName.Checked = false;
                 Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdDelete_ByCategory, GB_SearchType_Delete);
                 L_NameCode_Delete.Text = "Код";
-                TB_InpudDataForSearch_Delete.Enabled = false;
+                TB_InputDataForSearch_Delete.Enabled = false;
                 L_InfoCatregorySearch_Delete.Visible = true;
                 CB_CategorySearch_Delete.Visible = true;
+                GetCategoriesforRedact(CB_CategorySearch_Delete);
             }
             else
             {
@@ -358,7 +416,7 @@ namespace Bookshop
                 CHB_ProdDelete_ByName.Checked = false;
                 Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdDelete_ByCode, GB_SearchType_Delete);
                 L_NameCode_Delete.Text = "Код";
-                TB_InpudDataForSearch_Delete.Enabled = true;
+                TB_InputDataForSearch_Delete.Enabled = true;
                 L_InfoCatregorySearch_Delete.Visible = false;
                 CB_CategorySearch_Delete.Visible = false;
             }
@@ -366,7 +424,7 @@ namespace Bookshop
             {
                 if (!CHB_ProdDelete_ByName.Checked)
                 {
-                    TB_InpudDataForSearch_Delete.Enabled = false;
+                    TB_InputDataForSearch_Delete.Enabled = false;
                 }
             }
         }
@@ -375,6 +433,7 @@ namespace Bookshop
         {
             if (CHB_SelectAll_Delete.Checked)
             {
+                Data.Products.Delete.DeleteAll = true;
                 CB_Products_Delete.Enabled = false;
                 CB_Products_Delete.Items.Clear();
                 CB_Products_Delete.Text = "Удатиь все данные в категории";
@@ -382,6 +441,7 @@ namespace Bookshop
             }
             else
             {
+                Data.Products.Delete.DeleteAll = false;
                 CB_Products_Delete.Enabled = true;
                 CB_Products_Delete.Items.Clear();
                 B_ProductDelete.Text = "Удалить товар";
@@ -464,6 +524,15 @@ namespace Bookshop
             {
                 NUD_Price.Value = NUD_Price.Maximum;
             }
+            if (NUD_Price.Value == 0)
+            {
+                B_ApplyPrice.Enabled = false;
+                Data.Products.CodeGenerator.EnableGenerator[2] = false;
+            }
+            else
+            {
+                B_ApplyPrice.Enabled = true;
+            }
         }
 
         private void NUD_Count_ValueChanged(object sender, EventArgs e)
@@ -472,42 +541,1018 @@ namespace Bookshop
             {
                 NUD_Count.Value = NUD_Count.Maximum;
             }
+            if (NUD_Count.Value == 0)
+            {
+                B_ApplyCount.Enabled = false;
+                Data.Products.CodeGenerator.EnableGenerator[3] = true;
+            }
+            else
+            {
+                B_ApplyCount.Enabled = true;
+            }
 
         }
-
-        private void TSMI_Synchronize_Click(object sender, EventArgs e)
+        public void SynchronizeData()
         {
             if (Connections.Direct.ConnectionReset(ConnectionMF))
             {
-                string Table = "Categories";
+                string Table = "Category";
                 int categoriescount = Connections.Direct.Queries.GetRowsCount(Table, ConnectionMF);
-                Array.Resize(ref Data.Categories.AllCategories, categoriescount);
-                for (int r = 0; r < categoriescount; r++)
+                if (categoriescount > 0)
                 {
-                    Data.Categories.AllCategories[r] = String.Empty;
-                }
-                string getcategoriesquery = $"SELECT * FROM {Table} WHERE ID > 0";
-                string readenrow;
-                int index = 0;
-                using (OleDbCommand getcategoriescmd = new OleDbCommand(getcategoriesquery, ConnectionMF))
-                {
-                    using (OleDbDataReader getcategoriesreader = getcategoriescmd.ExecuteReader())
+                    bool readen = false;
+                    try
                     {
-                        if (getcategoriesreader.Read())
+                        Array.Resize(ref Data.Categories.AllCategories, categoriescount);
+                        for (int r = 0; r < categoriescount; r++)
                         {
-                            do
+                            Data.Categories.AllCategories[r] = String.Empty;
+                        }
+                        string getcategoriesquery = $"SELECT * FROM {Table} WHERE ID > 0";
+                        string readenrow;
+                        int index = 0;
+                        using (OleDbCommand getcategoriescmd = new OleDbCommand(getcategoriesquery, ConnectionMF))
+                        {
+                            using (OleDbDataReader getcategoriesreader = getcategoriescmd.ExecuteReader())
                             {
-                                readenrow = Convert.ToString(getcategoriesreader[1]);
-                                Data.Categories.AllCategories[index] = readenrow;
-                                index++;
+                                if (getcategoriesreader.Read())
+                                {
+                                    do
+                                    {
+                                        readenrow = Convert.ToString(getcategoriesreader[1]);
+                                        Data.Categories.AllCategories[index] = readenrow;
+                                        index++;
+                                    }
+                                    while (getcategoriesreader.Read());
+                                }
                             }
-                            while(getcategoriesreader.Read());
+                        }
+                        readen = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                        readen = false;
+                    }
+                    finally
+                    {
+                        if (readen)
+                        {
+                            PNL_DataOperation.Enabled = true;
+                            B_AcceptChoice_Update.Enabled = true;
+                            B_AcceptChoice_Rename.Enabled = true;
+                            B_AcceptChoice_Delete.Enabled = true;
+                        }
+                        else
+                        {
+                            PNL_DataOperation.Enabled = false;
                         }
                     }
+                }
+                else
+                {
+                    MessageBox.Show("Нет доступных категории", $"{Config.Managers[0]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    PNL_DataOperation.Enabled = false;
                 }
             }
             else
             {
+                switch (DialogResult = MessageBox.Show("Синхронизация Провалено", $"{Config.Managers[0]}", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error))
+                {
+                    case DialogResult.Retry:
+                        {
+                            PNL_DataOperation.Enabled = false;
+                            SynchronizeData();
+                            break;
+                        }
+                    case DialogResult.Cancel:
+                        {
+                            break;
+                        }
+                }
+            }
+        }
+        private void TSMI_Synchronize_Click(object sender, EventArgs e)
+        {
+            SynchronizeData();
+        }
+        private void B_ProductName_Check_Click(object sender, EventArgs e)
+        {
+            Data.Products.EnteredName[0] = Convert.ToString(TB_ProductName.Text);
+            Data.Products.ProductsCount = Connections.Direct.Queries.GetRowsCount(Options.Table[1], ConnectionMF);
+            if (Data.Products.EnteredName[0] == String.Empty)
+            {
+                DialogResult = MessageBox.Show("Пустое поле ввода", "Диспечер данных", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                if (DialogResult == DialogResult.OK)
+                {
+                    TB_ProductName.Focus();
+                }
+            }
+            bool excaption;
+            int rowscount = Data.Products.ProductsCount;
+            switch (rowscount)
+            {
+                case < 0:
+                    {
+                        excaption = true;
+                        break;
+                    }
+                case 0:
+                    {
+                        excaption = false;
+                        Data.Products.NameExist[0] = false;
+                        break;
+                    }
+                case > 0:
+                    {
+                        excaption = false;
+                        string getproductnamequery = $"SELECT @Column FROM {Options.Table[1]} WHERE Название = @Name";
+                        try
+                        {
+                            using (OleDbCommand getproductnamecmd = new OleDbCommand(getproductnamequery, ConnectionMF))
+                            {
+                                getproductnamecmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(Data.Products.EnteredName[0]);
+                                getproductnamecmd.Parameters.Add("@Column", OleDbType.VarChar).Value = Convert.ToString("Название");
+                                OleDbDataReader getproductnamereader = getproductnamecmd.ExecuteReader();
+                                if (!getproductnamereader.Read())
+                                {
+                                    Data.Products.NameExist[0] = true;
+                                }
+                                else
+                                {
+                                    Data.Products.NameExist[0] = false;
+                                    Data.Products.ProductNameOverOne[0] = true;
+                                    Data.Products.SameNameProductsCount = 0;
+                                    while (getproductnamereader.Read())
+                                    {
+                                        Data.Products.SameNameProductsCount++;
+                                    }
+                                }
+                                getproductnamereader.Close();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                            excaption = true;
+                        }
+                        break;
+                    }
+            }
+            if (excaption)
+            {
+                //Ошибка
+            }
+            else
+            {
+                switch (Data.Products.NameExist[0])
+                {
+                    case true:
+                        {
+                            B_GetCategoryData.Enabled = false;
+                            Data.Products.CodeGenerator.EnableGenerator[0] = false;
+                            Data.Products.ProductNameOverOne[1] = false;
+                            break;
+                        }
+                    case false:
+                        {
+                            DialogResult =  MessageBox.Show($"Обноружено {Data.Products.SameNameProductsCount} продуктов под именем {Data.Products.EnteredName[0]}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            if (DialogResult == DialogResult.OK)
+                            {
+                                Data.Products.ProductNameOverOne[1] = true;
+                                B_GetCategoryData.Enabled = true;
+                                Data.Products.CodeGenerator.EnableGenerator[0] = true;
+                                B_GenerateUniqueID.Enabled = EnableCodeGenerator(0);
+                            }
+                            break;
+                        }
+                }
+            }
+        }
+
+        private void B_GetCategoryData_Click(object sender, EventArgs e)
+        {
+            CB_GetCategories.Items.Clear();
+            for (int p = 0; p < Data.Categories.AllCategories.Length; p++)
+            {
+                CB_GetCategories.Items.Add(Data.Categories.AllCategories[p]);
+            }
+            CB_GetCategories.Enabled = true;
+        }
+
+        private void B_SelectCategory_Click(object sender, EventArgs e)
+        {
+            Data.Products.SelectedCategory = Convert.ToString(CB_GetCategories.SelectedItem);
+            if (Data.Products.SelectedCategory != String.Empty)
+            {
+                NUD_Price.Enabled = true;
+                NUD_Count.Enabled = true;
+                CHB_CountOver100.Enabled = true;
+                CHB_PriceOver100.Enabled = true;
+                NUD_Price.Value = 1;
+                NUD_Count.Value = 1;
+                Data.Products.CodeGenerator.EnableGenerator[1] = true;
+                B_GenerateUniqueID.Enabled = EnableCodeGenerator(0);
+            }
+            else
+            {
+                NUD_Price.Enabled = false;
+                NUD_Count.Enabled = false;
+                NUD_Price.Value = 0;
+                NUD_Count.Value = 0;
+                CHB_CountOver100.Enabled = false;
+                CHB_PriceOver100.Enabled = false;
+                Data.Products.CodeGenerator.EnableGenerator[1] = false;
+            }
+        }
+        public bool EnableCodeGenerator(int Index)
+        {
+            switch (Index)
+            {
+                case 0:
+                    {
+                        for (int b = 0; b < Data.Products.CodeGenerator.EnableGenerator.Length; b++)
+                        {
+                            if (Data.Products.CodeGenerator.EnableGenerator[b])
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                case 1:
+                    {
+                        for (int b = 0; b < Data.Products.CodeGenerator.EnableGenerator.Length; b++)
+                        {
+                            Data.Products.CodeGenerator.EnableGenerator[b] = false;
+                        }
+                        return false;
+                    }
+                case 2:
+                    {
+                        for (int b = 0; b < Data.Products.CodeGenerator.EnableGenerator.Length; b++)
+                        {
+                            Data.Products.CodeGenerator.EnableGenerator[b] = true; ;
+                        }
+                        return true;
+                    }
+                default:
+                    {
+                        return false;
+                    }
+            }
+        }
+        private void B_ApplyPrice_Click(object sender, EventArgs e)
+        {
+            Data.Products.Price = Convert.ToInt32(NUD_Price.Value);
+            Data.Products.CodeGenerator.EnableGenerator[2] = true;
+            B_GenerateUniqueID.Enabled = EnableCodeGenerator(0);
+        }
+
+        private void B_ApplyCount_Click(object sender, EventArgs e)
+        {
+            Data.Products.Count = Convert.ToInt32(NUD_Count.Value);
+            Data.Products.CodeGenerator.EnableGenerator[3] = true;
+            B_GenerateUniqueID.Enabled = EnableCodeGenerator(0);
+        }
+
+        private void B_GenerateUniqueID_Click(object sender, EventArgs e)
+        {
+            TB_UniqueCode.Text = Data.Products.CodeGenerator.GenerateCode();
+            if (TB_UniqueCode.Text != String.Empty)
+            {
+                B_ApplyData.Enabled = true;
+            }
+            else
+            {
+                B_ApplyData.Enabled = false;
+                Data.Products.CodeGenerator.UniqueCode = null;
+            }
+        }
+
+        private void B_ApplyData_Click(object sender, EventArgs e)
+        {
+            Data.Products.CodeGenerator.UniqueCode = Convert.ToString(TB_UniqueCode.Text);
+            switch (DialogResult = MessageBox.Show("Записать данные ?", $"{Config.Managers[1]}", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            {
+                case DialogResult.Yes:
+                    {
+                        if (InsertProductsData())
+                        {
+                            Handlers.InformationProvider.DataOperationState(0, 0, 1);
+                        }
+                        else
+                        {
+                            Handlers.InformationProvider.DataOperationState(1, 0, 1);
+                        }
+                        break;
+                    }
+            }
+        }
+        public bool InsertProductsData()
+        {
+            bool inserted = false;
+            string insertquery = $"INSERT INTO {Options.Table[1]} (Название, Категория, Количество, Цена, Код, Изменение) VALUES (@Name, @Category, @Count, @Price, @Code, @Date)";
+            using (OleDbCommand insertcmd = new OleDbCommand(insertquery, ConnectionMF))
+            {
+                insertcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(Data.Products.EnteredName[0]);
+                insertcmd.Parameters.Add("@Category", OleDbType.VarChar).Value = Convert.ToString(Data.Products.SelectedCategory);
+                insertcmd.Parameters.Add("@Count", OleDbType.Integer).Value = Convert.ToInt32(Data.Products.Count);
+                insertcmd.Parameters.Add("@Price", OleDbType.Integer).Value = Convert.ToInt32(Data.Products.Price);
+                insertcmd.Parameters.Add("@Code", OleDbType.VarChar).Value = Convert.ToString(Data.Products.CodeGenerator.UniqueCode);
+                insertcmd.Parameters.Add("@Date", OleDbType.DBDate).Value = Convert.ToDateTime(DateTime.Now);
+                try
+                {
+                    insertcmd.ExecuteNonQuery();
+                    inserted = true;
+                }
+                catch (Exception ex)
+                {
+                    Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                    inserted = false;
+                }
+            }
+            if (inserted)
+            {
+                int count = 0;
+                string[] query = new string[2];
+                query[0] = $"SELECT * FROM {Options.Table[0]} WHERE Название = @Name";
+                query[1] = $"UPDATE {Options.Table[0]} SET Количество = @NewCount WHERE Название = @Name";
+                using (OleDbCommand selectcmd = new OleDbCommand(query[0], ConnectionMF))
+                {
+                    selectcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(Data.Products.SelectedCategory);
+                    OleDbDataReader selectreader = selectcmd.ExecuteReader();
+                    if (selectreader.Read())
+                    {
+                        count = Convert.ToInt32(selectreader[2]);
+                    }
+                    else
+                    {
+                        count = -1;
+                    }
+                    selectreader.Close();
+                }
+                if (count < 0)
+                {
+                    MessageBox.Show("Не удалось обновить данные категории", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    using (OleDbCommand updatecmd = new OleDbCommand(query[1], ConnectionMF))
+                    {
+                        updatecmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(Data.Products.SelectedCategory);
+                        updatecmd.Parameters.Add("@NewCount", OleDbType.Integer).Value = Convert.ToInt32(count + 1);
+                        updatecmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            return inserted;
+
+        }
+
+        private void CB_GetCategories_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CB_GetCategories.Items.Count != 0)
+            {
+                B_SelectCategory.Enabled = true;
+            }
+            else
+            {
+                B_SelectCategory.Enabled = false;
+            }
+        }
+
+        private void TSMI_Update_DGV_Click(object sender, EventArgs e)
+        {
+            string script = $"SELECT * FROM {Options.Table[1]}";
+            OleDbDataAdapter adapter = new OleDbDataAdapter(script, ConnectionMF);
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+            DGV_MS_Product.DataSource = table;
+        }
+
+        private void B_DEBUG_ADDCATEGORY_Click(object sender, EventArgs e)
+        {
+            if (ConnectionMF.State != ConnectionState.Open)
+            {
+                ConnectionMF.Open();
+                string insert = $"INSERT INTO {Options.Table[0]} (Название, Количество) VALUES (@V1, @V2)";
+                using (OleDbCommand cmd = new OleDbCommand(insert, ConnectionMF))
+                {
+                    cmd.Parameters.Add("@V1", OleDbType.VarChar).Value = Convert.ToString("TestCategory");
+                    cmd.Parameters.Add("@V2", OleDbType.VarChar).Value = Convert.ToString(1);
+                    cmd.ExecuteNonQuery();
+                }
+                ConnectionMF.Close();
+            }
+            else
+            {
+                string insert = $"INSERT INTO {Options.Table[0]} (Название, Количество) VALUES (@V1, @V2)";
+                using (OleDbCommand cmd = new OleDbCommand(insert, ConnectionMF))
+                {
+                    cmd.Parameters.Add("@V1", OleDbType.VarChar).Value = Convert.ToString("Test");
+                    cmd.Parameters.Add("@V2", OleDbType.VarChar).Value = Convert.ToString(100);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void B_DEBUG_ADDPRODUCT_Click(object sender, EventArgs e)
+        {
+            if (ConnectionMF.State != ConnectionState.Open)
+            {
+                ConnectionMF.Open();
+                string insertquery = $"INSERT INTO {Options.Table[1]} (Название, Категория, Количество, Цена, Код, Изменение) VALUES (@Name, @Category, @Count, @Price, @Code, @Date)";
+                using (OleDbCommand insertcmd = new OleDbCommand(insertquery, ConnectionMF))
+                {
+                    insertcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(Data.Products.EnteredName[0]);
+                    insertcmd.Parameters.Add("@Category", OleDbType.VarChar).Value = Convert.ToString(Data.Products.SelectedCategory);
+                    insertcmd.Parameters.Add("@Count", OleDbType.Integer).Value = Convert.ToInt32(Data.Products.Count);
+                    insertcmd.Parameters.Add("@Price", OleDbType.Integer).Value = Convert.ToInt32(Data.Products.Price);
+                    insertcmd.Parameters.Add("@Code", OleDbType.VarChar).Value = Convert.ToString(Data.Products.CodeGenerator.UniqueCode);
+                    insertcmd.Parameters.Add("@Date", OleDbType.DBDate).Value = Convert.ToDateTime(DateTime.Now);
+                }
+                ConnectionMF.Close();
+            }
+            else
+            {
+                string insertquery = $"INSERT INTO {Options.Table[1]} (Название, Категория, Количество, Цена, Код, Изменение) VALUES (@Name, @Category, @Count, @Price, @Code, @Date)";
+                using (OleDbCommand insertcmd = new OleDbCommand(insertquery, ConnectionMF))
+                {
+                    insertcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString("TestProduct");
+                    insertcmd.Parameters.Add("@Category", OleDbType.VarChar).Value = Convert.ToString("TestCategory");
+                    insertcmd.Parameters.Add("@Count", OleDbType.Integer).Value = Convert.ToInt32(1);
+                    insertcmd.Parameters.Add("@Price", OleDbType.Integer).Value = Convert.ToInt32(2);
+                    insertcmd.Parameters.Add("@Code", OleDbType.VarChar).Value = Convert.ToString("TESTCODE001");
+                    insertcmd.Parameters.Add("@Date", OleDbType.DBDate).Value = Convert.ToDateTime(DateTime.Now);
+                }
+            }
+        }
+
+        private void B_AcceptChoice_Update_Click(object sender, EventArgs e)
+        {
+            CB_Products_Update.Items.Clear();
+            switch (Data.Products.SearchWithUniqueCode[0])
+            {
+                case 0:
+                    {
+                        bool readen = false;
+                        Data.Products.Update.EnteredCode = Convert.ToString(TB_InputDataForSearch_Update.Text);
+                        string compareenteredcodequery = $"SELECT * FROM {Options.Table[1]} WHERE Код = @EnteredCode";
+                        using (OleDbCommand compareenteredcodecmd = new OleDbCommand(compareenteredcodequery, ConnectionMF))
+                        {
+                            compareenteredcodecmd.Parameters.Add("@EnteredCode", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Update.EnteredCode);
+                            OleDbDataReader compareenteredcodereader = compareenteredcodecmd.ExecuteReader();
+                            if (!compareenteredcodereader.Read())
+                            {
+                                MessageBox.Show($"Товар под кодом {Data.Products.Update.EnteredCode} не найден!", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    Data.Products.Update.SelectedName = Convert.ToString(compareenteredcodereader[1]);
+                                    readen = true;
+                                }
+                                catch (Exception ex)
+                                {
+                                    Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                                    readen = false;
+                                }
+                                finally
+                                {
+                                    if (readen)
+                                    {
+                                        MessageBox.Show($"Товар {Data.Products.Update.SelectedName} обноружен под кодом {Data.Products.Update.EnteredCode} ", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
+                                }
+                            }
+                            compareenteredcodereader.Close();
+                        }
+                        break;
+                    }
+                case 1:
+                    {
+                        Data.Products.Update.SelectedCategory = Convert.ToString(CB_CategorySearch_Update.SelectedItem);
+                        GB_SelectProduct_Update.Visible = true;
+                        Array.Resize(ref Data.Products.Update.ProductsByCategory, 0);
+                        string getproductsbycategoryquery = $"SELECT * FROM {Options.Table[1]} WHERE Категория = @Category";
+                        using (OleDbCommand getproductsbycategorycmd = new OleDbCommand(getproductsbycategoryquery, ConnectionMF))
+                        {
+                            getproductsbycategorycmd.Parameters.Add("@Category", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Update.SelectedCategory);
+                            using (OleDbDataReader getproductsbycategoryreader = getproductsbycategorycmd.ExecuteReader())
+                            {
+                                if (getproductsbycategoryreader.Read())
+                                {
+                                    int index = 0;
+                                    do
+                                    {
+                                        Array.Resize(ref Data.Products.Update.ProductsByCategory, Data.Products.Update.ProductsByCategory.Length + 1);
+                                        Data.Products.Update.ProductsByCategory[index] = Convert.ToString(getproductsbycategoryreader.GetValue(1));
+                                        index++;
+                                    }
+                                    while (getproductsbycategoryreader.Read());
+                                }
+                            }
+                            for (int u = 0; u < Data.Products.Update.ProductsByCategory.Length; u++)
+                            {
+                                CB_Products_Update.Items.Add(Convert.ToString(Data.Products.Update.ProductsByCategory[u]));
+                            }
+                        }
+                        break;
+                    }
+                case 2:
+                    {
+                        int counternames = 0;
+                        bool readen = false;
+                        Data.Products.Update.EnteredName = Convert.ToString(TB_InputDataForSearch_Update.Text);
+                        string compareenteredcodequery = $"SELECT * FROM {Options.Table[1]} WHERE Название = @EnteredName";
+                        using (OleDbCommand compareenteredcodecmd = new OleDbCommand(compareenteredcodequery, ConnectionMF))
+                        {
+                            compareenteredcodecmd.Parameters.Add("@EnteredName", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Update.EnteredName);
+                            OleDbDataReader compareenteredcodereader = compareenteredcodecmd.ExecuteReader();
+                            if (!compareenteredcodereader.Read())
+                            {
+                                MessageBox.Show($"Товар под названием {Data.Products.Update.EnteredName} не найден!", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                                readen = false;
+                            }
+                            else
+                            {
+                                readen = true;
+                                counternames = 1;
+                                do
+                                {
+                                    Array.Resize(ref Data.Products.Update.SelectedNames, counternames);
+                                    Data.Products.Update.SelectedNames[counternames - 1] = Convert.ToString(compareenteredcodereader[5]);
+                                    counternames++;
+                                }
+                                while (compareenteredcodereader.Read());
+                                string codes = null;
+                                for (int f = 0; f < Data.Products.Update.SelectedNames.Length; f++)
+                                {
+                                    codes = Data.Products.Update.SelectedNames[f] + "\r\n";
+                                }
+                                if (readen)
+                                {
+                                    if (counternames == 1)
+                                    {
+                                        MessageBox.Show($"Обноружен {Convert.ToString(counternames - 1)} товар под именем {Data.Products.Update.EnteredName}\r\nКод товара\r\n{codes}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show($"Обноружено {Convert.ToString(counternames - 1)} товаров под именем {Data.Products.Update.EnteredName}\r\nКоды товаров\r\n{codes}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
+                                }
+                            }
+                            compareenteredcodereader.Close();
+                        }
+                        break;
+                    }
+            }
+        }
+
+        private void B_UpdatePanel_Click(object sender, EventArgs e)
+        {
+            switch (DialogResult = MessageBox.Show("Вернуть данные в исходное состояние?", $"{Config.Managers[2]}", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            {
+                case DialogResult.Yes:
+                    {
+                        TB_ProductName.Clear();
+                        B_GetCategoryData.Enabled = false;
+                        CB_GetCategories.Items.Clear();
+                        CB_GetCategories.Text = String.Empty;
+                        CB_GetCategories.Enabled = false;
+                        B_SelectCategory.Enabled = false;
+                        CHB_CountOver100.Enabled = false;
+                        CHB_CountOver100.Checked = false;
+                        CHB_PriceOver100.Enabled = false;
+                        CHB_PriceOver100.Checked = false;
+                        NUD_Price.Enabled = false;
+                        NUD_Price.Value = 1;
+                        NUD_Count.Enabled = false;
+                        NUD_Count.Value = 1;
+                        B_GenerateUniqueID.Enabled = EnableCodeGenerator(2);
+                        TB_UniqueCode.Clear();
+                        B_ApplyData.Enabled = false;
+                        break;
+                    }
+                case DialogResult.No:
+                    {
+                        break;
+                    }
+            }
+        }
+
+        private void B_AcceptChoice_Rename_Click(object sender, EventArgs e)
+        {
+            CB_Products_Rename.Items.Clear();
+            switch (Data.Products.SearchWithUniqueCode[1])
+            {
+                case 0:
+                    {
+                        bool readen = false;
+                        Data.Products.Rename.EnteredCode = Convert.ToString(TB_InputDataForSearch_Rename.Text);
+                        string compareenteredcodequery = $"SELECT * FROM {Options.Table[1]} WHERE Код = @EnteredCode";
+                        using (OleDbCommand compareenteredcodecmd = new OleDbCommand(compareenteredcodequery, ConnectionMF))
+                        {
+                            compareenteredcodecmd.Parameters.Add("@EnteredCode", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Rename.EnteredCode);
+                            OleDbDataReader compareenteredcodereader = compareenteredcodecmd.ExecuteReader();
+                            if (!compareenteredcodereader.Read())
+                            {
+                                MessageBox.Show($"Товар под кодом {Data.Products.Rename.EnteredCode} не найден!", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    Data.Products.Rename.SelectedName = Convert.ToString(compareenteredcodereader[1]);
+                                    readen = true;
+                                }
+                                catch (Exception ex)
+                                {
+                                    Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                                    readen = false;
+                                }
+                                finally
+                                {
+                                    if (readen)
+                                    {
+                                        MessageBox.Show($"Товар {Data.Products.Rename.SelectedName} обноружен под кодом {Data.Products.Rename.EnteredCode} ", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
+                                }
+                            }
+                            compareenteredcodereader.Close();
+                        }
+                        break;
+                    }
+                case 1:
+                    {
+                        Data.Products.Rename.SelectedCategory = Convert.ToString(CB_CategorySearch_Rename.SelectedItem);
+                        GB_SelectProduct_Rename.Visible = true;
+                        Array.Resize(ref Data.Products.Rename.ProductsByCategory, 0);
+                        string getproductsbycategoryquery = $"SELECT * FROM {Options.Table[1]} WHERE Категория = @Category";
+                        using (OleDbCommand getproductsbycategorycmd = new OleDbCommand(getproductsbycategoryquery, ConnectionMF))
+                        {
+                            getproductsbycategorycmd.Parameters.Add("@Category", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Rename.SelectedCategory);
+                            using (OleDbDataReader getproductsbycategoryreader = getproductsbycategorycmd.ExecuteReader())
+                            {
+                                if (getproductsbycategoryreader.Read())
+                                {
+                                    int index = 0;
+                                    do
+                                    {
+                                        Array.Resize(ref Data.Products.Rename.ProductsByCategory, Data.Products.Rename.ProductsByCategory.Length + 1);
+                                        Data.Products.Rename.ProductsByCategory[index] = Convert.ToString(getproductsbycategoryreader.GetValue(1));
+                                        index++;
+                                    }
+                                    while (getproductsbycategoryreader.Read());
+                                }
+                            }
+                            for (int u = 0; u < Data.Products.Rename.ProductsByCategory.Length; u++)
+                            {
+                                CB_Products_Rename.Items.Add(Convert.ToString(Data.Products.Rename.ProductsByCategory[u]));
+                            }
+                        }
+                        break;
+                    }
+                case 2:
+                    {
+                        int counternames = 0;
+                        bool readen = false;
+                        Data.Products.Rename.EnteredName = Convert.ToString(TB_InputDataForSearch_Rename.Text);
+                        string compareenteredcodequery = $"SELECT * FROM {Options.Table[1]} WHERE Название = @EnteredName";
+                        using (OleDbCommand compareenteredcodecmd = new OleDbCommand(compareenteredcodequery, ConnectionMF))
+                        {
+                            compareenteredcodecmd.Parameters.Add("@EnteredName", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Rename.EnteredName);
+                            OleDbDataReader compareenteredcodereader = compareenteredcodecmd.ExecuteReader();
+                            if (!compareenteredcodereader.Read())
+                            {
+                                MessageBox.Show($"Товар под названием {Data.Products.Rename.EnteredName} не найден!", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                                readen = false;
+                            }
+                            else
+                            {
+                                readen = true;
+                                counternames = 1;
+                                do
+                                {
+                                    Array.Resize(ref Data.Products.Rename.SelectedNames, counternames);
+                                    Data.Products.Rename.SelectedNames[counternames - 1] = Convert.ToString(compareenteredcodereader[5]);
+                                    counternames++;
+                                }
+                                while (compareenteredcodereader.Read());
+                                string codes = null;
+                                for (int f = 0; f < Data.Products.Rename.SelectedNames.Length; f++)
+                                {
+                                    codes = Data.Products.Rename.SelectedNames[f] + "\r\n";
+                                }
+                                if (readen)
+                                {
+                                    if (counternames == 1)
+                                    {
+                                        MessageBox.Show($"Обноружен {Convert.ToString(counternames - 1)} товар под именем {Data.Products.Rename.EnteredName}\r\nКод товара\r\n{codes}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show($"Обноружено {Convert.ToString(counternames - 1)} товаров под именем {Data.Products.Rename.EnteredName}\r\nКоды товаров\r\n{codes}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
+                                }
+                            }
+                            compareenteredcodereader.Close();
+                        }
+                        break;
+                    }
+            }
+        }
+
+        private void B_CheckNewName_Click(object sender, EventArgs e)
+        {
+            Data.Products.Rename.NewName[0] = Convert.ToString(TB_NewName_Rename.Text);
+            Data.Products.ProductsCount = Connections.Direct.Queries.GetRowsCount(Options.Table[1], ConnectionMF);
+            if (Data.Products.Rename.NewName[0] == String.Empty)
+            {
+                DialogResult = MessageBox.Show("Пустое поле ввода", "Диспечер данных", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                if (DialogResult == DialogResult.OK)
+                {
+                    TB_NewName_Rename.Focus();
+                }
+            }
+            bool excaption;
+            int rowscount = Data.Products.ProductsCount;
+            switch (rowscount)
+            {
+                case < 0:
+                    {
+                        excaption = true;
+                        break;
+                    }
+                case 0:
+                    {
+                        excaption = false;
+                        Data.Products.NameExist[0] = false;
+                        break;
+                    }
+                case > 0:
+                    {
+                        excaption = false;
+                        string getproductnamequery = $"SELECT @Column FROM {Options.Table[1]} WHERE ID > 0";
+                        try
+                        {
+                            using (OleDbCommand getproductnamecmd = new OleDbCommand(getproductnamequery, ConnectionMF))
+                            {
+                                getproductnamecmd.Parameters.Add("@Column", OleDbType.VarChar).Value = Convert.ToString("Название");
+                                OleDbDataReader getproductnamereader = getproductnamecmd.ExecuteReader();
+                                if (!getproductnamereader.Read())
+                                {
+                                    Data.Products.NameExist[0] = false;
+                                }
+                                else
+                                {
+                                    Data.Products.NameExist[0] = true;
+                                    Data.Products.ProductNameOverOne[0] = true;
+                                    Data.Products.SameNameProductsCount = 0;
+                                    string selectquery = $"SELECT * FROM {Options.Table[1]} WHERE Название = @Name";
+                                    using (OleDbCommand selectcmd = new OleDbCommand(selectquery, ConnectionMF))
+                                    {
+                                        selectcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Rename.NewName[0]);
+                                        OleDbDataReader selectreader = selectcmd.ExecuteReader();
+                                        Data.Products.Rename.NameEpty = true;
+                                        while (selectreader.Read())
+                                        {
+                                            Data.Products.SameNameProductsCount++;
+                                            Data.Products.Rename.NameEpty = false;
+                                        }
+                                        selectreader.Close();
+                                    }
+                                    
+                                }
+                                getproductnamereader.Close();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                            excaption = true;
+                        }
+                        break;
+                    }
+            }
+            if (excaption)
+            {
+                //Ошибка
+            }
+            else
+            {
+                switch (Data.Products.Rename.NameEpty)
+                {
+                    case true:
+                        {
+                            DialogResult = MessageBox.Show($"Не обноружен продукт под именем {Data.Products.EnteredName[0]}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            if (DialogResult == DialogResult.OK)
+                            {
+                                B_GetCategoryData.Enabled = true;
+                            }
+                            break;
+                        }
+                    case false:
+                        {
+                            if (Data.Products.SameNameProductsCount == 1)
+                            {
+                                DialogResult = MessageBox.Show($"Обноружен {Data.Products.SameNameProductsCount} продукт под именем {Data.Products.EnteredName[0]}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                if (DialogResult == DialogResult.OK)
+                                {
+                                    B_GetCategoryData.Enabled = true;
+                                }
+                            }
+                            else
+                            {
+                                DialogResult = MessageBox.Show($"Обноружено {Data.Products.SameNameProductsCount} продуктов под именем {Data.Products.EnteredName[0]}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                if (DialogResult == DialogResult.OK)
+                                {
+                                    B_GetCategoryData.Enabled = true;
+                                }
+                            }
+                            break;
+                        }
+                }
+            }
+        }
+
+        private void CHB_SelectAll_Rename_CheckedChanged(object sender, EventArgs e)
+        {
+            switch (CHB_SelectAll_Rename.Checked)
+            {
+                case true:
+                    {
+                        Data.Products.Rename.RanameAll = true;
+                        break;
+                    }
+                case false:
+                    {
+                        Data.Products.Rename.RanameAll = false;
+                        break;
+                    }
+            }
+        }
+
+        private void B_AcceptChoice_Delete_Click(object sender, EventArgs e)
+        {
+            CB_Products_Delete.Items.Clear();
+            switch (Data.Products.SearchWithUniqueCode[2])
+            {
+                case 0:
+                    {
+                        bool readen = false;
+                        Data.Products.Delete.EnteredCode = Convert.ToString(TB_InputDataForSearch_Delete.Text);
+                        string compareenteredcodequery = $"SELECT * FROM {Options.Table[1]} WHERE Код = @EnteredCode";
+                        using (OleDbCommand compareenteredcodecmd = new OleDbCommand(compareenteredcodequery, ConnectionMF))
+                        {
+                            compareenteredcodecmd.Parameters.Add("@EnteredCode", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Delete.EnteredCode);
+                            OleDbDataReader compareenteredcodereader = compareenteredcodecmd.ExecuteReader();
+                            if (!compareenteredcodereader.Read())
+                            {
+                                MessageBox.Show($"Товар под кодом {Data.Products.Delete.EnteredCode} не найден!", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    Data.Products.Delete.SelectedName = Convert.ToString(compareenteredcodereader[1]);
+                                    readen = true;
+                                }
+                                catch (Exception ex)
+                                {
+                                    Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                                    readen = false;
+                                }
+                                finally
+                                {
+                                    if (readen)
+                                    {
+                                        MessageBox.Show($"Товар {Data.Products.Delete.SelectedName} обноружен под кодом {Data.Products.Delete.EnteredCode} ", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
+                                }
+                            }
+                            compareenteredcodereader.Close();
+                        }
+                        break;
+                    }
+                case 1:
+                    {
+                        Data.Products.Delete.SelectedCategory = Convert.ToString(CB_CategorySearch_Delete.SelectedItem);
+                        GB_SelectProduct_Delete.Visible = true;
+                        Array.Resize(ref Data.Products.Delete.ProductsByCategory, 0);
+                        string getproductsbycategoryquery = $"SELECT * FROM {Options.Table[1]} WHERE Категория = @Category";
+                        using (OleDbCommand getproductsbycategorycmd = new OleDbCommand(getproductsbycategoryquery, ConnectionMF))
+                        {
+                            getproductsbycategorycmd.Parameters.Add("@Category", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Delete.SelectedCategory);
+                            using (OleDbDataReader getproductsbycategoryreader = getproductsbycategorycmd.ExecuteReader())
+                            {
+                                if (getproductsbycategoryreader.Read())
+                                {
+                                    int index = 0;
+                                    do
+                                    {
+                                        Array.Resize(ref Data.Products.Delete.ProductsByCategory, Data.Products.Delete.ProductsByCategory.Length + 1);
+                                        Data.Products.Delete.ProductsByCategory[index] = Convert.ToString(getproductsbycategoryreader.GetValue(1));
+                                        index++;
+                                    }
+                                    while (getproductsbycategoryreader.Read());
+                                }
+                            }
+                            for (int u = 0; u < Data.Products.Delete.ProductsByCategory.Length; u++)
+                            {
+                                CB_Products_Delete.Items.Add(Convert.ToString(Data.Products.Delete.ProductsByCategory[u]));
+                            }
+                        }
+                        break;
+                    }
+                case 2:
+                    {
+                        int counternames = 0;
+                        bool readen = false;
+                        Data.Products.Delete.EnteredName = Convert.ToString(TB_InputDataForSearch_Delete.Text);
+                        string compareenteredcodequery = $"SELECT * FROM {Options.Table[1]} WHERE Название = @EnteredName";
+                        using (OleDbCommand compareenteredcodecmd = new OleDbCommand(compareenteredcodequery, ConnectionMF))
+                        {
+                            compareenteredcodecmd.Parameters.Add("@EnteredName", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Delete.EnteredName);
+                            OleDbDataReader compareenteredcodereader = compareenteredcodecmd.ExecuteReader();
+                            if (!compareenteredcodereader.Read())
+                            {
+                                MessageBox.Show($"Товар под названием {Data.Products.Delete.EnteredName} не найден!", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                                readen = false;
+                            }
+                            else
+                            {
+                                readen = true;
+                                counternames = 1;
+                                do
+                                {
+                                    Array.Resize(ref Data.Products.Delete.SelectedNames, counternames);
+                                    Data.Products.Delete.SelectedNames[counternames - 1] = Convert.ToString(compareenteredcodereader[5]);
+                                    counternames++;
+                                }
+                                while (compareenteredcodereader.Read());
+                                string codes = null;
+                                for (int f = 0; f < Data.Products.Delete.SelectedNames.Length; f++)
+                                {
+                                    codes = Data.Products.Delete.SelectedNames[f] + "\r\n";
+                                }
+                                if (readen)
+                                {
+                                    if (counternames == 1)
+                                    {
+                                        MessageBox.Show($"Обноружен {Convert.ToString(counternames - 1)} товар под именем {Data.Products.Delete.EnteredName}\r\nКод товара\r\n{codes}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show($"Обноружено {Convert.ToString(counternames - 1)} товаров под именем {Data.Products.Delete.EnteredName}\r\nКоды товаров\r\n{codes}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
+                                }
+                            }
+                            compareenteredcodereader.Close();
+                        }
+                        break;
+                    }
+            }
+
+        }
+
+        private void B_RedactChoosenProduct_Click(object sender, EventArgs e)
+        {
+            bool IDreaden = false;
+            Data.Products.Update.ChoosenName = Convert.ToString(CB_Products_Update.SelectedItem);
+            string getIDbynamequery = $"SELECT * FROM {Options.Table[1]} WHERE Название = @Name";
+            try
+            {
+                using (OleDbCommand getIDbynamecmd = new OleDbCommand(getIDbynamequery, ConnectionMF))
+                {
+                    getIDbynamecmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Update.ChoosenName);
+                    OleDbDataReader getIdbynamereader = getIDbynamecmd.ExecuteReader();
+                    if (getIdbynamereader.Read())
+                    {
+                        Data.Products.Update.SelectedID = Convert.ToInt32(getIdbynamereader[0]);
+                    }
+                    getIdbynamereader.Close();
+                    IDreaden = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                IDreaden = false;
+            }
+            finally
+            {
+                if (IDreaden)
+                {
+                    ProductUpdate IPU = new ProductUpdate();
+                    IPU.Show();
+                }
             }
         }
     }

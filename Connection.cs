@@ -57,6 +57,10 @@ namespace Bookshop
                 }
                 public static int GetRowsCount(string Table, OleDbConnection InstanceConnection)
                 {
+                    if (InstanceConnection.State != ConnectionState.Open)
+                    {
+                        InstanceConnection.Open();
+                    }
                     int rowsCount;
                     string rowscountquery = "SELECT COUNT(*) FROM " + Table + "";
                     OleDbCommand rowcountcmd = new OleDbCommand(rowscountquery, InstanceConnection);

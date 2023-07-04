@@ -44,6 +44,7 @@
             this.TSMI_Category_Add = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMI_Datas = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMI_Synchronize = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMI_Update_DGV = new System.Windows.Forms.ToolStripMenuItem();
             this.PNL_GridView = new System.Windows.Forms.Panel();
             this.DGV_MS_Product = new System.Windows.Forms.DataGridView();
             this.iDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -56,6 +57,7 @@
             this.productBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.bSDBDataSet = new Bookshop.BSDBDataSet();
             this.PNL_DataOperation = new System.Windows.Forms.Panel();
+            this.B_UpdatePanel = new System.Windows.Forms.Button();
             this.CHB_CountOver1000 = new System.Windows.Forms.CheckBox();
             this.CHB_CountOver100 = new System.Windows.Forms.CheckBox();
             this.CHB_PriceOver1000 = new System.Windows.Forms.CheckBox();
@@ -79,15 +81,15 @@
             this.B_ProductName_Check = new System.Windows.Forms.Button();
             this.L_Info_ProductName = new System.Windows.Forms.Label();
             this.TB_ProductName = new System.Windows.Forms.TextBox();
-            this.PB_LogoMain = new System.Windows.Forms.PictureBox();
             this.PNL_CodeSelector = new System.Windows.Forms.Panel();
             this.TLP_ProdusctsRedact = new System.Windows.Forms.TableLayoutPanel();
             this.CHB_ProdRename_Code = new System.Windows.Forms.Panel();
             this.B_AcceptChoice_Rename = new System.Windows.Forms.Button();
             this.GB_SelectProduct_Rename = new System.Windows.Forms.GroupBox();
+            this.CHB_SelectAll_Rename = new System.Windows.Forms.CheckBox();
             this.L_Info_Product_NewName = new System.Windows.Forms.Label();
             this.B_RenameProduct = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.TB_NewName_Rename = new System.Windows.Forms.TextBox();
             this.B_CheckNewName = new System.Windows.Forms.Button();
             this.CB_Products_Rename = new System.Windows.Forms.ComboBox();
             this.L_NameCode_Rename = new System.Windows.Forms.Label();
@@ -95,7 +97,7 @@
             this.CHB_ProdRename_ByCode = new System.Windows.Forms.CheckBox();
             this.CHB_ProdRename_ByName = new System.Windows.Forms.CheckBox();
             this.CHB_ProdRename_ByCategory = new System.Windows.Forms.CheckBox();
-            this.TB_InpudDataForSearch_Rename = new System.Windows.Forms.TextBox();
+            this.TB_InputDataForSearch_Rename = new System.Windows.Forms.TextBox();
             this.L_Info_RedactRename = new System.Windows.Forms.Label();
             this.CB_CategorySearch_Rename = new System.Windows.Forms.ComboBox();
             this.L_InfoCatregorySearch_Rename = new System.Windows.Forms.Label();
@@ -105,7 +107,7 @@
             this.B_RedactChoosenProduct = new System.Windows.Forms.Button();
             this.CB_Products_Update = new System.Windows.Forms.ComboBox();
             this.L_NameCode_Update = new System.Windows.Forms.Label();
-            this.TB_InpudDataForSearch_Update = new System.Windows.Forms.TextBox();
+            this.TB_InputDataForSearch_Update = new System.Windows.Forms.TextBox();
             this.CB_CategorySearch_Update = new System.Windows.Forms.ComboBox();
             this.L_InfoCatregorySearch_Update = new System.Windows.Forms.Label();
             this.GB_SearchType_Update = new System.Windows.Forms.GroupBox();
@@ -120,7 +122,7 @@
             this.B_ProductDelete = new System.Windows.Forms.Button();
             this.CB_Products_Delete = new System.Windows.Forms.ComboBox();
             this.L_NameCode_Delete = new System.Windows.Forms.Label();
-            this.TB_InpudDataForSearch_Delete = new System.Windows.Forms.TextBox();
+            this.TB_InputDataForSearch_Delete = new System.Windows.Forms.TextBox();
             this.CB_CategorySearch_Delete = new System.Windows.Forms.ComboBox();
             this.L_InfoCatregorySearch_Delete = new System.Windows.Forms.Label();
             this.GB_SearchType_Delete = new System.Windows.Forms.GroupBox();
@@ -129,6 +131,9 @@
             this.CHB_ProdDelete_ByCategory = new System.Windows.Forms.CheckBox();
             this.L_Info_RedactDelete = new System.Windows.Forms.Label();
             this.productTableAdapter = new Bookshop.BSDBDataSetTableAdapters.ProductTableAdapter();
+            this.B_DEBUG_ADDCATEGORY = new System.Windows.Forms.Button();
+            this.B_DEBUG_ADDPRODUCT = new System.Windows.Forms.Button();
+            this.PB_LogoMain = new System.Windows.Forms.PictureBox();
             this.MS_Main.SuspendLayout();
             this.PNL_GridView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_MS_Product)).BeginInit();
@@ -137,7 +142,6 @@
             this.PNL_DataOperation.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_Count)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_Price)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_LogoMain)).BeginInit();
             this.PNL_CodeSelector.SuspendLayout();
             this.TLP_ProdusctsRedact.SuspendLayout();
             this.CHB_ProdRename_Code.SuspendLayout();
@@ -149,6 +153,7 @@
             this.PNL_Redact_Delete.SuspendLayout();
             this.GB_SelectProduct_Delete.SuspendLayout();
             this.GB_SearchType_Delete.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_LogoMain)).BeginInit();
             this.SuspendLayout();
             // 
             // MS_Main
@@ -239,7 +244,8 @@
             // TSMI_Datas
             // 
             this.TSMI_Datas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TSMI_Synchronize});
+            this.TSMI_Synchronize,
+            this.TSMI_Update_DGV});
             this.TSMI_Datas.Name = "TSMI_Datas";
             this.TSMI_Datas.Size = new System.Drawing.Size(59, 21);
             this.TSMI_Datas.Text = "Данные";
@@ -247,10 +253,19 @@
             // TSMI_Synchronize
             // 
             this.TSMI_Synchronize.BackColor = System.Drawing.Color.SandyBrown;
+            this.TSMI_Synchronize.Enabled = false;
             this.TSMI_Synchronize.Name = "TSMI_Synchronize";
-            this.TSMI_Synchronize.Size = new System.Drawing.Size(180, 22);
+            this.TSMI_Synchronize.Size = new System.Drawing.Size(169, 22);
             this.TSMI_Synchronize.Text = "Синхронизировать";
             this.TSMI_Synchronize.Click += new System.EventHandler(this.TSMI_Synchronize_Click);
+            // 
+            // TSMI_Update_DGV
+            // 
+            this.TSMI_Update_DGV.BackColor = System.Drawing.Color.SandyBrown;
+            this.TSMI_Update_DGV.Name = "TSMI_Update_DGV";
+            this.TSMI_Update_DGV.Size = new System.Drawing.Size(169, 22);
+            this.TSMI_Update_DGV.Text = "Обнавить таблицу";
+            this.TSMI_Update_DGV.Click += new System.EventHandler(this.TSMI_Update_DGV_Click);
             // 
             // PNL_GridView
             // 
@@ -368,6 +383,7 @@
             // 
             this.PNL_DataOperation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(200)))), ((int)(((byte)(145)))));
             this.PNL_DataOperation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PNL_DataOperation.Controls.Add(this.B_UpdatePanel);
             this.PNL_DataOperation.Controls.Add(this.CHB_CountOver1000);
             this.PNL_DataOperation.Controls.Add(this.CHB_CountOver100);
             this.PNL_DataOperation.Controls.Add(this.CHB_PriceOver1000);
@@ -391,10 +407,23 @@
             this.PNL_DataOperation.Controls.Add(this.B_ProductName_Check);
             this.PNL_DataOperation.Controls.Add(this.L_Info_ProductName);
             this.PNL_DataOperation.Controls.Add(this.TB_ProductName);
+            this.PNL_DataOperation.Enabled = false;
             this.PNL_DataOperation.Location = new System.Drawing.Point(22, 188);
             this.PNL_DataOperation.Name = "PNL_DataOperation";
-            this.PNL_DataOperation.Size = new System.Drawing.Size(338, 510);
+            this.PNL_DataOperation.Size = new System.Drawing.Size(338, 457);
             this.PNL_DataOperation.TabIndex = 3;
+            // 
+            // B_UpdatePanel
+            // 
+            this.B_UpdatePanel.BackColor = System.Drawing.Color.SandyBrown;
+            this.B_UpdatePanel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.B_UpdatePanel.Location = new System.Drawing.Point(226, 15);
+            this.B_UpdatePanel.Name = "B_UpdatePanel";
+            this.B_UpdatePanel.Size = new System.Drawing.Size(103, 26);
+            this.B_UpdatePanel.TabIndex = 35;
+            this.B_UpdatePanel.Text = "Обновить";
+            this.B_UpdatePanel.UseVisualStyleBackColor = false;
+            this.B_UpdatePanel.Click += new System.EventHandler(this.B_UpdatePanel_Click);
             // 
             // CHB_CountOver1000
             // 
@@ -413,6 +442,7 @@
             // CHB_CountOver100
             // 
             this.CHB_CountOver100.AutoSize = true;
+            this.CHB_CountOver100.Enabled = false;
             this.CHB_CountOver100.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CHB_CountOver100.Location = new System.Drawing.Point(177, 178);
             this.CHB_CountOver100.Name = "CHB_CountOver100";
@@ -440,6 +470,7 @@
             // CHB_PriceOver100
             // 
             this.CHB_PriceOver100.AutoSize = true;
+            this.CHB_PriceOver100.Enabled = false;
             this.CHB_PriceOver100.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CHB_PriceOver100.Location = new System.Drawing.Point(6, 178);
             this.CHB_PriceOver100.Name = "CHB_PriceOver100";
@@ -460,6 +491,7 @@
             this.B_ApplyData.TabIndex = 26;
             this.B_ApplyData.Text = "Принять данные";
             this.B_ApplyData.UseVisualStyleBackColor = false;
+            this.B_ApplyData.Click += new System.EventHandler(this.B_ApplyData_Click);
             // 
             // L_Info_UniqueID
             // 
@@ -491,6 +523,7 @@
             this.B_GenerateUniqueID.TabIndex = 22;
             this.B_GenerateUniqueID.Text = "Генерация кода";
             this.B_GenerateUniqueID.UseVisualStyleBackColor = false;
+            this.B_GenerateUniqueID.Click += new System.EventHandler(this.B_GenerateUniqueID_Click);
             // 
             // L_Info_GenerateUniqueID
             // 
@@ -518,10 +551,11 @@
             this.B_ApplyCount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.B_ApplyCount.Location = new System.Drawing.Point(174, 291);
             this.B_ApplyCount.Name = "B_ApplyCount";
-            this.B_ApplyCount.Size = new System.Drawing.Size(156, 25);
+            this.B_ApplyCount.Size = new System.Drawing.Size(155, 25);
             this.B_ApplyCount.TabIndex = 19;
             this.B_ApplyCount.Text = "Принять количество";
             this.B_ApplyCount.UseVisualStyleBackColor = false;
+            this.B_ApplyCount.Click += new System.EventHandler(this.B_ApplyCount_Click);
             // 
             // B_ApplyPrice
             // 
@@ -533,6 +567,7 @@
             this.B_ApplyPrice.TabIndex = 18;
             this.B_ApplyPrice.Text = "Принять цену";
             this.B_ApplyPrice.UseVisualStyleBackColor = false;
+            this.B_ApplyPrice.Click += new System.EventHandler(this.B_ApplyPrice_Click);
             // 
             // L_Info_Product_Count
             // 
@@ -548,19 +583,15 @@
             // 
             this.NUD_Count.BackColor = System.Drawing.Color.SandyBrown;
             this.NUD_Count.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.NUD_Count.Enabled = false;
             this.NUD_Count.Location = new System.Drawing.Point(177, 250);
             this.NUD_Count.Maximum = new decimal(new int[] {
             99,
             0,
             0,
             0});
-            this.NUD_Count.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.NUD_Count.Name = "NUD_Count";
-            this.NUD_Count.Size = new System.Drawing.Size(156, 22);
+            this.NUD_Count.Size = new System.Drawing.Size(152, 22);
             this.NUD_Count.TabIndex = 16;
             this.NUD_Count.Value = new decimal(new int[] {
             1,
@@ -583,14 +614,10 @@
             // 
             this.NUD_Price.BackColor = System.Drawing.Color.SandyBrown;
             this.NUD_Price.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.NUD_Price.Enabled = false;
             this.NUD_Price.Location = new System.Drawing.Point(7, 250);
             this.NUD_Price.Maximum = new decimal(new int[] {
             99,
-            0,
-            0,
-            0});
-            this.NUD_Price.Minimum = new decimal(new int[] {
-            1,
             0,
             0,
             0});
@@ -607,6 +634,7 @@
             // B_SelectCategory
             // 
             this.B_SelectCategory.BackColor = System.Drawing.Color.SandyBrown;
+            this.B_SelectCategory.Enabled = false;
             this.B_SelectCategory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.B_SelectCategory.Location = new System.Drawing.Point(211, 138);
             this.B_SelectCategory.Name = "B_SelectCategory";
@@ -614,20 +642,24 @@
             this.B_SelectCategory.TabIndex = 9;
             this.B_SelectCategory.Text = "Выбрать категорию";
             this.B_SelectCategory.UseVisualStyleBackColor = false;
+            this.B_SelectCategory.Click += new System.EventHandler(this.B_SelectCategory_Click);
             // 
             // CB_GetCategories
             // 
             this.CB_GetCategories.BackColor = System.Drawing.Color.PeachPuff;
+            this.CB_GetCategories.Enabled = false;
             this.CB_GetCategories.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CB_GetCategories.FormattingEnabled = true;
             this.CB_GetCategories.Location = new System.Drawing.Point(3, 138);
             this.CB_GetCategories.Name = "CB_GetCategories";
             this.CB_GetCategories.Size = new System.Drawing.Size(202, 25);
             this.CB_GetCategories.TabIndex = 8;
+            this.CB_GetCategories.SelectedIndexChanged += new System.EventHandler(this.CB_GetCategories_SelectedIndexChanged);
             // 
             // B_GetCategoryData
             // 
             this.B_GetCategoryData.BackColor = System.Drawing.Color.SandyBrown;
+            this.B_GetCategoryData.Enabled = false;
             this.B_GetCategoryData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.B_GetCategoryData.Location = new System.Drawing.Point(169, 75);
             this.B_GetCategoryData.Name = "B_GetCategoryData";
@@ -635,6 +667,7 @@
             this.B_GetCategoryData.TabIndex = 7;
             this.B_GetCategoryData.Text = "Получить данные категории";
             this.B_GetCategoryData.UseVisualStyleBackColor = false;
+            this.B_GetCategoryData.Click += new System.EventHandler(this.B_GetCategoryData_Click);
             // 
             // L_Info_Product_Category
             // 
@@ -656,6 +689,7 @@
             this.B_ProductName_Check.TabIndex = 5;
             this.B_ProductName_Check.Text = "Проверить название";
             this.B_ProductName_Check.UseVisualStyleBackColor = false;
+            this.B_ProductName_Check.Click += new System.EventHandler(this.B_ProductName_Check_Click);
             // 
             // L_Info_ProductName
             // 
@@ -674,18 +708,8 @@
             this.TB_ProductName.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.TB_ProductName.Location = new System.Drawing.Point(3, 47);
             this.TB_ProductName.Name = "TB_ProductName";
-            this.TB_ProductName.Size = new System.Drawing.Size(330, 22);
+            this.TB_ProductName.Size = new System.Drawing.Size(326, 22);
             this.TB_ProductName.TabIndex = 4;
-            // 
-            // PB_LogoMain
-            // 
-            this.PB_LogoMain.Image = global::Bookshop.Properties.Resources.BSManager_MainLogo;
-            this.PB_LogoMain.Location = new System.Drawing.Point(22, 37);
-            this.PB_LogoMain.Name = "PB_LogoMain";
-            this.PB_LogoMain.Size = new System.Drawing.Size(338, 131);
-            this.PB_LogoMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PB_LogoMain.TabIndex = 2;
-            this.PB_LogoMain.TabStop = false;
             // 
             // PNL_CodeSelector
             // 
@@ -711,7 +735,7 @@
             this.TLP_ProdusctsRedact.Name = "TLP_ProdusctsRedact";
             this.TLP_ProdusctsRedact.RowCount = 1;
             this.TLP_ProdusctsRedact.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.TLP_ProdusctsRedact.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 244F));
+            this.TLP_ProdusctsRedact.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 257F));
             this.TLP_ProdusctsRedact.Size = new System.Drawing.Size(966, 257);
             this.TLP_ProdusctsRedact.TabIndex = 0;
             // 
@@ -722,7 +746,7 @@
             this.CHB_ProdRename_Code.Controls.Add(this.GB_SelectProduct_Rename);
             this.CHB_ProdRename_Code.Controls.Add(this.L_NameCode_Rename);
             this.CHB_ProdRename_Code.Controls.Add(this.GB_SearchType_Rename);
-            this.CHB_ProdRename_Code.Controls.Add(this.TB_InpudDataForSearch_Rename);
+            this.CHB_ProdRename_Code.Controls.Add(this.TB_InputDataForSearch_Rename);
             this.CHB_ProdRename_Code.Controls.Add(this.L_Info_RedactRename);
             this.CHB_ProdRename_Code.Controls.Add(this.CB_CategorySearch_Rename);
             this.CHB_ProdRename_Code.Controls.Add(this.L_InfoCatregorySearch_Rename);
@@ -735,6 +759,7 @@
             // B_AcceptChoice_Rename
             // 
             this.B_AcceptChoice_Rename.BackColor = System.Drawing.Color.SandyBrown;
+            this.B_AcceptChoice_Rename.Enabled = false;
             this.B_AcceptChoice_Rename.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.B_AcceptChoice_Rename.Location = new System.Drawing.Point(166, 125);
             this.B_AcceptChoice_Rename.Name = "B_AcceptChoice_Rename";
@@ -742,12 +767,14 @@
             this.B_AcceptChoice_Rename.TabIndex = 40;
             this.B_AcceptChoice_Rename.Text = "Выбрать";
             this.B_AcceptChoice_Rename.UseVisualStyleBackColor = false;
+            this.B_AcceptChoice_Rename.Click += new System.EventHandler(this.B_AcceptChoice_Rename_Click);
             // 
             // GB_SelectProduct_Rename
             // 
+            this.GB_SelectProduct_Rename.Controls.Add(this.CHB_SelectAll_Rename);
             this.GB_SelectProduct_Rename.Controls.Add(this.L_Info_Product_NewName);
             this.GB_SelectProduct_Rename.Controls.Add(this.B_RenameProduct);
-            this.GB_SelectProduct_Rename.Controls.Add(this.textBox1);
+            this.GB_SelectProduct_Rename.Controls.Add(this.TB_NewName_Rename);
             this.GB_SelectProduct_Rename.Controls.Add(this.B_CheckNewName);
             this.GB_SelectProduct_Rename.Controls.Add(this.CB_Products_Rename);
             this.GB_SelectProduct_Rename.Location = new System.Drawing.Point(3, 146);
@@ -757,6 +784,19 @@
             this.GB_SelectProduct_Rename.TabStop = false;
             this.GB_SelectProduct_Rename.Tag = "0";
             this.GB_SelectProduct_Rename.Text = "Выбрать Товар";
+            // 
+            // CHB_SelectAll_Rename
+            // 
+            this.CHB_SelectAll_Rename.AutoSize = true;
+            this.CHB_SelectAll_Rename.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CHB_SelectAll_Rename.Location = new System.Drawing.Point(226, 48);
+            this.CHB_SelectAll_Rename.Name = "CHB_SelectAll_Rename";
+            this.CHB_SelectAll_Rename.Size = new System.Drawing.Size(82, 21);
+            this.CHB_SelectAll_Rename.TabIndex = 44;
+            this.CHB_SelectAll_Rename.Tag = "2";
+            this.CHB_SelectAll_Rename.Text = "Удалить все";
+            this.CHB_SelectAll_Rename.UseVisualStyleBackColor = true;
+            this.CHB_SelectAll_Rename.CheckedChanged += new System.EventHandler(this.CHB_SelectAll_Rename_CheckedChanged);
             // 
             // L_Info_Product_NewName
             // 
@@ -779,15 +819,15 @@
             this.B_RenameProduct.Text = "Переименовать товар";
             this.B_RenameProduct.UseVisualStyleBackColor = false;
             // 
-            // textBox1
+            // TB_NewName_Rename
             // 
-            this.textBox1.BackColor = System.Drawing.Color.PeachPuff;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.textBox1.Location = new System.Drawing.Point(0, 76);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(147, 22);
-            this.textBox1.TabIndex = 37;
+            this.TB_NewName_Rename.BackColor = System.Drawing.Color.PeachPuff;
+            this.TB_NewName_Rename.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TB_NewName_Rename.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.TB_NewName_Rename.Location = new System.Drawing.Point(6, 76);
+            this.TB_NewName_Rename.Name = "TB_NewName_Rename";
+            this.TB_NewName_Rename.Size = new System.Drawing.Size(147, 22);
+            this.TB_NewName_Rename.TabIndex = 37;
             // 
             // B_CheckNewName
             // 
@@ -799,13 +839,14 @@
             this.B_CheckNewName.TabIndex = 42;
             this.B_CheckNewName.Text = "Проверить название";
             this.B_CheckNewName.UseVisualStyleBackColor = false;
+            this.B_CheckNewName.Click += new System.EventHandler(this.B_CheckNewName_Click);
             // 
             // CB_Products_Rename
             // 
             this.CB_Products_Rename.BackColor = System.Drawing.Color.PeachPuff;
             this.CB_Products_Rename.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CB_Products_Rename.FormattingEnabled = true;
-            this.CB_Products_Rename.Location = new System.Drawing.Point(3, 21);
+            this.CB_Products_Rename.Location = new System.Drawing.Point(6, 21);
             this.CB_Products_Rename.Name = "CB_Products_Rename";
             this.CB_Products_Rename.Size = new System.Drawing.Size(144, 25);
             this.CB_Products_Rename.TabIndex = 38;
@@ -874,15 +915,15 @@
             this.CHB_ProdRename_ByCategory.UseVisualStyleBackColor = true;
             this.CHB_ProdRename_ByCategory.CheckedChanged += new System.EventHandler(this.CHB_ProdRename_ByCategory_CheckedChanged);
             // 
-            // TB_InpudDataForSearch_Rename
+            // TB_InputDataForSearch_Rename
             // 
-            this.TB_InpudDataForSearch_Rename.BackColor = System.Drawing.Color.PeachPuff;
-            this.TB_InpudDataForSearch_Rename.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TB_InpudDataForSearch_Rename.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.TB_InpudDataForSearch_Rename.Location = new System.Drawing.Point(3, 50);
-            this.TB_InpudDataForSearch_Rename.Name = "TB_InpudDataForSearch_Rename";
-            this.TB_InpudDataForSearch_Rename.Size = new System.Drawing.Size(147, 22);
-            this.TB_InpudDataForSearch_Rename.TabIndex = 38;
+            this.TB_InputDataForSearch_Rename.BackColor = System.Drawing.Color.PeachPuff;
+            this.TB_InputDataForSearch_Rename.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TB_InputDataForSearch_Rename.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.TB_InputDataForSearch_Rename.Location = new System.Drawing.Point(3, 50);
+            this.TB_InputDataForSearch_Rename.Name = "TB_InputDataForSearch_Rename";
+            this.TB_InputDataForSearch_Rename.Size = new System.Drawing.Size(147, 22);
+            this.TB_InputDataForSearch_Rename.TabIndex = 38;
             // 
             // L_Info_RedactRename
             // 
@@ -922,7 +963,7 @@
             this.PNL_Redact_Update.Controls.Add(this.B_AcceptChoice_Update);
             this.PNL_Redact_Update.Controls.Add(this.GB_SelectProduct_Update);
             this.PNL_Redact_Update.Controls.Add(this.L_NameCode_Update);
-            this.PNL_Redact_Update.Controls.Add(this.TB_InpudDataForSearch_Update);
+            this.PNL_Redact_Update.Controls.Add(this.TB_InputDataForSearch_Update);
             this.PNL_Redact_Update.Controls.Add(this.CB_CategorySearch_Update);
             this.PNL_Redact_Update.Controls.Add(this.L_InfoCatregorySearch_Update);
             this.PNL_Redact_Update.Controls.Add(this.GB_SearchType_Update);
@@ -936,6 +977,7 @@
             // B_AcceptChoice_Update
             // 
             this.B_AcceptChoice_Update.BackColor = System.Drawing.Color.SandyBrown;
+            this.B_AcceptChoice_Update.Enabled = false;
             this.B_AcceptChoice_Update.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.B_AcceptChoice_Update.Location = new System.Drawing.Point(159, 125);
             this.B_AcceptChoice_Update.Name = "B_AcceptChoice_Update";
@@ -943,6 +985,7 @@
             this.B_AcceptChoice_Update.TabIndex = 27;
             this.B_AcceptChoice_Update.Text = "Выбрать";
             this.B_AcceptChoice_Update.UseVisualStyleBackColor = false;
+            this.B_AcceptChoice_Update.Click += new System.EventHandler(this.B_AcceptChoice_Update_Click);
             // 
             // GB_SelectProduct_Update
             // 
@@ -966,6 +1009,7 @@
             this.B_RedactChoosenProduct.TabIndex = 37;
             this.B_RedactChoosenProduct.Text = "Редактировать данные товаров";
             this.B_RedactChoosenProduct.UseVisualStyleBackColor = false;
+            this.B_RedactChoosenProduct.Click += new System.EventHandler(this.B_RedactChoosenProduct_Click);
             // 
             // CB_Products_Update
             // 
@@ -987,15 +1031,15 @@
             this.L_NameCode_Update.Text = "Код";
             this.L_NameCode_Update.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // TB_InpudDataForSearch_Update
+            // TB_InputDataForSearch_Update
             // 
-            this.TB_InpudDataForSearch_Update.BackColor = System.Drawing.Color.PeachPuff;
-            this.TB_InpudDataForSearch_Update.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TB_InpudDataForSearch_Update.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.TB_InpudDataForSearch_Update.Location = new System.Drawing.Point(6, 50);
-            this.TB_InpudDataForSearch_Update.Name = "TB_InpudDataForSearch_Update";
-            this.TB_InpudDataForSearch_Update.Size = new System.Drawing.Size(147, 22);
-            this.TB_InpudDataForSearch_Update.TabIndex = 34;
+            this.TB_InputDataForSearch_Update.BackColor = System.Drawing.Color.PeachPuff;
+            this.TB_InputDataForSearch_Update.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TB_InputDataForSearch_Update.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.TB_InputDataForSearch_Update.Location = new System.Drawing.Point(6, 50);
+            this.TB_InputDataForSearch_Update.Name = "TB_InputDataForSearch_Update";
+            this.TB_InputDataForSearch_Update.Size = new System.Drawing.Size(147, 22);
+            this.TB_InputDataForSearch_Update.TabIndex = 34;
             // 
             // CB_CategorySearch_Update
             // 
@@ -1089,7 +1133,7 @@
             this.PNL_Redact_Delete.Controls.Add(this.B_AcceptChoice_Delete);
             this.PNL_Redact_Delete.Controls.Add(this.GB_SelectProduct_Delete);
             this.PNL_Redact_Delete.Controls.Add(this.L_NameCode_Delete);
-            this.PNL_Redact_Delete.Controls.Add(this.TB_InpudDataForSearch_Delete);
+            this.PNL_Redact_Delete.Controls.Add(this.TB_InputDataForSearch_Delete);
             this.PNL_Redact_Delete.Controls.Add(this.CB_CategorySearch_Delete);
             this.PNL_Redact_Delete.Controls.Add(this.L_InfoCatregorySearch_Delete);
             this.PNL_Redact_Delete.Controls.Add(this.GB_SearchType_Delete);
@@ -1110,6 +1154,7 @@
             this.B_AcceptChoice_Delete.TabIndex = 42;
             this.B_AcceptChoice_Delete.Text = "Выбрать";
             this.B_AcceptChoice_Delete.UseVisualStyleBackColor = false;
+            this.B_AcceptChoice_Delete.Click += new System.EventHandler(this.B_AcceptChoice_Delete_Click);
             // 
             // GB_SelectProduct_Delete
             // 
@@ -1141,7 +1186,7 @@
             // 
             this.B_ProductDelete.BackColor = System.Drawing.Color.SandyBrown;
             this.B_ProductDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.B_ProductDelete.Location = new System.Drawing.Point(166, 52);
+            this.B_ProductDelete.Location = new System.Drawing.Point(166, 73);
             this.B_ProductDelete.Name = "B_ProductDelete";
             this.B_ProductDelete.Size = new System.Drawing.Size(132, 25);
             this.B_ProductDelete.TabIndex = 43;
@@ -1168,15 +1213,15 @@
             this.L_NameCode_Delete.Text = "Код";
             this.L_NameCode_Delete.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // TB_InpudDataForSearch_Delete
+            // TB_InputDataForSearch_Delete
             // 
-            this.TB_InpudDataForSearch_Delete.BackColor = System.Drawing.Color.PeachPuff;
-            this.TB_InpudDataForSearch_Delete.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TB_InpudDataForSearch_Delete.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.TB_InpudDataForSearch_Delete.Location = new System.Drawing.Point(3, 51);
-            this.TB_InpudDataForSearch_Delete.Name = "TB_InpudDataForSearch_Delete";
-            this.TB_InpudDataForSearch_Delete.Size = new System.Drawing.Size(147, 22);
-            this.TB_InpudDataForSearch_Delete.TabIndex = 38;
+            this.TB_InputDataForSearch_Delete.BackColor = System.Drawing.Color.PeachPuff;
+            this.TB_InputDataForSearch_Delete.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TB_InputDataForSearch_Delete.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.TB_InputDataForSearch_Delete.Location = new System.Drawing.Point(3, 51);
+            this.TB_InputDataForSearch_Delete.Name = "TB_InputDataForSearch_Delete";
+            this.TB_InputDataForSearch_Delete.Size = new System.Drawing.Size(147, 22);
+            this.TB_InputDataForSearch_Delete.TabIndex = 38;
             // 
             // CB_CategorySearch_Delete
             // 
@@ -1268,12 +1313,50 @@
             // 
             this.productTableAdapter.ClearBeforeFill = true;
             // 
+            // B_DEBUG_ADDCATEGORY
+            // 
+            this.B_DEBUG_ADDCATEGORY.BackColor = System.Drawing.Color.OrangeRed;
+            this.B_DEBUG_ADDCATEGORY.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.B_DEBUG_ADDCATEGORY.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.B_DEBUG_ADDCATEGORY.Location = new System.Drawing.Point(22, 682);
+            this.B_DEBUG_ADDCATEGORY.Name = "B_DEBUG_ADDCATEGORY";
+            this.B_DEBUG_ADDCATEGORY.Size = new System.Drawing.Size(202, 25);
+            this.B_DEBUG_ADDCATEGORY.TabIndex = 35;
+            this.B_DEBUG_ADDCATEGORY.Text = "ОТКЛАДКА: ДОБАВИТЬ КАТЕГОРИЮ";
+            this.B_DEBUG_ADDCATEGORY.UseVisualStyleBackColor = false;
+            this.B_DEBUG_ADDCATEGORY.Click += new System.EventHandler(this.B_DEBUG_ADDCATEGORY_Click);
+            // 
+            // B_DEBUG_ADDPRODUCT
+            // 
+            this.B_DEBUG_ADDPRODUCT.BackColor = System.Drawing.Color.OrangeRed;
+            this.B_DEBUG_ADDPRODUCT.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.B_DEBUG_ADDPRODUCT.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.B_DEBUG_ADDPRODUCT.Location = new System.Drawing.Point(22, 651);
+            this.B_DEBUG_ADDPRODUCT.Name = "B_DEBUG_ADDPRODUCT";
+            this.B_DEBUG_ADDPRODUCT.Size = new System.Drawing.Size(202, 25);
+            this.B_DEBUG_ADDPRODUCT.TabIndex = 36;
+            this.B_DEBUG_ADDPRODUCT.Text = "ОТКЛАДКА: ДОБАВИТЬ ПРОДУКТ";
+            this.B_DEBUG_ADDPRODUCT.UseVisualStyleBackColor = false;
+            this.B_DEBUG_ADDPRODUCT.Click += new System.EventHandler(this.B_DEBUG_ADDPRODUCT_Click);
+            // 
+            // PB_LogoMain
+            // 
+            this.PB_LogoMain.Image = global::Bookshop.Properties.Resources.BSManager_MainLogo;
+            this.PB_LogoMain.Location = new System.Drawing.Point(22, 37);
+            this.PB_LogoMain.Name = "PB_LogoMain";
+            this.PB_LogoMain.Size = new System.Drawing.Size(338, 131);
+            this.PB_LogoMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PB_LogoMain.TabIndex = 2;
+            this.PB_LogoMain.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PeachPuff;
             this.ClientSize = new System.Drawing.Size(1366, 749);
+            this.Controls.Add(this.B_DEBUG_ADDCATEGORY);
+            this.Controls.Add(this.B_DEBUG_ADDPRODUCT);
             this.Controls.Add(this.PNL_CodeSelector);
             this.Controls.Add(this.PNL_DataOperation);
             this.Controls.Add(this.PB_LogoMain);
@@ -1300,7 +1383,6 @@
             this.PNL_DataOperation.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_Count)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_Price)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_LogoMain)).EndInit();
             this.PNL_CodeSelector.ResumeLayout(false);
             this.TLP_ProdusctsRedact.ResumeLayout(false);
             this.CHB_ProdRename_Code.ResumeLayout(false);
@@ -1320,6 +1402,7 @@
             this.GB_SelectProduct_Delete.PerformLayout();
             this.GB_SearchType_Delete.ResumeLayout(false);
             this.GB_SearchType_Delete.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_LogoMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1392,13 +1475,13 @@
         private System.Windows.Forms.ComboBox CB_CategorySearch_Update;
         private System.Windows.Forms.Label L_InfoCatregorySearch_Update;
         private System.Windows.Forms.Label L_NameCode_Update;
-        private System.Windows.Forms.TextBox TB_InpudDataForSearch_Update;
+        private System.Windows.Forms.TextBox TB_InputDataForSearch_Update;
         private System.Windows.Forms.Label L_NameCode_Rename;
-        private System.Windows.Forms.TextBox TB_InpudDataForSearch_Rename;
+        private System.Windows.Forms.TextBox TB_InputDataForSearch_Rename;
         private System.Windows.Forms.ComboBox CB_CategorySearch_Rename;
         private System.Windows.Forms.Label L_InfoCatregorySearch_Rename;
         private System.Windows.Forms.Label L_NameCode_Delete;
-        private System.Windows.Forms.TextBox TB_InpudDataForSearch_Delete;
+        private System.Windows.Forms.TextBox TB_InputDataForSearch_Delete;
         private System.Windows.Forms.ComboBox CB_CategorySearch_Delete;
         private System.Windows.Forms.Label L_InfoCatregorySearch_Delete;
         private System.Windows.Forms.Button B_AcceptChoice_Update;
@@ -1409,7 +1492,7 @@
         public System.Windows.Forms.GroupBox GB_SelectProduct_Rename;
         private System.Windows.Forms.Label L_Info_Product_NewName;
         private System.Windows.Forms.Button B_RenameProduct;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox TB_NewName_Rename;
         private System.Windows.Forms.Button B_CheckNewName;
         private System.Windows.Forms.ComboBox CB_Products_Rename;
         public System.Windows.Forms.GroupBox GB_SelectProduct_Delete;
@@ -1424,5 +1507,10 @@
         public System.Windows.Forms.CheckBox CHB_CountOver100;
         public System.Windows.Forms.CheckBox CHB_PriceOver1000;
         public System.Windows.Forms.CheckBox CHB_PriceOver100;
+        private System.Windows.Forms.ToolStripMenuItem TSMI_Update_DGV;
+        private System.Windows.Forms.Button B_DEBUG_ADDPRODUCT;
+        private System.Windows.Forms.Button B_DEBUG_ADDCATEGORY;
+        private System.Windows.Forms.Button B_UpdatePanel;
+        public System.Windows.Forms.CheckBox CHB_SelectAll_Rename;
     }
 }

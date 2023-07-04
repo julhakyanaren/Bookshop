@@ -15,6 +15,7 @@ namespace Bookshop
         {
             Config.Managers[0] = "Диспечер соединения";
             Config.Managers[1] = "Диспечер данных";
+            Config.Managers[2] = "Диспечер конфигурации";
         }
         public static void LoadComponents()
         {
@@ -28,6 +29,7 @@ namespace Bookshop
             }
         }
     }
+  
     public static class Handlers
     {
         public static class InformationProvider
