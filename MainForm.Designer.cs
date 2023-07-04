@@ -135,8 +135,6 @@
             this.CHB_ProdDelete_ByCategory = new System.Windows.Forms.CheckBox();
             this.L_Info_RedactDelete = new System.Windows.Forms.Label();
             this.productTableAdapter = new Bookshop.BSDBDataSetTableAdapters.ProductTableAdapter();
-            this.B_DEBUG_ADDCATEGORY = new System.Windows.Forms.Button();
-            this.B_DEBUG_ADDPRODUCT = new System.Windows.Forms.Button();
             this.TSMI_Info = new System.Windows.Forms.ToolStripMenuItem();
             this.PB_LogoMain = new System.Windows.Forms.PictureBox();
             this.MS_Main.SuspendLayout();
@@ -446,7 +444,7 @@
             this.PNL_DataOperation.Enabled = false;
             this.PNL_DataOperation.Location = new System.Drawing.Point(22, 188);
             this.PNL_DataOperation.Name = "PNL_DataOperation";
-            this.PNL_DataOperation.Size = new System.Drawing.Size(338, 457);
+            this.PNL_DataOperation.Size = new System.Drawing.Size(338, 510);
             this.PNL_DataOperation.TabIndex = 3;
             // 
             // B_UpdatePanel
@@ -1364,30 +1362,6 @@
             // 
             this.productTableAdapter.ClearBeforeFill = true;
             // 
-            // B_DEBUG_ADDCATEGORY
-            // 
-            this.B_DEBUG_ADDCATEGORY.BackColor = System.Drawing.Color.OrangeRed;
-            this.B_DEBUG_ADDCATEGORY.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.B_DEBUG_ADDCATEGORY.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.B_DEBUG_ADDCATEGORY.Location = new System.Drawing.Point(22, 682);
-            this.B_DEBUG_ADDCATEGORY.Name = "B_DEBUG_ADDCATEGORY";
-            this.B_DEBUG_ADDCATEGORY.Size = new System.Drawing.Size(202, 25);
-            this.B_DEBUG_ADDCATEGORY.TabIndex = 35;
-            this.B_DEBUG_ADDCATEGORY.Text = "ОТКЛАДКА: ДОБАВИТЬ КАТЕГОРИЮ";
-            this.B_DEBUG_ADDCATEGORY.UseVisualStyleBackColor = false;
-            // 
-            // B_DEBUG_ADDPRODUCT
-            // 
-            this.B_DEBUG_ADDPRODUCT.BackColor = System.Drawing.Color.OrangeRed;
-            this.B_DEBUG_ADDPRODUCT.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.B_DEBUG_ADDPRODUCT.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.B_DEBUG_ADDPRODUCT.Location = new System.Drawing.Point(22, 651);
-            this.B_DEBUG_ADDPRODUCT.Name = "B_DEBUG_ADDPRODUCT";
-            this.B_DEBUG_ADDPRODUCT.Size = new System.Drawing.Size(202, 25);
-            this.B_DEBUG_ADDPRODUCT.TabIndex = 36;
-            this.B_DEBUG_ADDPRODUCT.Text = "ОТКЛАДКА: ДОБАВИТЬ ПРОДУКТ";
-            this.B_DEBUG_ADDPRODUCT.UseVisualStyleBackColor = false;
-            // 
             // TSMI_Info
             // 
             this.TSMI_Info.Name = "TSMI_Info";
@@ -1411,8 +1385,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PeachPuff;
             this.ClientSize = new System.Drawing.Size(1366, 749);
-            this.Controls.Add(this.B_DEBUG_ADDCATEGORY);
-            this.Controls.Add(this.B_DEBUG_ADDPRODUCT);
             this.Controls.Add(this.PNL_CodeSelector);
             this.Controls.Add(this.PNL_DataOperation);
             this.Controls.Add(this.PB_LogoMain);
@@ -1564,8 +1536,6 @@
         public System.Windows.Forms.CheckBox CHB_PriceOver1000;
         public System.Windows.Forms.CheckBox CHB_PriceOver100;
         private System.Windows.Forms.ToolStripMenuItem TSMI_Update_DGV;
-        private System.Windows.Forms.Button B_DEBUG_ADDPRODUCT;
-        private System.Windows.Forms.Button B_DEBUG_ADDCATEGORY;
         private System.Windows.Forms.Button B_UpdatePanel;
         public System.Windows.Forms.CheckBox CHB_SelectAll_Rename;
         private System.Windows.Forms.Button B_SelectName_Delete;

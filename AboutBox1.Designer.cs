@@ -58,7 +58,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(274, 21);
             this.label1.TabIndex = 1;
-            this.label1.Text = "BookShop Manager V 0.5.6.0 Pre Release_V2";
+            this.label1.Text = "BookShop Manager V 0.5.6.1 Pre Release_V2";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
