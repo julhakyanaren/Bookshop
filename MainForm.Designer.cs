@@ -45,6 +45,7 @@
             this.TSMI_Datas = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMI_Synchronize = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMI_Update_DGV = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMI_Info = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMI_DebugMode = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMI_DEBUG_ADDCATEGORY = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMI_DEBUG_ADDPRODUCT = new System.Windows.Forms.ToolStripMenuItem();
@@ -135,7 +136,6 @@
             this.CHB_ProdDelete_ByCategory = new System.Windows.Forms.CheckBox();
             this.L_Info_RedactDelete = new System.Windows.Forms.Label();
             this.productTableAdapter = new Bookshop.BSDBDataSetTableAdapters.ProductTableAdapter();
-            this.TSMI_Info = new System.Windows.Forms.ToolStripMenuItem();
             this.PB_LogoMain = new System.Windows.Forms.PictureBox();
             this.MS_Main.SuspendLayout();
             this.PNL_GridView.SuspendLayout();
@@ -243,8 +243,8 @@
             // 
             this.TSMI_Category_Add.BackColor = System.Drawing.Color.SandyBrown;
             this.TSMI_Category_Add.Name = "TSMI_Category_Add";
-            this.TSMI_Category_Add.Size = new System.Drawing.Size(214, 22);
-            this.TSMI_Category_Add.Text = "Добавыть новую категорию";
+            this.TSMI_Category_Add.Size = new System.Drawing.Size(180, 22);
+            this.TSMI_Category_Add.Text = "Менеджер категории";
             this.TSMI_Category_Add.Click += new System.EventHandler(this.TSMI_Category_Add_Click);
             // 
             // TSMI_Datas
@@ -261,7 +261,7 @@
             this.TSMI_Synchronize.BackColor = System.Drawing.Color.SandyBrown;
             this.TSMI_Synchronize.Enabled = false;
             this.TSMI_Synchronize.Name = "TSMI_Synchronize";
-            this.TSMI_Synchronize.Size = new System.Drawing.Size(169, 22);
+            this.TSMI_Synchronize.Size = new System.Drawing.Size(180, 22);
             this.TSMI_Synchronize.Text = "Синхронизировать";
             this.TSMI_Synchronize.Click += new System.EventHandler(this.TSMI_Synchronize_Click);
             // 
@@ -269,9 +269,16 @@
             // 
             this.TSMI_Update_DGV.BackColor = System.Drawing.Color.SandyBrown;
             this.TSMI_Update_DGV.Name = "TSMI_Update_DGV";
-            this.TSMI_Update_DGV.Size = new System.Drawing.Size(169, 22);
-            this.TSMI_Update_DGV.Text = "Обнавить таблицу";
+            this.TSMI_Update_DGV.Size = new System.Drawing.Size(180, 22);
+            this.TSMI_Update_DGV.Text = "Обновить таблицу";
             this.TSMI_Update_DGV.Click += new System.EventHandler(this.TSMI_Update_DGV_Click);
+            // 
+            // TSMI_Info
+            // 
+            this.TSMI_Info.Name = "TSMI_Info";
+            this.TSMI_Info.Size = new System.Drawing.Size(46, 21);
+            this.TSMI_Info.Text = "Инфо";
+            this.TSMI_Info.Click += new System.EventHandler(this.TSMI_Info_Click);
             // 
             // TSMI_DebugMode
             // 
@@ -282,7 +289,6 @@
             this.TSMI_DebugMode.Name = "TSMI_DebugMode";
             this.TSMI_DebugMode.Size = new System.Drawing.Size(71, 21);
             this.TSMI_DebugMode.Text = "ОТКЛАДКА";
-            this.TSMI_DebugMode.Visible = false;
             // 
             // TSMI_DEBUG_ADDCATEGORY
             // 
@@ -290,7 +296,6 @@
             this.TSMI_DEBUG_ADDCATEGORY.Name = "TSMI_DEBUG_ADDCATEGORY";
             this.TSMI_DEBUG_ADDCATEGORY.Size = new System.Drawing.Size(211, 22);
             this.TSMI_DEBUG_ADDCATEGORY.Text = "Добавить категорию Debug";
-            this.TSMI_DEBUG_ADDCATEGORY.Visible = false;
             this.TSMI_DEBUG_ADDCATEGORY.Click += new System.EventHandler(this.TSMI_DEBUG_ADDCATEGORY_Click);
             // 
             // TSMI_DEBUG_ADDPRODUCT
@@ -1361,13 +1366,6 @@
             // productTableAdapter
             // 
             this.productTableAdapter.ClearBeforeFill = true;
-            // 
-            // TSMI_Info
-            // 
-            this.TSMI_Info.Name = "TSMI_Info";
-            this.TSMI_Info.Size = new System.Drawing.Size(46, 21);
-            this.TSMI_Info.Text = "Инфо";
-            this.TSMI_Info.Click += new System.EventHandler(this.TSMI_Info_Click);
             // 
             // PB_LogoMain
             // 

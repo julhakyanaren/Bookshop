@@ -21,6 +21,7 @@ namespace Bookshop
         {
             public static int DebugUnloackCount = 5;
             public static bool DebugModON = false;
+            public static int[] DataCounter = { 1, 1, 1 };
         }
     }
     public static class Data

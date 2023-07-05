@@ -225,24 +225,23 @@ namespace Bookshop
                 Data.Categories.LastID = Data.Categories.FirstID + Data.Categories.IDCount - 1;
                 bool successfullinsert = false;
                 string newcategoryinsertquery = "INSERT INTO " + Table + " (Название, Количество) VALUES (@Value2, @Value3)"; //@Value1
-                OleDbCommand newcategoryinsertcmd = new OleDbCommand (newcategoryinsertquery, ConnectionCM);
-                newcategoryinsertcmd.Parameters.Add("@Value2", OleDbType.VarChar).Value = Convert.ToString(Data.Categories.EnteredName[0]);
-                newcategoryinsertcmd.Parameters.Add("@Value3", OleDbType.VarChar).Value = Convert.ToString(0);
-                try
+                using (OleDbCommand newcategoryinsertcmd = new OleDbCommand(newcategoryinsertquery, ConnectionCM))
                 {
-                    newcategoryinsertcmd.ExecuteNonQuery();
-                    successfullinsert = true;
-                }
-                catch (Exception ex)
-                {
-                    Handlers.ErrorProvider.ExcaptionShowMessages(ex, 2);
-                    successfullinsert = false;
-                }
-                finally
-                {
-                    if (successfullinsert)
+                    newcategoryinsertcmd.Parameters.Add("@Value2", OleDbType.VarChar).Value = Convert.ToString(Data.Categories.EnteredName[0]);
+                    newcategoryinsertcmd.Parameters.Add("@Value3", OleDbType.VarChar).Value = Convert.ToString(0);
+                    try
                     {
-                        if (Connections.Direct.Queries.TableOperationsCore(Connections.Direct.Queries.CreateCategoryTable(Data.Categories.EnteredName[0]), ConnectionCM))
+                        newcategoryinsertcmd.ExecuteNonQuery();
+                        successfullinsert = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Handlers.ErrorProvider.ExcaptionShowMessages(ex, 2);
+                        successfullinsert = false;
+                    }
+                    finally
+                    {
+                        if (successfullinsert)
                         {
                             Handlers.InformationProvider.DataOperationState(0, 0, 1);
                             TB_CategoryName.Clear();
@@ -255,13 +254,8 @@ namespace Bookshop
                             B_CM_Add.Enabled = false;
                         }
                     }
-                    else
-                    {
-                        Handlers.InformationProvider.DataOperationState(1, 0, 1);
-                        TB_CategoryName.Clear();
-                        B_CM_Add.Enabled = false;
-                    }
                 }
+                
             }
         }
 
@@ -456,28 +450,7 @@ namespace Bookshop
                 {
                     if (renamed)
                     {
-                        bool tableranamed = true;
-                        string[] renamequeries = { Connections.Direct.Queries.RenameCategoryTableStage1(Data.Categories.OldName, Data.Categories.NewName[0]), Connections.Direct.Queries.RenameCategoryTableStage2(Data.Categories.OldName) };
-                        for (int b = 0; b < renamequeries.Length; b++)
-                        {
-                            if (Connections.Direct.Queries.TableOperationsCore(renamequeries[1], ConnectionCM))
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                tableranamed = false;
-                                break;
-                            }
-                        }
-                        if (tableranamed)
-                        {
-                            Handlers.InformationProvider.DataOperationState(0, 1, 1);
-                        }
-                        else
-                        {
-                            Handlers.InformationProvider.DataOperationState(1, 1, 1);
-                        }
+                        Handlers.InformationProvider.DataOperationState(0, 1, 1);
                     }
                     else
                     {
@@ -527,18 +500,21 @@ namespace Bookshop
                         {
                             string Table = "Category";
                             string deletequery = "DELETE FROM " + Table + " WHERE Название = @Value";
-                            OleDbCommand deletecmd = new OleDbCommand(deletequery, ConnectionCM);
-                            deletecmd.Parameters.Add("@Value", OleDbType.VarChar).Value = Convert.ToString(Data.Categories.OldName);
-                            try
+                            using (OleDbCommand deletecmd = new OleDbCommand(deletequery, ConnectionCM))
                             {
-                                deletecmd.ExecuteNonQuery();
-                                deleted = true;
+                                deletecmd.Parameters.Add("@Value", OleDbType.VarChar).Value = Convert.ToString(Data.Categories.OldName);
+                                try
+                                {
+                                    deletecmd.ExecuteNonQuery();
+                                    deleted = true;
+                                }
+                                catch (Exception ex)
+                                {
+                                    Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                                    deleted = false;
+                                }
                             }
-                            catch (Exception ex)
-                            {
-                                Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
-                                deleted = false;
-                            }
+                            
                             break;
                         }
                     case DialogResult.No:
@@ -551,16 +527,9 @@ namespace Bookshop
                 {
                     case true:
                         {
-                            if (Connections.Direct.Queries.TableOperationsCore(Connections.Direct.Queries.DeleteCategoryTable(Data.Categories.OldName), ConnectionCM))
-                            {
-                                CB_CM_Categories.Items.Clear();
-                                Array.Resize(ref Data.Categories.ExistingNames, 0);
-                                Handlers.InformationProvider.DataOperationState(0, 2, 1);
-                            }
-                            else
-                            {
-                                Handlers.InformationProvider.DataOperationState(1, 2, 1);
-                            }
+                            CB_CM_Categories.Items.Clear();
+                            Array.Resize(ref Data.Categories.ExistingNames, 0);
+                            Handlers.InformationProvider.DataOperationState(0, 2, 1);
                             break;
                         }
                     case false:
@@ -658,6 +627,81 @@ namespace Bookshop
                         B2.BackColor = Color.SandyBrown;
                         break;
                     }
+            }
+        }
+        private void TSMI_CM_SynchronizeData_Click(object sender, EventArgs e)
+        {
+            int updatedindex = 1;
+            try
+            {
+                string[] categorynames = new string[0];
+                int selector = 0;
+                string getcategoriesquery = $"SELECT * FROM {Options.Table[0]} WHERE ID > 0";
+                using (OleDbCommand getcategoriescmd = new OleDbCommand(getcategoriesquery, ConnectionCM))
+                {
+                    using (OleDbDataReader getcategoriesreader = getcategoriescmd.ExecuteReader())
+                    {
+                        if (getcategoriesreader.Read())
+                        {
+                            selector = 1;
+                            do
+                            {
+                                Array.Resize(ref categorynames, selector);
+                                categorynames[selector - 1] = getcategoriesreader.GetString(1);
+                                selector++;
+                            }
+                            while (getcategoriesreader.Read());
+                        }
+                    }
+                }
+                int categoriescount = categorynames.Length;
+                if (categoriescount > 0)
+                {
+                    int[] counts = new int[categoriescount];
+                    string getdataquery = $"SELECT * FROM {Options.Table[1]} WHERE Категория = @Category";
+                    using (OleDbCommand getdatacmd = new OleDbCommand(getdataquery, ConnectionCM))
+                    {
+                        for (int i = 0; i < categoriescount; i++)
+                        {
+                            getdatacmd.Parameters.Add("@Category", OleDbType.VarChar).Value = Convert.ToString(categorynames[i]);
+                            using (OleDbDataReader getdatareader = getdatacmd.ExecuteReader())
+                            {
+                                if (getdatareader.Read())
+                                {
+                                    while (getdatareader.Read())
+                                    {
+                                        counts[i]++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    int[] newcounts = new int[counts.Length];
+                    for (int nc = 0; nc < counts.Length; nc++)
+                    {
+                        newcounts[nc] = counts[nc] + 1;
+                    }
+                    string updatecountquery = $"UPDATE {Options.Table[0]} SET Количество = @NewCount WHERE Название = @Category";
+                    using (OleDbCommand updatecountcmd = new OleDbCommand(updatecountquery, ConnectionCM))
+                    {
+                        for (int u = 0; u < newcounts.Length; u++)
+                        {
+                            updatecountcmd.Parameters.Add("@Category", OleDbType.VarChar).Value = Convert.ToString(categorynames[u]);
+                            updatecountcmd.Parameters.Add("@NewCount", OleDbType.VarChar).Value = Convert.ToString(newcounts[u]);
+                            updatecountcmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                updatedindex = 0;
+            }
+            catch (Exception ex)
+            {
+                Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                updatedindex = 1;
+            }
+            finally
+            {
+                Handlers.InformationProvider.DataOperationState(updatedindex, 1, 1);
             }
         }
     }

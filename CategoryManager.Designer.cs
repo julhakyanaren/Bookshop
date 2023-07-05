@@ -44,6 +44,11 @@
             this.PB_LogoMain = new System.Windows.Forms.PictureBox();
             this.PNL_CM_DGV = new System.Windows.Forms.Panel();
             this.DGV_CM_Category = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.bSDBDataSet = new Bookshop.BSDBDataSet();
             this.PNL_CM_ControlElements = new System.Windows.Forms.Panel();
             this.SC_CM_ControlElement = new System.Windows.Forms.SplitContainer();
             this.PNL_CM_AddCategory = new System.Windows.Forms.Panel();
@@ -68,16 +73,14 @@
             this.TB_LoadingData = new System.Windows.Forms.TextBox();
             this.PNL_LoadingData = new System.Windows.Forms.Panel();
             this.PB_CM_LoadingData = new System.Windows.Forms.ProgressBar();
-            this.bSDBDataSet = new Bookshop.BSDBDataSet();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.categoryTableAdapter = new Bookshop.BSDBDataSetTableAdapters.CategoryTableAdapter();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TSMI_CM_SynchronizeData = new System.Windows.Forms.ToolStripMenuItem();
             this.MS_Category.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PB_LogoMain)).BeginInit();
             this.PNL_CM_DGV.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_CM_Category)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bSDBDataSet)).BeginInit();
             this.PNL_CM_ControlElements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SC_CM_ControlElement)).BeginInit();
             this.SC_CM_ControlElement.Panel1.SuspendLayout();
@@ -86,8 +89,6 @@
             this.PNL_CM_AddCategory.SuspendLayout();
             this.PNL_CM_AddRedact.SuspendLayout();
             this.PNL_LoadingData.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bSDBDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // MS_Category
@@ -97,7 +98,8 @@
             this.MS_Category.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.MS_Category.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSMI_CM_File,
-            this.TSMI_CM_ConnectionData});
+            this.TSMI_CM_ConnectionData,
+            this.TSMI_CM_SynchronizeData});
             this.MS_Category.Location = new System.Drawing.Point(0, 0);
             this.MS_Category.Name = "MS_Category";
             this.MS_Category.Size = new System.Drawing.Size(687, 25);
@@ -138,7 +140,7 @@
             this.TSMI_CM_CheckConnection,
             this.TSMI_CM_Connect});
             this.TSMI_CM_Connection.Name = "TSMI_CM_Connection";
-            this.TSMI_CM_Connection.Size = new System.Drawing.Size(137, 22);
+            this.TSMI_CM_Connection.Size = new System.Drawing.Size(180, 22);
             this.TSMI_CM_Connection.Text = "Соеденение";
             // 
             // TSMI_CM_Status
@@ -219,6 +221,39 @@
             this.DGV_CM_Category.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.DGV_CM_Category.Size = new System.Drawing.Size(431, 304);
             this.DGV_CM_Category.TabIndex = 0;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "ID";
+            this.dataGridViewTextBoxColumn3.FillWeight = 50F;
+            this.dataGridViewTextBoxColumn3.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.DataPropertyName = "Название";
+            this.dataGridViewTextBoxColumn4.FillWeight = 200F;
+            this.dataGridViewTextBoxColumn4.HeaderText = "Название";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "Количество";
+            this.dataGridViewTextBoxColumn5.HeaderText = "Количество";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // bindingSource1
+            // 
+            this.bindingSource1.DataMember = "Category";
+            this.bindingSource1.DataSource = this.bSDBDataSet;
+            // 
+            // bSDBDataSet
+            // 
+            this.bSDBDataSet.DataSetName = "BSDBDataSet";
+            this.bSDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // PNL_CM_ControlElements
             // 
@@ -507,42 +542,16 @@
             this.PB_CM_LoadingData.Size = new System.Drawing.Size(276, 23);
             this.PB_CM_LoadingData.TabIndex = 0;
             // 
-            // bSDBDataSet
-            // 
-            this.bSDBDataSet.DataSetName = "BSDBDataSet";
-            this.bSDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // bindingSource1
-            // 
-            this.bindingSource1.DataMember = "Category";
-            this.bindingSource1.DataSource = this.bSDBDataSet;
-            // 
             // categoryTableAdapter
             // 
             this.categoryTableAdapter.ClearBeforeFill = true;
             // 
-            // dataGridViewTextBoxColumn3
+            // TSMI_CM_SynchronizeData
             // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "ID";
-            this.dataGridViewTextBoxColumn3.FillWeight = 50F;
-            this.dataGridViewTextBoxColumn3.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "Название";
-            this.dataGridViewTextBoxColumn4.FillWeight = 200F;
-            this.dataGridViewTextBoxColumn4.HeaderText = "Название";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.Width = 200;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Количество";
-            this.dataGridViewTextBoxColumn5.HeaderText = "Количество";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.TSMI_CM_SynchronizeData.Name = "TSMI_CM_SynchronizeData";
+            this.TSMI_CM_SynchronizeData.Size = new System.Drawing.Size(159, 21);
+            this.TSMI_CM_SynchronizeData.Text = "Синхоронизировать данные";
+            this.TSMI_CM_SynchronizeData.Click += new System.EventHandler(this.TSMI_CM_SynchronizeData_Click);
             // 
             // CategoryManager
             // 
@@ -571,6 +580,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_LogoMain)).EndInit();
             this.PNL_CM_DGV.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_CM_Category)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bSDBDataSet)).EndInit();
             this.PNL_CM_ControlElements.ResumeLayout(false);
             this.SC_CM_ControlElement.Panel1.ResumeLayout(false);
             this.SC_CM_ControlElement.Panel2.ResumeLayout(false);
@@ -582,8 +593,6 @@
             this.PNL_CM_AddRedact.PerformLayout();
             this.PNL_LoadingData.ResumeLayout(false);
             this.PNL_LoadingData.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bSDBDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -639,5 +648,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.ToolStripMenuItem TSMI_CM_SynchronizeData;
     }
 }

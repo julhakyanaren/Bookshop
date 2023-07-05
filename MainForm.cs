@@ -669,21 +669,20 @@ namespace Bookshop
                     case > 0:
                         {
                             excaption = false;
-                            string getproductnamequery = $"SELECT @Column FROM {Options.Table[1]} WHERE Название = @Name";
+                            string getproductnamequery = $"SELECT Название FROM {Options.Table[1]} WHERE Название = @Name";
                             try
                             {
                                 using (OleDbCommand getproductnamecmd = new OleDbCommand(getproductnamequery, ConnectionMF))
                                 {
                                     getproductnamecmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(Data.Products.EnteredName[0]);
-                                    getproductnamecmd.Parameters.Add("@Column", OleDbType.VarChar).Value = Convert.ToString("Название");
                                     OleDbDataReader getproductnamereader = getproductnamecmd.ExecuteReader();
                                     if (!getproductnamereader.Read())
                                     {
-                                        Data.Products.NameExist[0] = true;
+                                        Data.Products.NameExist[0] = false;
                                     }
                                     else
                                     {
-                                        Data.Products.NameExist[0] = false;
+                                        Data.Products.NameExist[0] = true;
                                         Data.Products.ProductNameOverOne[0] = true;
                                         Data.Products.SameNameProductsCount = 0;
                                         while (getproductnamereader.Read())
@@ -848,6 +847,7 @@ namespace Bookshop
                         if (InsertProductsData())
                         {
                             Handlers.InformationProvider.DataOperationState(0, 0, 1);
+                            UpdateProductAdd_Values();
                         }
                         else
                         {
@@ -892,7 +892,7 @@ namespace Bookshop
                     OleDbDataReader selectreader = selectcmd.ExecuteReader();
                     if (selectreader.Read())
                     {
-                        count = Convert.ToInt32(selectreader[2]);
+                        count = selectreader.GetInt32(2);
                     }
                     else
                     {
@@ -1064,30 +1064,33 @@ namespace Bookshop
                     }
             }
         }
-
+        public void UpdateProductAdd_Values()
+        {
+            TB_ProductName.Clear();
+            B_GetCategoryData.Enabled = false;
+            CB_GetCategories.Items.Clear();
+            CB_GetCategories.Text = String.Empty;
+            CB_GetCategories.Enabled = false;
+            B_SelectCategory.Enabled = false;
+            CHB_CountOver100.Enabled = false;
+            CHB_CountOver100.Checked = false;
+            CHB_PriceOver100.Enabled = false;
+            CHB_PriceOver100.Checked = false;
+            NUD_Price.Enabled = false;
+            NUD_Price.Value = 1;
+            NUD_Count.Enabled = false;
+            NUD_Count.Value = 1;
+            B_GenerateUniqueID.Enabled = EnableCodeGenerator(1);
+            TB_UniqueCode.Clear();
+            B_ApplyData.Enabled = false;
+        }
         private void B_UpdatePanel_Click(object sender, EventArgs e)
         {
             switch (DialogResult = MessageBox.Show("Вернуть данные в исходное состояние?", $"{Config.Managers[2]}", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
             {
                 case DialogResult.Yes:
                     {
-                        TB_ProductName.Clear();
-                        B_GetCategoryData.Enabled = false;
-                        CB_GetCategories.Items.Clear();
-                        CB_GetCategories.Text = String.Empty;
-                        CB_GetCategories.Enabled = false;
-                        B_SelectCategory.Enabled = false;
-                        CHB_CountOver100.Enabled = false;
-                        CHB_CountOver100.Checked = false;
-                        CHB_PriceOver100.Enabled = false;
-                        CHB_PriceOver100.Checked = false;
-                        NUD_Price.Enabled = false;
-                        NUD_Price.Value = 1;
-                        NUD_Count.Enabled = false;
-                        NUD_Count.Value = 1;
-                        B_GenerateUniqueID.Enabled = EnableCodeGenerator(1);
-                        TB_UniqueCode.Clear();
-                        B_ApplyData.Enabled = false;
+                        UpdateProductAdd_Values();
                         break;
                     }
                 case DialogResult.No:
@@ -1719,57 +1722,60 @@ namespace Bookshop
             if (ConnectionMF.State != ConnectionState.Open)
             {
                 ConnectionMF.Open();
-                string insert = $"INSERT INTO {Options.Table[0]} (Название, Количество) VALUES (@V1, @V2)";
-                using (OleDbCommand cmd = new OleDbCommand(insert, ConnectionMF))
-                {
-                    cmd.Parameters.Add("@V1", OleDbType.VarChar).Value = Convert.ToString("TestCategory");
-                    cmd.Parameters.Add("@V2", OleDbType.VarChar).Value = Convert.ToString(1);
-                    cmd.ExecuteNonQuery();
-                }
+                ADD_DEBUGDATA(0);
                 ConnectionMF.Close();
             }
             else
             {
-                string insert = $"INSERT INTO {Options.Table[0]} (Название, Количество) VALUES (@V1, @V2)";
-                using (OleDbCommand cmd = new OleDbCommand(insert, ConnectionMF))
-                {
-                    cmd.Parameters.Add("@V1", OleDbType.VarChar).Value = Convert.ToString("Test");
-                    cmd.Parameters.Add("@V2", OleDbType.VarChar).Value = Convert.ToString(100);
-                    cmd.ExecuteNonQuery();
-                }
+                ADD_DEBUGDATA(0);
             }
         }
-
+        public void ADD_DEBUGDATA(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    {
+                        string insert = $"INSERT INTO {Options.Table[0]} (Название, Количество) VALUES (@V1, @V2)";
+                        using (OleDbCommand cmd = new OleDbCommand(insert, ConnectionMF))
+                        {
+                            cmd.Parameters.Add("@V1", OleDbType.VarChar).Value = Convert.ToString($"TestCategory{Convert.ToString(Config.Debug.DataCounter[0])}");
+                            cmd.Parameters.Add("@V2", OleDbType.VarChar).Value = Convert.ToString(1);
+                            cmd.ExecuteNonQuery();
+                            Config.Debug.DataCounter[0]++;
+                        }
+                        break;
+                    }
+                case 1:
+                    {
+                        string insertquery = $"INSERT INTO {Options.Table[1]} (Название, Категория, Количество, Цена, Код, Изменение) VALUES (@Name, @Category, @Count, @Price, @Code, @Date)";
+                        using (OleDbCommand insertcmd = new OleDbCommand(insertquery, ConnectionMF))
+                        {
+                            insertcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString($"TestProduct{Convert.ToString(Config.Debug.DataCounter[1])}");
+                            insertcmd.Parameters.Add("@Category", OleDbType.VarChar).Value = Convert.ToString($"TestCategory{Convert.ToString(Config.Debug.DataCounter[0] - 1)}");
+                            insertcmd.Parameters.Add("@Count", OleDbType.Integer).Value = Convert.ToInt32("-1");
+                            insertcmd.Parameters.Add("@Price", OleDbType.Integer).Value = Convert.ToInt32("-1");
+                            insertcmd.Parameters.Add("@Code", OleDbType.VarChar).Value = Convert.ToString($"TEST-0000{Convert.ToString(Config.Debug.DataCounter[2])}");
+                            insertcmd.Parameters.Add("@Date", OleDbType.DBDate).Value = Convert.ToDateTime(DateTime.MaxValue);
+                            insertcmd.ExecuteNonQuery();
+                            Config.Debug.DataCounter[1]++;
+                            Config.Debug.DataCounter[2]++;
+                        }
+                        break;
+                    }
+            }
+        }
         private void TSMI_DEBUG_ADDPRODUCT_Click(object sender, EventArgs e)
         {
             if (ConnectionMF.State != ConnectionState.Open)
             {
                 ConnectionMF.Open();
-                string insertquery = $"INSERT INTO {Options.Table[1]} (Название, Категория, Количество, Цена, Код, Изменение) VALUES (@Name, @Category, @Count, @Price, @Code, @Date)";
-                using (OleDbCommand insertcmd = new OleDbCommand(insertquery, ConnectionMF))
-                {
-                    insertcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString("TestProduct");
-                    insertcmd.Parameters.Add("@Category", OleDbType.VarChar).Value = Convert.ToString("TestCategory");
-                    insertcmd.Parameters.Add("@Count", OleDbType.Integer).Value = Convert.ToInt32("-1");
-                    insertcmd.Parameters.Add("@Price", OleDbType.Integer).Value = Convert.ToInt32("-1");
-                    insertcmd.Parameters.Add("@Code", OleDbType.VarChar).Value = Convert.ToString("TEST-00001");
-                    insertcmd.Parameters.Add("@Date", OleDbType.DBDate).Value = Convert.ToDateTime(DateTime.MaxValue);
-                    insertcmd.ExecuteNonQuery();
-                }
+                ADD_DEBUGDATA(1);
                 ConnectionMF.Close();
             }
             else
             {
-                string insertquery = $"INSERT INTO {Options.Table[1]} (Название, Категория, Количество, Цена, Код, Изменение) VALUES (@Name, @Category, @Count, @Price, @Code, @Date)";
-                using (OleDbCommand insertcmd = new OleDbCommand(insertquery, ConnectionMF))
-                {
-                    insertcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString("TestProduct");
-                    insertcmd.Parameters.Add("@Category", OleDbType.VarChar).Value = Convert.ToString("TestCategory");
-                    insertcmd.Parameters.Add("@Count", OleDbType.Integer).Value = Convert.ToInt32(0);
-                    insertcmd.Parameters.Add("@Price", OleDbType.Integer).Value = Convert.ToInt32(0);
-                    insertcmd.Parameters.Add("@Code", OleDbType.VarChar).Value = Convert.ToString("TESTCODE001");
-                    insertcmd.Parameters.Add("@Date", OleDbType.DBDate).Value = Convert.ToDateTime(DateTime.Now);
-                }
+                ADD_DEBUGDATA(1);
             }
         }
 

@@ -18,43 +18,6 @@ namespace Bookshop
         {
             public static class Queries
             {
-                public static string CreateCategoryTable(string TableName)
-                {
-                    string Query = $"CREATE TABLE {TableName} (ID COUNTER PRIMARY KEY, Наименование VARCHAR(255), Количество INT, ЦЕНА INT, Код VARCHAR(255))";
-                    return Query;
-                }
-                public static string DeleteCategoryTable(string TableName)
-                {
-                    string Query = $"DROP TABLE {TableName}";
-                    return Query;
-                }
-                public static string RenameCategoryTableStage1(string OldTableName, string NewTableName)
-                {
-                    string Query = $"SELECT * INTO {NewTableName} FROM {OldTableName}";
-                    return Query;
-                }
-                public static string RenameCategoryTableStage2(string OldTableName)
-                {
-                    string Query = $"DROP TABLE {OldTableName}";
-                    return Query;
-                }
-                public static bool TableOperationsCore(string Query, OleDbConnection InstanceConnection)
-                {
-                    using (OleDbCommand Command = new OleDbCommand(Query, InstanceConnection))
-                    {
-                        try
-                        {
-                            Command.ExecuteNonQuery();
-                            return true;
-                        }
-                        catch (Exception ex)
-                        {
-                            Handlers.ErrorProvider.ExcaptionShowMessages(ex, 5);
-                            return false;
-                        }
-                        
-                    }
-                }
                 public static int GetRowsCount(string Table, OleDbConnection InstanceConnection)
                 {
                     if (InstanceConnection.State != ConnectionState.Open)
@@ -63,34 +26,19 @@ namespace Bookshop
                     }
                     int rowsCount;
                     string rowscountquery = "SELECT COUNT(*) FROM " + Table + "";
-                    OleDbCommand rowcountcmd = new OleDbCommand(rowscountquery, InstanceConnection);
-                    try
+                    using (OleDbCommand rowcountcmd = new OleDbCommand(rowscountquery, InstanceConnection))
                     {
-                        rowsCount = (int)rowcountcmd.ExecuteScalar();
-                    }
-                    catch (Exception ex)
-                    {
-                        Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
-                        rowsCount = -1;
-                    }
-                    return rowsCount;
-                }
-                public static int GetFirstID(string Table, OleDbConnection InstanceConnection)
-                {
-                    int firstID = 0;
-                    string GetValue = "SELECT * FROM " + Table + " WHERE ID > 0";
-                    using (OleDbCommand getIDCommand = new OleDbCommand(GetValue, InstanceConnection))
-                    {
-                        using (OleDbDataReader getIDReeader = getIDCommand.ExecuteReader())
+                        try
                         {
-                            while (getIDReeader.Read())
-                            {
-                                firstID = Convert.ToInt32(getIDReeader[0]);
-                                break;
-                            }
+                            rowsCount = (int)rowcountcmd.ExecuteScalar();
+                        }
+                        catch (Exception ex)
+                        {
+                            Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
+                            rowsCount = -1;
                         }
                     }
-                    return firstID;
+                    return rowsCount;
                 }
             }
             public static string ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=BSDB.mdb";
