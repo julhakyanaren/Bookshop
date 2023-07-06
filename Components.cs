@@ -28,6 +28,31 @@ namespace Bookshop
                 Options.FormClosed[f] = !Options.FormOpened[f];
             }
         }
+        public static int AbsoluteConvertStringToInt32(string NumericText, out bool CanParse)
+        {
+            CanParse = false;
+            int Lenght = NumericText.Length;
+            char[] CharArray = new char[Lenght];
+            int[] IntArray = new int[Lenght];
+            int Result = 0;
+            double degree = 1;
+            CharArray = NumericText.ToCharArray();
+            try
+            {
+                for (int c = 0; c < Lenght; c++)
+                {
+                    IntArray[c] = Convert.ToInt32(Char.GetNumericValue(CharArray[c]));
+                    degree = Lenght - c - 1;
+                    Result += IntArray[c] * Convert.ToInt32(Math.Pow(10, degree));
+                }
+                CanParse = true;
+            }
+            catch
+            {
+                CanParse = false;
+            }
+            return Result;
+        }
     }
   
     public static class Handlers

@@ -67,20 +67,11 @@ namespace Bookshop
                 public static string[] RedactCode = new string[2];
                 public static DateTime[] RedactDate = new DateTime[2];
                 public static bool[] ChangeMode = new bool[4];
-                public static string[] FinalOverwriteData = new string[6];
-            }
-            public static class Rename
-            {
-                public static string SelectedCategory;
-                public static string[] ProductsByCategory = new string[0];
-                public static string EnteredCode;
-                public static string SelectedName;
-                public static string EnteredName;
-                public static string[] SelectedNames = new string[0];
-                public static string[] NewName = new string[2];
-                public static bool NameEpty;
-                public static bool RanameAll;
-                public static int[] SelectedNamesIDs = new int[0];
+                public static class OverwriteData
+                {
+                    public static string[] StringValues = new string[2];
+                    public static int[] IntegerValues = new int[2];
+                }
             }
             public static class Delete
             {

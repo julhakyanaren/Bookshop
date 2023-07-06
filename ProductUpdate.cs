@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Bookshop
 {
@@ -238,28 +239,49 @@ namespace Bookshop
 
         private void B_ApplyChanges_Click(object sender, EventArgs e)
         {
+            Connections.Direct.ConnectionStateReload(ConnectionPU);
+            bool[] Parsed = { false, false };
             if (Data.Products.Update.ChangeMode[0])
             {
-                Data.Products.Update.RedactName[1] = Convert.ToString(TB_New_ProductName.Text);
-                Data.Products.Update.FinalOverwriteData[0] = Convert.ToString(Data.Products.Update.RedactName[1]);
+                Data.Products.Update.OverwriteData.StringValues[0] = Convert.ToString(TB_New_ProductName.Text);
+            }
+            else
+            {
+                Data.Products.Update.OverwriteData.StringValues[0] = Convert.ToString(TB_Old_ProductName.Text);
             }
             if (Data.Products.Update.ChangeMode[1])
             {
-                Data.Products.Update.RedactCategory[1] = Convert.ToString(CB_New_ProductCategory.SelectedItem);
-                Data.Products.Update.FinalOverwriteData[1] = Convert.ToString(Data.Products.Update.RedactCategory[1]);
+                Data.Products.Update.OverwriteData.StringValues[1] = Convert.ToString(CB_New_ProductCategory.SelectedItem);
+            }
+            else
+            {
+                Data.Products.Update.OverwriteData.StringValues[1] = Convert.ToString(TB_Old_ProductCategory.Text);
             }
             if (Data.Products.Update.ChangeMode[2])
             {
-                Data.Products.Update.RedactCount[1] = Convert.ToInt32(NUD_New_ProductCount.Value);
-                Data.Products.Update.FinalOverwriteData[2] = Convert.ToString(Data.Products.Update.RedactCount[1]);
+                Data.Products.Update.OverwriteData.IntegerValues[0] = Convert.ToInt32(NUD_New_ProductCount.Value);
+            }
+            else
+            {
+                Data.Products.Update.OverwriteData.IntegerValues[0] = Convert.ToInt32(Methods.AbsoluteConvertStringToInt32(TB_Old_ProductCount.Text, out Parsed[0]));
+                if (!Parsed[0])
+                {
+                    Data.Products.Update.OverwriteData.IntegerValues[0] = Convert.ToInt32(Data.Products.Update.RedactCount[0]);
+                }
             }
             if (Data.Products.Update.ChangeMode[3])
             {
-                Data.Products.Update.RedactPrice[1] = Convert.ToInt32(NUD_New_ProductPrice.Value);
-                Data.Products.Update.FinalOverwriteData[3] = Convert.ToString(Data.Products.Update.RedactPrice[1]);
+                Data.Products.Update.OverwriteData.IntegerValues[1] = Convert.ToInt32(NUD_New_ProductPrice.Value);
             }
-            Data.Products.Update.FinalOverwriteData[4] = Data.Products.Update.RedactCode[0];
-            DialogResult = MessageBox.Show("Данные сохранены", $"{Config.Managers[0]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+            {
+                Data.Products.Update.OverwriteData.IntegerValues[1] = Convert.ToInt32(Methods.AbsoluteConvertStringToInt32(TB_Old_ProductPrice.Text, out Parsed[1]));
+                if (!Parsed[1])
+                {
+                    Data.Products.Update.OverwriteData.IntegerValues[1] = Convert.ToInt32(Data.Products.Update.RedactCount[1]);
+                }
+            }
+            DialogResult = MessageBox.Show("Данные сохранены", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (DialogResult == DialogResult.OK)
             {
                 B_OverwriteData.Enabled = true;
@@ -268,7 +290,7 @@ namespace Bookshop
 
         private void B_OverwriteData_Click(object sender, EventArgs e)
         {
-            switch (DialogResult = MessageBox.Show("При перезаписе данных старые оброзцы данных кроме поля 'Код' будут безвозвратно удалены\r\nПродолжить", $"{Config.Managers[1]}"))
+            switch (DialogResult = MessageBox.Show("При перезаписе данных старые оброзцы данных кроме поля 'Код' будут безвозвратно удалены\r\nПродолжить", $"{Config.Managers[1]}", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
             {
                 case DialogResult.Yes:
                     {
@@ -283,34 +305,23 @@ namespace Bookshop
         }
         public void OverwriteData()
         {
+            Connections.Direct.ConnectionStateReload(ConnectionPU);
             int redacted = 1;
             string[] redactquery = new string[2];
             string[] keys = new string[6];
-            keys[0] = "Название";
-            keys[1] = "Категория";
-            keys[2] = "Количество";
-            keys[3] = "Цена";
-            keys[4] = "Код";
-            keys[5] = "Изменение";
-            Data.Products.Update.FinalOverwriteData[5] = Convert.ToString(DateTime.Now);
             try
             {
-                for (int c = 0; c < Data.Products.Update.ChangeMode.Length; c++)
+                redactquery[0] = $"UPDATE {Options.Table[1]} SET Название = @Name, Категория = @Category, Количество = @Count, Цена = @Price, Код = @Code, Изменение = @Change WHERE ID = @SelectedID";
+                using (OleDbCommand redactcmd = new OleDbCommand(redactquery[0], ConnectionPU))
                 {
-                    if (Data.Products.Update.ChangeMode[c])
-                    {
-                        redactquery[0] = $"UPDATE {Options.Table[1]} SET {keys[c]} = {Data.Products.Update.FinalOverwriteData[c]} WHERE ID = {Convert.ToString(Data.Products.Update.SelectedID)}";
-                        using (OleDbCommand redactcmd = new OleDbCommand(redactquery[0], ConnectionPU))
-                        {
-                            redactcmd.ExecuteNonQuery();
-                        }
-                    }
-                }
-                Data.Products.Update.FinalOverwriteData[5] = Convert.ToString(DateTime.Now);
-                redactquery[1] = $"UPDATE { Options.Table[1]} SET {keys[4]} = {Data.Products.Update.FinalOverwriteData[4]},{keys[5]} = {Data.Products.Update.FinalOverwriteData[5]} WHERE ID = {Convert.ToString(Data.Products.Update.SelectedID)}";
-                using (OleDbCommand redactcodedatecmd = new OleDbCommand(redactquery[1], ConnectionPU))
-                {
-                    redactcodedatecmd.ExecuteNonQuery();
+                    redactcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Update.OverwriteData.StringValues[0]);
+                    redactcmd.Parameters.Add("@Category", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Update.OverwriteData.StringValues[1]);
+                    redactcmd.Parameters.Add("@Count", OleDbType.Integer).Value = Convert.ToInt32(Data.Products.Update.OverwriteData.IntegerValues[0]);
+                    redactcmd.Parameters.Add("@Price", OleDbType.Integer).Value = Convert.ToInt32(Data.Products.Update.OverwriteData.IntegerValues[1]);
+                    redactcmd.Parameters.Add("@Code", OleDbType.VarChar).Value = Convert.ToString(TB_Old_ProductCode.Text);
+                    redactcmd.Parameters.Add("@Change", OleDbType.DBDate).Value = Convert.ToDateTime(DateTime.Now);
+                    redactcmd.Parameters.Add("@SelectedID", OleDbType.Integer).Value = Convert.ToInt32(Data.Products.Update.SelectedID);
+                    redactcmd.ExecuteNonQuery();
                 }
                 redacted = 0;
             }
@@ -322,6 +333,19 @@ namespace Bookshop
             {
                 Handlers.InformationProvider.DataOperationState(redacted, 1, 1);
                 ResetToDefaultValues();
+            }
+        }
+
+        private void ProductUpdate_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (ConnectionPU.State == ConnectionState.Closed)
+            {
+                ConnectionPU.Open();
+                ConnectionPU.Close();
+            }
+            else
+            {
+                ConnectionPU.Close();
             }
         }
     }

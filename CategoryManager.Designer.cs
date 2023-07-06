@@ -41,6 +41,7 @@
             this.TSMI_CM_Status = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMI_CM_CheckConnection = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMI_CM_Connect = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMI_CM_SynchronizeData = new System.Windows.Forms.ToolStripMenuItem();
             this.PB_LogoMain = new System.Windows.Forms.PictureBox();
             this.PNL_CM_DGV = new System.Windows.Forms.Panel();
             this.DGV_CM_Category = new System.Windows.Forms.DataGridView();
@@ -70,11 +71,7 @@
             this.B_CM_GetCategory = new System.Windows.Forms.Button();
             this.L_Info_RedactCategory = new System.Windows.Forms.Label();
             this.TT_CM = new System.Windows.Forms.ToolTip(this.components);
-            this.TB_LoadingData = new System.Windows.Forms.TextBox();
-            this.PNL_LoadingData = new System.Windows.Forms.Panel();
-            this.PB_CM_LoadingData = new System.Windows.Forms.ProgressBar();
             this.categoryTableAdapter = new Bookshop.BSDBDataSetTableAdapters.CategoryTableAdapter();
-            this.TSMI_CM_SynchronizeData = new System.Windows.Forms.ToolStripMenuItem();
             this.MS_Category.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PB_LogoMain)).BeginInit();
             this.PNL_CM_DGV.SuspendLayout();
@@ -88,7 +85,6 @@
             this.SC_CM_ControlElement.SuspendLayout();
             this.PNL_CM_AddCategory.SuspendLayout();
             this.PNL_CM_AddRedact.SuspendLayout();
-            this.PNL_LoadingData.SuspendLayout();
             this.SuspendLayout();
             // 
             // MS_Category
@@ -166,6 +162,13 @@
             this.TSMI_CM_Connect.Text = "Подключить";
             this.TSMI_CM_Connect.Click += new System.EventHandler(this.TSMI_CM_Connect_Click);
             // 
+            // TSMI_CM_SynchronizeData
+            // 
+            this.TSMI_CM_SynchronizeData.Name = "TSMI_CM_SynchronizeData";
+            this.TSMI_CM_SynchronizeData.Size = new System.Drawing.Size(159, 21);
+            this.TSMI_CM_SynchronizeData.Text = "Синхоронизировать данные";
+            this.TSMI_CM_SynchronizeData.Click += new System.EventHandler(this.TSMI_CM_SynchronizeData_Click);
+            // 
             // PB_LogoMain
             // 
             this.PB_LogoMain.Image = global::Bookshop.Properties.Resources.BSManager_MainLogo;
@@ -181,7 +184,7 @@
             this.PNL_CM_DGV.Controls.Add(this.DGV_CM_Category);
             this.PNL_CM_DGV.Location = new System.Drawing.Point(244, 111);
             this.PNL_CM_DGV.Name = "PNL_CM_DGV";
-            this.PNL_CM_DGV.Size = new System.Drawing.Size(431, 304);
+            this.PNL_CM_DGV.Size = new System.Drawing.Size(431, 344);
             this.PNL_CM_DGV.TabIndex = 4;
             // 
             // DGV_CM_Category
@@ -219,7 +222,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
             this.DGV_CM_Category.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.DGV_CM_Category.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.DGV_CM_Category.Size = new System.Drawing.Size(431, 304);
+            this.DGV_CM_Category.Size = new System.Drawing.Size(431, 344);
             this.DGV_CM_Category.TabIndex = 0;
             // 
             // dataGridViewTextBoxColumn3
@@ -511,47 +514,9 @@
             this.L_Info_RedactCategory.Text = "Изменить категорию";
             this.L_Info_RedactCategory.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // TB_LoadingData
-            // 
-            this.TB_LoadingData.BackColor = System.Drawing.Color.PeachPuff;
-            this.TB_LoadingData.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TB_LoadingData.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.TB_LoadingData.Location = new System.Drawing.Point(285, 6);
-            this.TB_LoadingData.Name = "TB_LoadingData";
-            this.TB_LoadingData.ReadOnly = true;
-            this.TB_LoadingData.Size = new System.Drawing.Size(141, 21);
-            this.TB_LoadingData.TabIndex = 9;
-            this.TT_CM.SetToolTip(this.TB_LoadingData, "Новое название категории");
-            // 
-            // PNL_LoadingData
-            // 
-            this.PNL_LoadingData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(200)))), ((int)(((byte)(145)))));
-            this.PNL_LoadingData.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PNL_LoadingData.Controls.Add(this.TB_LoadingData);
-            this.PNL_LoadingData.Controls.Add(this.PB_CM_LoadingData);
-            this.PNL_LoadingData.Location = new System.Drawing.Point(244, 421);
-            this.PNL_LoadingData.Name = "PNL_LoadingData";
-            this.PNL_LoadingData.Size = new System.Drawing.Size(431, 33);
-            this.PNL_LoadingData.TabIndex = 6;
-            // 
-            // PB_CM_LoadingData
-            // 
-            this.PB_CM_LoadingData.ForeColor = System.Drawing.Color.DarkOrange;
-            this.PB_CM_LoadingData.Location = new System.Drawing.Point(3, 5);
-            this.PB_CM_LoadingData.Name = "PB_CM_LoadingData";
-            this.PB_CM_LoadingData.Size = new System.Drawing.Size(276, 23);
-            this.PB_CM_LoadingData.TabIndex = 0;
-            // 
             // categoryTableAdapter
             // 
             this.categoryTableAdapter.ClearBeforeFill = true;
-            // 
-            // TSMI_CM_SynchronizeData
-            // 
-            this.TSMI_CM_SynchronizeData.Name = "TSMI_CM_SynchronizeData";
-            this.TSMI_CM_SynchronizeData.Size = new System.Drawing.Size(159, 21);
-            this.TSMI_CM_SynchronizeData.Text = "Синхоронизировать данные";
-            this.TSMI_CM_SynchronizeData.Click += new System.EventHandler(this.TSMI_CM_SynchronizeData_Click);
             // 
             // CategoryManager
             // 
@@ -560,7 +525,6 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.PeachPuff;
             this.ClientSize = new System.Drawing.Size(687, 467);
-            this.Controls.Add(this.PNL_LoadingData);
             this.Controls.Add(this.PNL_CM_ControlElements);
             this.Controls.Add(this.PNL_CM_DGV);
             this.Controls.Add(this.PB_LogoMain);
@@ -591,8 +555,6 @@
             this.PNL_CM_AddCategory.PerformLayout();
             this.PNL_CM_AddRedact.ResumeLayout(false);
             this.PNL_CM_AddRedact.PerformLayout();
-            this.PNL_LoadingData.ResumeLayout(false);
-            this.PNL_LoadingData.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -621,9 +583,6 @@
         private System.Windows.Forms.Button B_CM_CategoryRename;
         private System.Windows.Forms.Button B_CM_CheckNewName;
         private System.Windows.Forms.ToolTip TT_CM;
-        private System.Windows.Forms.Panel PNL_LoadingData;
-        private System.Windows.Forms.TextBox TB_LoadingData;
-        private System.Windows.Forms.ProgressBar PB_CM_LoadingData;
         public System.Windows.Forms.ToolStripMenuItem TSMI_CM_Connection;
         public System.Windows.Forms.ToolStripMenuItem TSMI_CM_Status;
         public System.Windows.Forms.ToolStripMenuItem TSMI_CM_CheckConnection;

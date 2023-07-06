@@ -115,6 +115,7 @@ namespace Bookshop
 
         public void B_CM_Check_Click(object sender, EventArgs e)
         {
+            Connections.Direct.ConnectionStateReload(ConnectionCM);
             Data.Categories.EnteredName[0] = Convert.ToString(TB_CategoryName.Text);
             if (Data.Categories.EnteredName[0] == String.Empty)
             {
@@ -208,6 +209,7 @@ namespace Bookshop
 
         private void B_CM_Add_Click(object sender, EventArgs e)
         {
+            Connections.Direct.ConnectionStateReload(ConnectionCM);
             Data.Categories.EnteredName[1] = Convert.ToString(TB_CategoryName.Text);
             if (Data.Categories.EnteredName[0] != Data.Categories.EnteredName[1])
             {
@@ -261,6 +263,7 @@ namespace Bookshop
 
         private void B_CM_GetCategory_Click(object sender, EventArgs e)
         {
+            Connections.Direct.ConnectionStateReload(ConnectionCM);
             CB_CM_Categories.Items.Clear();
             string Table = "Category";
             bool readen = false;
@@ -313,6 +316,7 @@ namespace Bookshop
 
         private void B_CM_UpdateDable_Click(object sender, EventArgs e)
         {
+            Connections.Direct.ConnectionStateReload(ConnectionCM);
             string Table = "Category";
             string script = "SELECT * FROM " + Table + "";
             OleDbDataAdapter adapter = new OleDbDataAdapter(script, ConnectionCM);
@@ -323,6 +327,7 @@ namespace Bookshop
 
         private void B_CM_CheckNewName_Click(object sender, EventArgs e)
         {
+            Connections.Direct.ConnectionStateReload(ConnectionCM);
             Data.Categories.NewName[0] = Convert.ToString(TB_CM_NewCategoryName.Text);
             if (Data.Categories.NewName[0] == String.Empty)
             {
@@ -408,6 +413,7 @@ namespace Bookshop
 
         private void B_CM_CategoryRename_Click(object sender, EventArgs e)
         {
+            Connections.Direct.ConnectionStateReload(ConnectionCM);
             Data.Categories.NewName[1] = Convert.ToString(TB_CM_NewCategoryName.Text);
             if (Data.Categories.NewName[0] != Data.Categories.NewName[1])
             {
@@ -482,6 +488,7 @@ namespace Bookshop
 
         private void B_CM_Delete_Click(object sender, EventArgs e)
         {
+            Connections.Direct.ConnectionStateReload(ConnectionCM);
             bool deleted = false;
             Data.Categories.OldName = Convert.ToString(CB_CM_Categories.SelectedItem);
             if (Data.Categories.OldName == String.Empty)
@@ -631,6 +638,7 @@ namespace Bookshop
         }
         private void TSMI_CM_SynchronizeData_Click(object sender, EventArgs e)
         {
+            Connections.Direct.ConnectionStateReload(ConnectionCM);
             int updatedindex = 1;
             try
             {

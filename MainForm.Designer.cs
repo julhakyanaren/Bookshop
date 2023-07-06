@@ -87,24 +87,6 @@
             this.TB_ProductName = new System.Windows.Forms.TextBox();
             this.PNL_CodeSelector = new System.Windows.Forms.Panel();
             this.TLP_ProdusctsRedact = new System.Windows.Forms.TableLayoutPanel();
-            this.CHB_ProdRename_Code = new System.Windows.Forms.Panel();
-            this.B_AcceptChoice_Rename = new System.Windows.Forms.Button();
-            this.GB_SelectProduct_Rename = new System.Windows.Forms.GroupBox();
-            this.CHB_SelectAll_Rename = new System.Windows.Forms.CheckBox();
-            this.L_Info_Product_NewName = new System.Windows.Forms.Label();
-            this.B_RenameProduct = new System.Windows.Forms.Button();
-            this.TB_NewName_Rename = new System.Windows.Forms.TextBox();
-            this.B_CheckNewName = new System.Windows.Forms.Button();
-            this.CB_Products_Rename = new System.Windows.Forms.ComboBox();
-            this.L_NameCode_Rename = new System.Windows.Forms.Label();
-            this.GB_SearchType_Rename = new System.Windows.Forms.GroupBox();
-            this.CHB_ProdRename_ByCode = new System.Windows.Forms.CheckBox();
-            this.CHB_ProdRename_ByName = new System.Windows.Forms.CheckBox();
-            this.CHB_ProdRename_ByCategory = new System.Windows.Forms.CheckBox();
-            this.TB_InputDataForSearch_Rename = new System.Windows.Forms.TextBox();
-            this.L_Info_RedactRename = new System.Windows.Forms.Label();
-            this.CB_CategorySearch_Rename = new System.Windows.Forms.ComboBox();
-            this.L_InfoCatregorySearch_Rename = new System.Windows.Forms.Label();
             this.PNL_Redact_Update = new System.Windows.Forms.Panel();
             this.B_AcceptChoice_Update = new System.Windows.Forms.Button();
             this.GB_SelectProduct_Update = new System.Windows.Forms.GroupBox();
@@ -147,9 +129,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.NUD_Price)).BeginInit();
             this.PNL_CodeSelector.SuspendLayout();
             this.TLP_ProdusctsRedact.SuspendLayout();
-            this.CHB_ProdRename_Code.SuspendLayout();
-            this.GB_SelectProduct_Rename.SuspendLayout();
-            this.GB_SearchType_Rename.SuspendLayout();
             this.PNL_Redact_Update.SuspendLayout();
             this.GB_SelectProduct_Update.SuspendLayout();
             this.GB_SearchType_Update.SuspendLayout();
@@ -360,14 +339,11 @@
             // iDDataGridViewTextBoxColumn
             // 
             this.iDDataGridViewTextBoxColumn.DataPropertyName = "ID";
-            this.iDDataGridViewTextBoxColumn.FillWeight = 50F;
             this.iDDataGridViewTextBoxColumn.HeaderText = "ID";
             this.iDDataGridViewTextBoxColumn.Name = "iDDataGridViewTextBoxColumn";
-            this.iDDataGridViewTextBoxColumn.Width = 50;
             // 
             // названиеDataGridViewTextBoxColumn
             // 
-            this.названиеDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.названиеDataGridViewTextBoxColumn.DataPropertyName = "Название";
             this.названиеDataGridViewTextBoxColumn.HeaderText = "Название";
             this.названиеDataGridViewTextBoxColumn.Name = "названиеDataGridViewTextBoxColumn";
@@ -375,10 +351,8 @@
             // категорияDataGridViewTextBoxColumn
             // 
             this.категорияDataGridViewTextBoxColumn.DataPropertyName = "Категория";
-            this.категорияDataGridViewTextBoxColumn.FillWeight = 150F;
             this.категорияDataGridViewTextBoxColumn.HeaderText = "Категория";
             this.категорияDataGridViewTextBoxColumn.Name = "категорияDataGridViewTextBoxColumn";
-            this.категорияDataGridViewTextBoxColumn.Width = 150;
             // 
             // количествоDataGridViewTextBoxColumn
             // 
@@ -395,18 +369,14 @@
             // кодDataGridViewTextBoxColumn
             // 
             this.кодDataGridViewTextBoxColumn.DataPropertyName = "Код";
-            this.кодDataGridViewTextBoxColumn.FillWeight = 120F;
             this.кодDataGridViewTextBoxColumn.HeaderText = "Код";
             this.кодDataGridViewTextBoxColumn.Name = "кодDataGridViewTextBoxColumn";
-            this.кодDataGridViewTextBoxColumn.Width = 120;
             // 
             // изменениеDataGridViewTextBoxColumn
             // 
             this.изменениеDataGridViewTextBoxColumn.DataPropertyName = "Изменение";
-            this.изменениеDataGridViewTextBoxColumn.FillWeight = 120F;
             this.изменениеDataGridViewTextBoxColumn.HeaderText = "Изменение";
             this.изменениеDataGridViewTextBoxColumn.Name = "изменениеDataGridViewTextBoxColumn";
-            this.изменениеDataGridViewTextBoxColumn.Width = 120;
             // 
             // productBindingSource
             // 
@@ -762,245 +732,23 @@
             // 
             // TLP_ProdusctsRedact
             // 
-            this.TLP_ProdusctsRedact.ColumnCount = 3;
-            this.TLP_ProdusctsRedact.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
-            this.TLP_ProdusctsRedact.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34F));
-            this.TLP_ProdusctsRedact.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
-            this.TLP_ProdusctsRedact.Controls.Add(this.CHB_ProdRename_Code, 1, 0);
+            this.TLP_ProdusctsRedact.ColumnCount = 2;
+            this.TLP_ProdusctsRedact.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.TLP_ProdusctsRedact.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.TLP_ProdusctsRedact.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.TLP_ProdusctsRedact.Controls.Add(this.PNL_Redact_Update, 0, 0);
-            this.TLP_ProdusctsRedact.Controls.Add(this.PNL_Redact_Delete, 2, 0);
+            this.TLP_ProdusctsRedact.Controls.Add(this.PNL_Redact_Delete, 1, 0);
             this.TLP_ProdusctsRedact.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TLP_ProdusctsRedact.Location = new System.Drawing.Point(0, 0);
             this.TLP_ProdusctsRedact.Name = "TLP_ProdusctsRedact";
             this.TLP_ProdusctsRedact.RowCount = 1;
             this.TLP_ProdusctsRedact.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.TLP_ProdusctsRedact.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 257F));
             this.TLP_ProdusctsRedact.Size = new System.Drawing.Size(966, 257);
             this.TLP_ProdusctsRedact.TabIndex = 0;
-            // 
-            // CHB_ProdRename_Code
-            // 
-            this.CHB_ProdRename_Code.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.CHB_ProdRename_Code.Controls.Add(this.B_AcceptChoice_Rename);
-            this.CHB_ProdRename_Code.Controls.Add(this.GB_SelectProduct_Rename);
-            this.CHB_ProdRename_Code.Controls.Add(this.L_NameCode_Rename);
-            this.CHB_ProdRename_Code.Controls.Add(this.GB_SearchType_Rename);
-            this.CHB_ProdRename_Code.Controls.Add(this.TB_InputDataForSearch_Rename);
-            this.CHB_ProdRename_Code.Controls.Add(this.L_Info_RedactRename);
-            this.CHB_ProdRename_Code.Controls.Add(this.CB_CategorySearch_Rename);
-            this.CHB_ProdRename_Code.Controls.Add(this.L_InfoCatregorySearch_Rename);
-            this.CHB_ProdRename_Code.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CHB_ProdRename_Code.Location = new System.Drawing.Point(321, 3);
-            this.CHB_ProdRename_Code.Name = "CHB_ProdRename_Code";
-            this.CHB_ProdRename_Code.Size = new System.Drawing.Size(322, 251);
-            this.CHB_ProdRename_Code.TabIndex = 2;
-            // 
-            // B_AcceptChoice_Rename
-            // 
-            this.B_AcceptChoice_Rename.BackColor = System.Drawing.Color.SandyBrown;
-            this.B_AcceptChoice_Rename.Enabled = false;
-            this.B_AcceptChoice_Rename.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.B_AcceptChoice_Rename.Location = new System.Drawing.Point(166, 125);
-            this.B_AcceptChoice_Rename.Name = "B_AcceptChoice_Rename";
-            this.B_AcceptChoice_Rename.Size = new System.Drawing.Size(145, 25);
-            this.B_AcceptChoice_Rename.TabIndex = 40;
-            this.B_AcceptChoice_Rename.Text = "Выбрать";
-            this.B_AcceptChoice_Rename.UseVisualStyleBackColor = false;
-            this.B_AcceptChoice_Rename.Click += new System.EventHandler(this.B_AcceptChoice_Rename_Click);
-            // 
-            // GB_SelectProduct_Rename
-            // 
-            this.GB_SelectProduct_Rename.Controls.Add(this.CHB_SelectAll_Rename);
-            this.GB_SelectProduct_Rename.Controls.Add(this.L_Info_Product_NewName);
-            this.GB_SelectProduct_Rename.Controls.Add(this.B_RenameProduct);
-            this.GB_SelectProduct_Rename.Controls.Add(this.TB_NewName_Rename);
-            this.GB_SelectProduct_Rename.Controls.Add(this.B_CheckNewName);
-            this.GB_SelectProduct_Rename.Controls.Add(this.CB_Products_Rename);
-            this.GB_SelectProduct_Rename.Location = new System.Drawing.Point(3, 146);
-            this.GB_SelectProduct_Rename.Name = "GB_SelectProduct_Rename";
-            this.GB_SelectProduct_Rename.Size = new System.Drawing.Size(314, 104);
-            this.GB_SelectProduct_Rename.TabIndex = 41;
-            this.GB_SelectProduct_Rename.TabStop = false;
-            this.GB_SelectProduct_Rename.Tag = "0";
-            this.GB_SelectProduct_Rename.Text = "Выбрать Товар";
-            // 
-            // CHB_SelectAll_Rename
-            // 
-            this.CHB_SelectAll_Rename.AutoSize = true;
-            this.CHB_SelectAll_Rename.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CHB_SelectAll_Rename.Location = new System.Drawing.Point(217, 51);
-            this.CHB_SelectAll_Rename.Name = "CHB_SelectAll_Rename";
-            this.CHB_SelectAll_Rename.Size = new System.Drawing.Size(91, 21);
-            this.CHB_SelectAll_Rename.TabIndex = 44;
-            this.CHB_SelectAll_Rename.Tag = "2";
-            this.CHB_SelectAll_Rename.Text = "Изменить все";
-            this.CHB_SelectAll_Rename.UseVisualStyleBackColor = true;
-            this.CHB_SelectAll_Rename.CheckedChanged += new System.EventHandler(this.CHB_SelectAll_Rename_CheckedChanged);
-            // 
-            // L_Info_Product_NewName
-            // 
-            this.L_Info_Product_NewName.AutoSize = true;
-            this.L_Info_Product_NewName.Location = new System.Drawing.Point(6, 56);
-            this.L_Info_Product_NewName.Name = "L_Info_Product_NewName";
-            this.L_Info_Product_NewName.Size = new System.Drawing.Size(89, 17);
-            this.L_Info_Product_NewName.TabIndex = 38;
-            this.L_Info_Product_NewName.Text = "Новое Название";
-            this.L_Info_Product_NewName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // B_RenameProduct
-            // 
-            this.B_RenameProduct.BackColor = System.Drawing.Color.SandyBrown;
-            this.B_RenameProduct.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.B_RenameProduct.Location = new System.Drawing.Point(163, 73);
-            this.B_RenameProduct.Name = "B_RenameProduct";
-            this.B_RenameProduct.Size = new System.Drawing.Size(145, 25);
-            this.B_RenameProduct.TabIndex = 43;
-            this.B_RenameProduct.Text = "Переименовать товар";
-            this.B_RenameProduct.UseVisualStyleBackColor = false;
-            this.B_RenameProduct.Click += new System.EventHandler(this.B_RenameProduct_Click);
-            // 
-            // TB_NewName_Rename
-            // 
-            this.TB_NewName_Rename.BackColor = System.Drawing.Color.PeachPuff;
-            this.TB_NewName_Rename.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TB_NewName_Rename.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.TB_NewName_Rename.Location = new System.Drawing.Point(6, 76);
-            this.TB_NewName_Rename.Name = "TB_NewName_Rename";
-            this.TB_NewName_Rename.Size = new System.Drawing.Size(147, 22);
-            this.TB_NewName_Rename.TabIndex = 37;
-            // 
-            // B_CheckNewName
-            // 
-            this.B_CheckNewName.BackColor = System.Drawing.Color.SandyBrown;
-            this.B_CheckNewName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.B_CheckNewName.Location = new System.Drawing.Point(163, 20);
-            this.B_CheckNewName.Name = "B_CheckNewName";
-            this.B_CheckNewName.Size = new System.Drawing.Size(145, 25);
-            this.B_CheckNewName.TabIndex = 42;
-            this.B_CheckNewName.Text = "Проверить название";
-            this.B_CheckNewName.UseVisualStyleBackColor = false;
-            this.B_CheckNewName.Click += new System.EventHandler(this.B_CheckNewName_Click);
-            // 
-            // CB_Products_Rename
-            // 
-            this.CB_Products_Rename.BackColor = System.Drawing.Color.PeachPuff;
-            this.CB_Products_Rename.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CB_Products_Rename.FormattingEnabled = true;
-            this.CB_Products_Rename.Location = new System.Drawing.Point(6, 21);
-            this.CB_Products_Rename.Name = "CB_Products_Rename";
-            this.CB_Products_Rename.Size = new System.Drawing.Size(144, 25);
-            this.CB_Products_Rename.TabIndex = 38;
-            // 
-            // L_NameCode_Rename
-            // 
-            this.L_NameCode_Rename.AutoSize = true;
-            this.L_NameCode_Rename.Location = new System.Drawing.Point(0, 30);
-            this.L_NameCode_Rename.Name = "L_NameCode_Rename";
-            this.L_NameCode_Rename.Size = new System.Drawing.Size(27, 17);
-            this.L_NameCode_Rename.TabIndex = 39;
-            this.L_NameCode_Rename.Text = "Код";
-            this.L_NameCode_Rename.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // GB_SearchType_Rename
-            // 
-            this.GB_SearchType_Rename.Controls.Add(this.CHB_ProdRename_ByCode);
-            this.GB_SearchType_Rename.Controls.Add(this.CHB_ProdRename_ByName);
-            this.GB_SearchType_Rename.Controls.Add(this.CHB_ProdRename_ByCategory);
-            this.GB_SearchType_Rename.Location = new System.Drawing.Point(169, 21);
-            this.GB_SearchType_Rename.Name = "GB_SearchType_Rename";
-            this.GB_SearchType_Rename.Size = new System.Drawing.Size(148, 100);
-            this.GB_SearchType_Rename.TabIndex = 32;
-            this.GB_SearchType_Rename.TabStop = false;
-            this.GB_SearchType_Rename.Tag = "1";
-            this.GB_SearchType_Rename.Text = "Тип Поиска";
-            // 
-            // CHB_ProdRename_ByCode
-            // 
-            this.CHB_ProdRename_ByCode.AutoSize = true;
-            this.CHB_ProdRename_ByCode.Checked = true;
-            this.CHB_ProdRename_ByCode.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CHB_ProdRename_ByCode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CHB_ProdRename_ByCode.Location = new System.Drawing.Point(6, 18);
-            this.CHB_ProdRename_ByCode.Name = "CHB_ProdRename_ByCode";
-            this.CHB_ProdRename_ByCode.Size = new System.Drawing.Size(93, 21);
-            this.CHB_ProdRename_ByCode.TabIndex = 22;
-            this.CHB_ProdRename_ByCode.Tag = "0";
-            this.CHB_ProdRename_ByCode.Text = "Поиск по коду";
-            this.CHB_ProdRename_ByCode.UseVisualStyleBackColor = true;
-            this.CHB_ProdRename_ByCode.CheckedChanged += new System.EventHandler(this.CHB_ProdRename_ByCode_CheckedChanged);
-            // 
-            // CHB_ProdRename_ByName
-            // 
-            this.CHB_ProdRename_ByName.AutoSize = true;
-            this.CHB_ProdRename_ByName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CHB_ProdRename_ByName.Location = new System.Drawing.Point(6, 70);
-            this.CHB_ProdRename_ByName.Name = "CHB_ProdRename_ByName";
-            this.CHB_ProdRename_ByName.Size = new System.Drawing.Size(120, 21);
-            this.CHB_ProdRename_ByName.TabIndex = 30;
-            this.CHB_ProdRename_ByName.Tag = "2";
-            this.CHB_ProdRename_ByName.Text = "Поиск по названию";
-            this.CHB_ProdRename_ByName.UseVisualStyleBackColor = true;
-            this.CHB_ProdRename_ByName.CheckedChanged += new System.EventHandler(this.CHB_ProdRename_ByName_CheckedChanged);
-            // 
-            // CHB_ProdRename_ByCategory
-            // 
-            this.CHB_ProdRename_ByCategory.AutoSize = true;
-            this.CHB_ProdRename_ByCategory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CHB_ProdRename_ByCategory.Location = new System.Drawing.Point(6, 44);
-            this.CHB_ProdRename_ByCategory.Name = "CHB_ProdRename_ByCategory";
-            this.CHB_ProdRename_ByCategory.Size = new System.Drawing.Size(128, 21);
-            this.CHB_ProdRename_ByCategory.TabIndex = 29;
-            this.CHB_ProdRename_ByCategory.Tag = "1";
-            this.CHB_ProdRename_ByCategory.Text = "Поиск по категориям";
-            this.CHB_ProdRename_ByCategory.UseVisualStyleBackColor = true;
-            this.CHB_ProdRename_ByCategory.CheckedChanged += new System.EventHandler(this.CHB_ProdRename_ByCategory_CheckedChanged);
-            // 
-            // TB_InputDataForSearch_Rename
-            // 
-            this.TB_InputDataForSearch_Rename.BackColor = System.Drawing.Color.PeachPuff;
-            this.TB_InputDataForSearch_Rename.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TB_InputDataForSearch_Rename.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.TB_InputDataForSearch_Rename.Location = new System.Drawing.Point(3, 50);
-            this.TB_InputDataForSearch_Rename.Name = "TB_InputDataForSearch_Rename";
-            this.TB_InputDataForSearch_Rename.Size = new System.Drawing.Size(147, 22);
-            this.TB_InputDataForSearch_Rename.TabIndex = 38;
-            // 
-            // L_Info_RedactRename
-            // 
-            this.L_Info_RedactRename.AutoSize = true;
-            this.L_Info_RedactRename.Location = new System.Drawing.Point(108, 1);
-            this.L_Info_RedactRename.Name = "L_Info_RedactRename";
-            this.L_Info_RedactRename.Size = new System.Drawing.Size(117, 17);
-            this.L_Info_RedactRename.TabIndex = 22;
-            this.L_Info_RedactRename.Text = "Переименовать товар";
-            this.L_Info_RedactRename.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // CB_CategorySearch_Rename
-            // 
-            this.CB_CategorySearch_Rename.BackColor = System.Drawing.Color.PeachPuff;
-            this.CB_CategorySearch_Rename.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CB_CategorySearch_Rename.FormattingEnabled = true;
-            this.CB_CategorySearch_Rename.Location = new System.Drawing.Point(3, 96);
-            this.CB_CategorySearch_Rename.Name = "CB_CategorySearch_Rename";
-            this.CB_CategorySearch_Rename.Size = new System.Drawing.Size(147, 25);
-            this.CB_CategorySearch_Rename.TabIndex = 37;
-            this.CB_CategorySearch_Rename.Visible = false;
-            // 
-            // L_InfoCatregorySearch_Rename
-            // 
-            this.L_InfoCatregorySearch_Rename.AutoSize = true;
-            this.L_InfoCatregorySearch_Rename.Location = new System.Drawing.Point(0, 75);
-            this.L_InfoCatregorySearch_Rename.Name = "L_InfoCatregorySearch_Rename";
-            this.L_InfoCatregorySearch_Rename.Size = new System.Drawing.Size(59, 17);
-            this.L_InfoCatregorySearch_Rename.TabIndex = 36;
-            this.L_InfoCatregorySearch_Rename.Text = "Категория";
-            this.L_InfoCatregorySearch_Rename.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.L_InfoCatregorySearch_Rename.Visible = false;
             // 
             // PNL_Redact_Update
             // 
             this.PNL_Redact_Update.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PNL_Redact_Update.Controls.Add(this.B_AcceptChoice_Update);
             this.PNL_Redact_Update.Controls.Add(this.GB_SelectProduct_Update);
             this.PNL_Redact_Update.Controls.Add(this.L_NameCode_Update);
             this.PNL_Redact_Update.Controls.Add(this.TB_InputDataForSearch_Update);
@@ -1011,7 +759,7 @@
             this.PNL_Redact_Update.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PNL_Redact_Update.Location = new System.Drawing.Point(3, 3);
             this.PNL_Redact_Update.Name = "PNL_Redact_Update";
-            this.PNL_Redact_Update.Size = new System.Drawing.Size(312, 251);
+            this.PNL_Redact_Update.Size = new System.Drawing.Size(477, 251);
             this.PNL_Redact_Update.TabIndex = 1;
             // 
             // B_AcceptChoice_Update
@@ -1019,9 +767,9 @@
             this.B_AcceptChoice_Update.BackColor = System.Drawing.Color.SandyBrown;
             this.B_AcceptChoice_Update.Enabled = false;
             this.B_AcceptChoice_Update.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.B_AcceptChoice_Update.Location = new System.Drawing.Point(159, 125);
+            this.B_AcceptChoice_Update.Location = new System.Drawing.Point(312, 21);
             this.B_AcceptChoice_Update.Name = "B_AcceptChoice_Update";
-            this.B_AcceptChoice_Update.Size = new System.Drawing.Size(148, 25);
+            this.B_AcceptChoice_Update.Size = new System.Drawing.Size(142, 25);
             this.B_AcceptChoice_Update.TabIndex = 27;
             this.B_AcceptChoice_Update.Text = "Выбрать";
             this.B_AcceptChoice_Update.UseVisualStyleBackColor = false;
@@ -1029,11 +777,12 @@
             // 
             // GB_SelectProduct_Update
             // 
+            this.GB_SelectProduct_Update.Controls.Add(this.B_AcceptChoice_Update);
             this.GB_SelectProduct_Update.Controls.Add(this.B_RedactChoosenProduct);
             this.GB_SelectProduct_Update.Controls.Add(this.CB_Products_Update);
             this.GB_SelectProduct_Update.Location = new System.Drawing.Point(3, 146);
             this.GB_SelectProduct_Update.Name = "GB_SelectProduct_Update";
-            this.GB_SelectProduct_Update.Size = new System.Drawing.Size(304, 104);
+            this.GB_SelectProduct_Update.Size = new System.Drawing.Size(460, 104);
             this.GB_SelectProduct_Update.TabIndex = 36;
             this.GB_SelectProduct_Update.TabStop = false;
             this.GB_SelectProduct_Update.Tag = "0";
@@ -1043,11 +792,11 @@
             // 
             this.B_RedactChoosenProduct.BackColor = System.Drawing.Color.SandyBrown;
             this.B_RedactChoosenProduct.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.B_RedactChoosenProduct.Location = new System.Drawing.Point(3, 70);
+            this.B_RedactChoosenProduct.Location = new System.Drawing.Point(312, 69);
             this.B_RedactChoosenProduct.Name = "B_RedactChoosenProduct";
-            this.B_RedactChoosenProduct.Size = new System.Drawing.Size(200, 25);
+            this.B_RedactChoosenProduct.Size = new System.Drawing.Size(142, 25);
             this.B_RedactChoosenProduct.TabIndex = 37;
-            this.B_RedactChoosenProduct.Text = "Редактировать данные товаров";
+            this.B_RedactChoosenProduct.Text = "Редактировать данные";
             this.B_RedactChoosenProduct.UseVisualStyleBackColor = false;
             this.B_RedactChoosenProduct.Click += new System.EventHandler(this.B_RedactChoosenProduct_Click);
             // 
@@ -1058,7 +807,7 @@
             this.CB_Products_Update.FormattingEnabled = true;
             this.CB_Products_Update.Location = new System.Drawing.Point(3, 21);
             this.CB_Products_Update.Name = "CB_Products_Update";
-            this.CB_Products_Update.Size = new System.Drawing.Size(200, 25);
+            this.CB_Products_Update.Size = new System.Drawing.Size(285, 25);
             this.CB_Products_Update.TabIndex = 38;
             // 
             // L_NameCode_Update
@@ -1078,7 +827,7 @@
             this.TB_InputDataForSearch_Update.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.TB_InputDataForSearch_Update.Location = new System.Drawing.Point(6, 50);
             this.TB_InputDataForSearch_Update.Name = "TB_InputDataForSearch_Update";
-            this.TB_InputDataForSearch_Update.Size = new System.Drawing.Size(147, 22);
+            this.TB_InputDataForSearch_Update.Size = new System.Drawing.Size(285, 22);
             this.TB_InputDataForSearch_Update.TabIndex = 34;
             // 
             // CB_CategorySearch_Update
@@ -1088,7 +837,7 @@
             this.CB_CategorySearch_Update.FormattingEnabled = true;
             this.CB_CategorySearch_Update.Location = new System.Drawing.Point(6, 96);
             this.CB_CategorySearch_Update.Name = "CB_CategorySearch_Update";
-            this.CB_CategorySearch_Update.Size = new System.Drawing.Size(147, 25);
+            this.CB_CategorySearch_Update.Size = new System.Drawing.Size(285, 25);
             this.CB_CategorySearch_Update.TabIndex = 33;
             this.CB_CategorySearch_Update.Visible = false;
             // 
@@ -1108,7 +857,7 @@
             this.GB_SearchType_Update.Controls.Add(this.CHB_ProdUpdate_ByCode);
             this.GB_SearchType_Update.Controls.Add(this.CHB_ProdUpdate_ByName);
             this.GB_SearchType_Update.Controls.Add(this.CHB_ProdUpdate_ByCategory);
-            this.GB_SearchType_Update.Location = new System.Drawing.Point(159, 21);
+            this.GB_SearchType_Update.Location = new System.Drawing.Point(315, 22);
             this.GB_SearchType_Update.Name = "GB_SearchType_Update";
             this.GB_SearchType_Update.Size = new System.Drawing.Size(148, 100);
             this.GB_SearchType_Update.TabIndex = 31;
@@ -1160,7 +909,7 @@
             // L_Info_RedactUpdate
             // 
             this.L_Info_RedactUpdate.AutoSize = true;
-            this.L_Info_RedactUpdate.Location = new System.Drawing.Point(70, 1);
+            this.L_Info_RedactUpdate.Location = new System.Drawing.Point(110, 1);
             this.L_Info_RedactUpdate.Name = "L_Info_RedactUpdate";
             this.L_Info_RedactUpdate.Size = new System.Drawing.Size(131, 17);
             this.L_Info_RedactUpdate.TabIndex = 21;
@@ -1179,16 +928,16 @@
             this.PNL_Redact_Delete.Controls.Add(this.GB_SearchType_Delete);
             this.PNL_Redact_Delete.Controls.Add(this.L_Info_RedactDelete);
             this.PNL_Redact_Delete.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PNL_Redact_Delete.Location = new System.Drawing.Point(649, 3);
+            this.PNL_Redact_Delete.Location = new System.Drawing.Point(486, 3);
             this.PNL_Redact_Delete.Name = "PNL_Redact_Delete";
-            this.PNL_Redact_Delete.Size = new System.Drawing.Size(314, 251);
+            this.PNL_Redact_Delete.Size = new System.Drawing.Size(477, 251);
             this.PNL_Redact_Delete.TabIndex = 0;
             // 
             // B_AcceptChoice_Delete
             // 
             this.B_AcceptChoice_Delete.BackColor = System.Drawing.Color.SandyBrown;
             this.B_AcceptChoice_Delete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.B_AcceptChoice_Delete.Location = new System.Drawing.Point(169, 124);
+            this.B_AcceptChoice_Delete.Location = new System.Drawing.Point(156, 97);
             this.B_AcceptChoice_Delete.Name = "B_AcceptChoice_Delete";
             this.B_AcceptChoice_Delete.Size = new System.Drawing.Size(132, 25);
             this.B_AcceptChoice_Delete.TabIndex = 42;
@@ -1204,7 +953,7 @@
             this.GB_SelectProduct_Delete.Controls.Add(this.CB_Products_Delete);
             this.GB_SelectProduct_Delete.Location = new System.Drawing.Point(3, 146);
             this.GB_SelectProduct_Delete.Name = "GB_SelectProduct_Delete";
-            this.GB_SelectProduct_Delete.Size = new System.Drawing.Size(304, 100);
+            this.GB_SelectProduct_Delete.Size = new System.Drawing.Size(458, 100);
             this.GB_SelectProduct_Delete.TabIndex = 40;
             this.GB_SelectProduct_Delete.TabStop = false;
             this.GB_SelectProduct_Delete.Tag = "0";
@@ -1214,9 +963,9 @@
             // 
             this.B_SelectName_Delete.BackColor = System.Drawing.Color.SandyBrown;
             this.B_SelectName_Delete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.B_SelectName_Delete.Location = new System.Drawing.Point(2, 69);
+            this.B_SelectName_Delete.Location = new System.Drawing.Point(6, 69);
             this.B_SelectName_Delete.Name = "B_SelectName_Delete";
-            this.B_SelectName_Delete.Size = new System.Drawing.Size(145, 25);
+            this.B_SelectName_Delete.Size = new System.Drawing.Size(132, 25);
             this.B_SelectName_Delete.TabIndex = 43;
             this.B_SelectName_Delete.Text = "Выбрать Товар";
             this.B_SelectName_Delete.UseVisualStyleBackColor = false;
@@ -1226,7 +975,7 @@
             // 
             this.CHB_SelectAll_Delete.AutoSize = true;
             this.CHB_SelectAll_Delete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CHB_SelectAll_Delete.Location = new System.Drawing.Point(168, 19);
+            this.CHB_SelectAll_Delete.Location = new System.Drawing.Point(312, 19);
             this.CHB_SelectAll_Delete.Name = "CHB_SelectAll_Delete";
             this.CHB_SelectAll_Delete.Size = new System.Drawing.Size(82, 21);
             this.CHB_SelectAll_Delete.TabIndex = 31;
@@ -1239,7 +988,7 @@
             // 
             this.B_ProductDelete.BackColor = System.Drawing.Color.SandyBrown;
             this.B_ProductDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.B_ProductDelete.Location = new System.Drawing.Point(166, 69);
+            this.B_ProductDelete.Location = new System.Drawing.Point(153, 69);
             this.B_ProductDelete.Name = "B_ProductDelete";
             this.B_ProductDelete.Size = new System.Drawing.Size(132, 25);
             this.B_ProductDelete.TabIndex = 43;
@@ -1254,7 +1003,7 @@
             this.CB_Products_Delete.FormattingEnabled = true;
             this.CB_Products_Delete.Location = new System.Drawing.Point(3, 20);
             this.CB_Products_Delete.Name = "CB_Products_Delete";
-            this.CB_Products_Delete.Size = new System.Drawing.Size(145, 25);
+            this.CB_Products_Delete.Size = new System.Drawing.Size(282, 25);
             this.CB_Products_Delete.TabIndex = 40;
             // 
             // L_NameCode_Delete
@@ -1274,7 +1023,7 @@
             this.TB_InputDataForSearch_Delete.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.TB_InputDataForSearch_Delete.Location = new System.Drawing.Point(3, 51);
             this.TB_InputDataForSearch_Delete.Name = "TB_InputDataForSearch_Delete";
-            this.TB_InputDataForSearch_Delete.Size = new System.Drawing.Size(147, 22);
+            this.TB_InputDataForSearch_Delete.Size = new System.Drawing.Size(285, 22);
             this.TB_InputDataForSearch_Delete.TabIndex = 38;
             // 
             // CB_CategorySearch_Delete
@@ -1304,9 +1053,9 @@
             this.GB_SearchType_Delete.Controls.Add(this.CHB_ProdDelete_ByCode);
             this.GB_SearchType_Delete.Controls.Add(this.CHB_ProdDelete_ByName);
             this.GB_SearchType_Delete.Controls.Add(this.CHB_ProdDelete_ByCategory);
-            this.GB_SearchType_Delete.Location = new System.Drawing.Point(165, 21);
+            this.GB_SearchType_Delete.Location = new System.Drawing.Point(309, 22);
             this.GB_SearchType_Delete.Name = "GB_SearchType_Delete";
-            this.GB_SearchType_Delete.Size = new System.Drawing.Size(142, 100);
+            this.GB_SearchType_Delete.Size = new System.Drawing.Size(152, 100);
             this.GB_SearchType_Delete.TabIndex = 33;
             this.GB_SearchType_Delete.TabStop = false;
             this.GB_SearchType_Delete.Tag = "2";
@@ -1356,7 +1105,7 @@
             // L_Info_RedactDelete
             // 
             this.L_Info_RedactDelete.AutoSize = true;
-            this.L_Info_RedactDelete.Location = new System.Drawing.Point(127, 1);
+            this.L_Info_RedactDelete.Location = new System.Drawing.Point(211, 1);
             this.L_Info_RedactDelete.Name = "L_Info_RedactDelete";
             this.L_Info_RedactDelete.Size = new System.Drawing.Size(77, 17);
             this.L_Info_RedactDelete.TabIndex = 23;
@@ -1411,12 +1160,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.NUD_Price)).EndInit();
             this.PNL_CodeSelector.ResumeLayout(false);
             this.TLP_ProdusctsRedact.ResumeLayout(false);
-            this.CHB_ProdRename_Code.ResumeLayout(false);
-            this.CHB_ProdRename_Code.PerformLayout();
-            this.GB_SelectProduct_Rename.ResumeLayout(false);
-            this.GB_SelectProduct_Rename.PerformLayout();
-            this.GB_SearchType_Rename.ResumeLayout(false);
-            this.GB_SearchType_Rename.PerformLayout();
             this.PNL_Redact_Update.ResumeLayout(false);
             this.PNL_Redact_Update.PerformLayout();
             this.GB_SelectProduct_Update.ResumeLayout(false);
@@ -1470,30 +1213,17 @@
         private System.Windows.Forms.Label L_Info_UniqueID;
         private System.Windows.Forms.TextBox TB_UniqueCode;
         private System.Windows.Forms.TableLayoutPanel TLP_ProdusctsRedact;
-        private System.Windows.Forms.Panel CHB_ProdRename_Code;
         private System.Windows.Forms.Panel PNL_Redact_Update;
         private System.Windows.Forms.Panel PNL_Redact_Delete;
-        private System.Windows.Forms.Label L_Info_RedactRename;
         private System.Windows.Forms.Label L_Info_RedactUpdate;
         private System.Windows.Forms.Label L_Info_RedactDelete;
         private BSDBDataSet bSDBDataSet;
         private System.Windows.Forms.BindingSource productBindingSource;
         private BSDBDataSetTableAdapters.ProductTableAdapter productTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn iDDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn названиеDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn категорияDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn количествоDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ценаDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn кодDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn изменениеDataGridViewTextBoxColumn;
         public System.Windows.Forms.CheckBox CHB_ProdUpdate_ByName;
         public System.Windows.Forms.CheckBox CHB_ProdUpdate_ByCode;
         public System.Windows.Forms.CheckBox CHB_ProdUpdate_ByCategory;
         public System.Windows.Forms.GroupBox GB_SearchType_Update;
-        public System.Windows.Forms.GroupBox GB_SearchType_Rename;
-        public System.Windows.Forms.CheckBox CHB_ProdRename_ByCode;
-        public System.Windows.Forms.CheckBox CHB_ProdRename_ByName;
-        public System.Windows.Forms.CheckBox CHB_ProdRename_ByCategory;
         public System.Windows.Forms.GroupBox GB_SearchType_Delete;
         public System.Windows.Forms.CheckBox CHB_ProdDelete_ByCode;
         public System.Windows.Forms.CheckBox CHB_ProdDelete_ByName;
@@ -1502,10 +1232,6 @@
         private System.Windows.Forms.Label L_InfoCatregorySearch_Update;
         private System.Windows.Forms.Label L_NameCode_Update;
         private System.Windows.Forms.TextBox TB_InputDataForSearch_Update;
-        private System.Windows.Forms.Label L_NameCode_Rename;
-        private System.Windows.Forms.TextBox TB_InputDataForSearch_Rename;
-        private System.Windows.Forms.ComboBox CB_CategorySearch_Rename;
-        private System.Windows.Forms.Label L_InfoCatregorySearch_Rename;
         private System.Windows.Forms.Label L_NameCode_Delete;
         private System.Windows.Forms.TextBox TB_InputDataForSearch_Delete;
         private System.Windows.Forms.ComboBox CB_CategorySearch_Delete;
@@ -1514,13 +1240,6 @@
         public System.Windows.Forms.GroupBox GB_SelectProduct_Update;
         private System.Windows.Forms.Button B_RedactChoosenProduct;
         private System.Windows.Forms.ComboBox CB_Products_Update;
-        private System.Windows.Forms.Button B_AcceptChoice_Rename;
-        public System.Windows.Forms.GroupBox GB_SelectProduct_Rename;
-        private System.Windows.Forms.Label L_Info_Product_NewName;
-        private System.Windows.Forms.Button B_RenameProduct;
-        private System.Windows.Forms.TextBox TB_NewName_Rename;
-        private System.Windows.Forms.Button B_CheckNewName;
-        private System.Windows.Forms.ComboBox CB_Products_Rename;
         public System.Windows.Forms.GroupBox GB_SelectProduct_Delete;
         private System.Windows.Forms.ComboBox CB_Products_Delete;
         private System.Windows.Forms.Button B_ProductDelete;
@@ -1535,11 +1254,17 @@
         public System.Windows.Forms.CheckBox CHB_PriceOver100;
         private System.Windows.Forms.ToolStripMenuItem TSMI_Update_DGV;
         private System.Windows.Forms.Button B_UpdatePanel;
-        public System.Windows.Forms.CheckBox CHB_SelectAll_Rename;
         private System.Windows.Forms.Button B_SelectName_Delete;
         private System.Windows.Forms.ToolStripMenuItem TSMI_DebugMode;
         private System.Windows.Forms.ToolStripMenuItem TSMI_DEBUG_ADDCATEGORY;
         private System.Windows.Forms.ToolStripMenuItem TSMI_DEBUG_ADDPRODUCT;
         private System.Windows.Forms.ToolStripMenuItem TSMI_Info;
+        private System.Windows.Forms.DataGridViewTextBoxColumn iDDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn названиеDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn категорияDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn количествоDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ценаDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn кодDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn изменениеDataGridViewTextBoxColumn;
     }
 }

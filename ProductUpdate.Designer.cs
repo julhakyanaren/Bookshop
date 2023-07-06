@@ -306,6 +306,7 @@
             // 
             this.NUD_New_ProductPrice.BackColor = System.Drawing.Color.PeachPuff;
             this.NUD_New_ProductPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.NUD_New_ProductPrice.Enabled = false;
             this.NUD_New_ProductPrice.Location = new System.Drawing.Point(245, 26);
             this.NUD_New_ProductPrice.Maximum = new decimal(new int[] {
             99,
@@ -325,6 +326,7 @@
             // 
             this.NUD_New_ProductCount.BackColor = System.Drawing.Color.PeachPuff;
             this.NUD_New_ProductCount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.NUD_New_ProductCount.Enabled = false;
             this.NUD_New_ProductCount.Location = new System.Drawing.Point(8, 130);
             this.NUD_New_ProductCount.Maximum = new decimal(new int[] {
             99,
@@ -343,6 +345,7 @@
             // CB_New_ProductCategory
             // 
             this.CB_New_ProductCategory.BackColor = System.Drawing.Color.PeachPuff;
+            this.CB_New_ProductCategory.Enabled = false;
             this.CB_New_ProductCategory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CB_New_ProductCategory.FormattingEnabled = true;
             this.CB_New_ProductCategory.Location = new System.Drawing.Point(8, 78);
@@ -355,6 +358,7 @@
             this.TB_New_ProductName.BackColor = System.Drawing.Color.PeachPuff;
             this.TB_New_ProductName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TB_New_ProductName.Cursor = System.Windows.Forms.Cursors.Default;
+            this.TB_New_ProductName.Enabled = false;
             this.TB_New_ProductName.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.TB_New_ProductName.Location = new System.Drawing.Point(8, 27);
             this.TB_New_ProductName.Name = "TB_New_ProductName";
@@ -702,6 +706,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "ProductUpdate";
             this.Text = "Редактировать товар";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProductUpdate_FormClosing);
             this.Load += new System.EventHandler(this.ProductUpdate_Load);
             this.MS_Main.ResumeLayout(false);
             this.MS_Main.PerformLayout();

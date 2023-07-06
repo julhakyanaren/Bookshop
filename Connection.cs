@@ -45,6 +45,48 @@ namespace Bookshop
             public static string DBAbsolutePath = Convert.ToString(System.IO.Path.GetFullPath("BSDB.mdb"));
             public static OleDbConnection Connection = new OleDbConnection(ConnectionString);
             public static bool Connected = false;
+            public static void ReverseConnection(OleDbConnection InstanceConnection)
+            {
+                switch (InstanceConnection.State)
+                {
+                    case ConnectionState.Open:
+                        {
+                            InstanceConnection.Close();
+                            break;
+                        }
+                    case ConnectionState.Closed:
+                        {
+                            InstanceConnection.Open();
+                            break;
+                        }
+                    default:
+                        {
+                            MessageBox.Show($"Ошибка соеденения\r\nConnection.State = {InstanceConnection.State.ToString()}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                            break;
+                        }
+                }
+            }
+            public static void ModifiteReverseConnection(OleDbConnection InstanceConnection, int Count)
+            {
+                for (int i = 0; i < Count; i++)
+                {
+                    ReverseConnection(InstanceConnection);
+                }
+            }
+            public static void ConnectionStateReload(OleDbConnection InstanceConnection)
+            {
+                if (InstanceConnection.State != ConnectionState.Open)
+                {
+                    try
+                    {
+                        InstanceConnection.Open();
+                    }
+                    catch (Exception ex)
+                    {
+                        Handlers.ErrorProvider.ExcaptionShowMessages(ex, 0);
+                    }
+                }
+            }
             public static void StatusToMB(bool Status)
             {
                 switch (Status)

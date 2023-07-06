@@ -108,6 +108,9 @@
     <Compile Include="AboutBox1.Designer.cs">
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSDBDataSet.cs">
+      <DependentUpon>BSDBDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="BSDBDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -190,7 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BSDB.mdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="MainIcon.ico" />
   </ItemGroup>

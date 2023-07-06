@@ -4,6 +4,7 @@ using System.Data.OleDb;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Bookshop
 {
@@ -128,7 +129,6 @@ namespace Bookshop
         {
             SetLableInCenterOfPanel(L_Info_AddProduct, PNL_DataOperation);
             SetLableInCenterOfPanel(L_Info_RedactUpdate, PNL_Redact_Update);
-            SetLableInCenterOfPanel(L_Info_RedactRename, CHB_ProdRename_Code);
             SetLableInCenterOfPanel(L_Info_RedactDelete, PNL_Redact_Delete);
         }
         public void SetLableInCenterOfPanel(Label inputlable, Panel inputpanel)
@@ -261,6 +261,8 @@ namespace Bookshop
                 TB_InputDataForSearch_Update.Enabled = true;
                 L_InfoCatregorySearch_Update.Visible = false;
                 CB_CategorySearch_Update.Visible = false;
+                CB_Products_Update.Enabled = true;
+                TB_InputDataForSearch_Update.Clear();
             }
             else
             {
@@ -281,7 +283,9 @@ namespace Bookshop
                 TB_InputDataForSearch_Update.Enabled = false;
                 L_InfoCatregorySearch_Update.Visible = true;
                 CB_CategorySearch_Update.Visible = true;
+                CB_Products_Update.Enabled = true;
                 GetCategoriesforRedact(CB_CategorySearch_Update);
+                TB_InputDataForSearch_Update.Clear();
             }
             else
             {
@@ -301,71 +305,14 @@ namespace Bookshop
                 TB_InputDataForSearch_Update.Enabled = true;
                 L_InfoCatregorySearch_Update.Visible = false;
                 CB_CategorySearch_Update.Visible = false;
+                CB_Products_Update.Enabled = true;
+                TB_InputDataForSearch_Update.Clear();
             }
             else
             {
                 if (!CHB_ProdUpdate_ByCode.Checked)
                 {
                     TB_InputDataForSearch_Update.Enabled = false;
-                }
-            }
-        }
-        private void CHB_ProdRename_ByCode_CheckedChanged(object sender, EventArgs e)
-        {
-            if (CHB_ProdRename_ByCode.Checked)
-            {
-                CHB_ProdRename_ByCategory.Checked = false;
-                CHB_ProdRename_ByName.Checked = false;
-                Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdRename_ByCode, GB_SearchType_Rename);
-                L_NameCode_Rename.Text = "Код";
-                TB_InputDataForSearch_Rename.Enabled = true;
-                L_InfoCatregorySearch_Rename.Visible = false;
-                CB_CategorySearch_Rename.Visible = false;
-            }
-            else
-            {
-                if (!CHB_ProdRename_ByName.Checked)
-                {
-                    TB_InputDataForSearch_Rename.Enabled = false;
-                }
-            }
-        }
-        private void CHB_ProdRename_ByCategory_CheckedChanged(object sender, EventArgs e)
-        {
-            if (CHB_ProdRename_ByCategory.Checked)
-            {
-                CHB_ProdRename_ByCode.Checked = false;
-                CHB_ProdRename_ByName.Checked = false;
-                Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdRename_ByCategory, GB_SearchType_Rename);
-                L_NameCode_Rename.Text = "Код";
-                TB_InputDataForSearch_Rename.Enabled = false;
-                L_InfoCatregorySearch_Rename.Visible = true;
-                CB_CategorySearch_Rename.Visible = true;
-                GetCategoriesforRedact(CB_CategorySearch_Rename);
-            }
-            else
-            {
-                L_InfoCatregorySearch_Rename.Visible = false;
-                CB_CategorySearch_Rename.Visible = false;
-            }
-        }
-        private void CHB_ProdRename_ByName_CheckedChanged(object sender, EventArgs e)
-        {
-            if (CHB_ProdRename_ByName.Checked)
-            {
-                CHB_ProdRename_ByCode.Checked = false;
-                CHB_ProdRename_ByCategory.Checked = false;
-                Handlers.SetConfiguration.SetSearchTypeThrowCheckBox(CHB_ProdRename_ByName, GB_SearchType_Rename);
-                L_NameCode_Rename.Text = "Название";
-                TB_InputDataForSearch_Rename.Enabled = true;
-                L_InfoCatregorySearch_Rename.Visible = false;
-                CB_CategorySearch_Rename.Visible = false;
-            }
-            else
-            {
-                if (!CHB_ProdRename_ByCode.Checked)
-                {
-                    TB_InputDataForSearch_Rename.Enabled = false;
                 }
             }
         }
@@ -555,6 +502,7 @@ namespace Bookshop
         }
         public void SynchronizeData()
         {
+            Connections.Direct.ConnectionStateReload(ConnectionMF);
             if (Connections.Direct.ConnectionReset(ConnectionMF))
             {
                 string Table = "Category";
@@ -601,7 +549,6 @@ namespace Bookshop
                         {
                             PNL_DataOperation.Enabled = true;
                             B_AcceptChoice_Update.Enabled = true;
-                            B_AcceptChoice_Rename.Enabled = true;
                             B_AcceptChoice_Delete.Enabled = true;
                         }
                         else
@@ -639,6 +586,7 @@ namespace Bookshop
         }
         private void B_ProductName_Check_Click(object sender, EventArgs e)
         {
+            Connections.Direct.ConnectionStateReload(ConnectionMF);
             Data.Products.EnteredName[0] = Convert.ToString(TB_ProductName.Text);
             Data.Products.ProductsCount = Connections.Direct.Queries.GetRowsCount(Options.Table[1], ConnectionMF);
             if (Data.Products.EnteredName[0] == String.Empty)
@@ -859,6 +807,7 @@ namespace Bookshop
         }
         public bool InsertProductsData()
         {
+            Connections.Direct.ConnectionStateReload(ConnectionMF);
             bool inserted = false;
             string insertquery = $"INSERT INTO {Options.Table[1]} (Название, Категория, Количество, Цена, Код, Изменение) VALUES (@Name, @Category, @Count, @Price, @Code, @Date)";
             using (OleDbCommand insertcmd = new OleDbCommand(insertquery, ConnectionMF))
@@ -932,6 +881,7 @@ namespace Bookshop
 
         private void TSMI_Update_DGV_Click(object sender, EventArgs e)
         {
+            Connections.Direct.ConnectionStateReload(ConnectionMF);
             string script = $"SELECT * FROM {Options.Table[1]}";
             OleDbDataAdapter adapter = new OleDbDataAdapter(script, ConnectionMF);
             DataTable table = new DataTable();
@@ -945,6 +895,7 @@ namespace Bookshop
         }
         private void B_AcceptChoice_Update_Click(object sender, EventArgs e)
         {
+            Connections.Direct.ConnectionStateReload(ConnectionMF);
             CB_Products_Update.Items.Clear();
             switch (Data.Products.SearchWithUniqueCode[0])
             {
@@ -979,6 +930,10 @@ namespace Bookshop
                                     {
                                         MessageBox.Show($"Товар {Data.Products.Update.SelectedName} обноружен под кодом {Data.Products.Update.EnteredCode} ", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     }
+                                    CB_Products_Update.Items.Clear();
+                                    CB_Products_Update.Items.Add(Convert.ToString(Data.Products.Update.SelectedName));
+                                    CB_Products_Update.SelectedIndex = 0;
+                                    CB_Products_Update.Enabled = false;
                                 }
                             }
                             compareenteredcodereader.Close();
@@ -1056,6 +1011,9 @@ namespace Bookshop
                                     {
                                         MessageBox.Show($"Обноружено {Convert.ToString(counternames - 1)} товаров под именем {Data.Products.Update.EnteredName}\r\nКоды товаров\r\n{codes}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     }
+                                    CB_Products_Update.Items.Clear();
+                                    CB_Products_Update.Items.Add(Convert.ToString(Data.Products.Update.EnteredName));
+                                    CB_Products_Update.SelectedIndex = 0;
                                 }
                             }
                             compareenteredcodereader.Close();
@@ -1099,270 +1057,9 @@ namespace Bookshop
                     }
             }
         }
-
-        private void B_AcceptChoice_Rename_Click(object sender, EventArgs e)
-        {
-            CB_Products_Rename.Items.Clear();
-            switch (Data.Products.SearchWithUniqueCode[1])
-            {
-                case 0:
-                    {
-                        bool readen = false;
-                        Data.Products.Rename.EnteredCode = Convert.ToString(TB_InputDataForSearch_Rename.Text);
-                        string compareenteredcodequery = $"SELECT * FROM {Options.Table[1]} WHERE Код = @EnteredCode";
-                        using (OleDbCommand compareenteredcodecmd = new OleDbCommand(compareenteredcodequery, ConnectionMF))
-                        {
-                            compareenteredcodecmd.Parameters.Add("@EnteredCode", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Rename.EnteredCode);
-                            OleDbDataReader compareenteredcodereader = compareenteredcodecmd.ExecuteReader();
-                            if (!compareenteredcodereader.Read())
-                            {
-                                MessageBox.Show($"Товар под кодом {Data.Products.Rename.EnteredCode} не найден!", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                            }
-                            else
-                            {
-                                try
-                                {
-                                    Data.Products.Rename.SelectedName = Convert.ToString(compareenteredcodereader[1]);
-                                    readen = true;
-                                }
-                                catch (Exception ex)
-                                {
-                                    Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
-                                    readen = false;
-                                }
-                                finally
-                                {
-                                    if (readen)
-                                    {
-                                        MessageBox.Show($"Товар {Data.Products.Rename.SelectedName} обноружен под кодом {Data.Products.Rename.EnteredCode} ", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    }
-                                }
-                            }
-                            compareenteredcodereader.Close();
-                        }
-                        CHB_SelectAll_Rename.Checked = false;
-                        CHB_SelectAll_Rename.Enabled = false;
-                        break;
-                    }
-                case 1:
-                    {
-                        Data.Products.Rename.SelectedCategory = Convert.ToString(CB_CategorySearch_Rename.SelectedItem);
-                        GB_SelectProduct_Rename.Visible = true;
-                        Array.Resize(ref Data.Products.Rename.ProductsByCategory, 0);
-                        string getproductsbycategoryquery = $"SELECT * FROM {Options.Table[1]} WHERE Категория = @Category";
-                        using (OleDbCommand getproductsbycategorycmd = new OleDbCommand(getproductsbycategoryquery, ConnectionMF))
-                        {
-                            getproductsbycategorycmd.Parameters.Add("@Category", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Rename.SelectedCategory);
-                            using (OleDbDataReader getproductsbycategoryreader = getproductsbycategorycmd.ExecuteReader())
-                            {
-                                if (getproductsbycategoryreader.Read())
-                                {
-                                    int index = 0;
-                                    do
-                                    {
-                                        Array.Resize(ref Data.Products.Rename.ProductsByCategory, Data.Products.Rename.ProductsByCategory.Length + 1);
-                                        Data.Products.Rename.ProductsByCategory[index] = Convert.ToString(getproductsbycategoryreader.GetValue(1));
-                                        index++;
-                                    }
-                                    while (getproductsbycategoryreader.Read());
-                                }
-                            }
-                            for (int u = 0; u < Data.Products.Rename.ProductsByCategory.Length; u++)
-                            {
-                                CB_Products_Rename.Items.Add(Convert.ToString(Data.Products.Rename.ProductsByCategory[u]));
-                            }
-                        }
-                        CHB_SelectAll_Rename.Checked = true;
-                        CHB_SelectAll_Rename.Enabled = true;
-                        break;
-                    }
-                case 2:
-                    {
-                        int counternames = 0;
-                        bool readen = false;
-                        Data.Products.Rename.EnteredName = Convert.ToString(TB_InputDataForSearch_Rename.Text);
-                        string compareenteredcodequery = $"SELECT * FROM {Options.Table[1]} WHERE Название = @EnteredName";
-                        using (OleDbCommand compareenteredcodecmd = new OleDbCommand(compareenteredcodequery, ConnectionMF))
-                        {
-                            compareenteredcodecmd.Parameters.Add("@EnteredName", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Rename.EnteredName);
-                            OleDbDataReader compareenteredcodereader = compareenteredcodecmd.ExecuteReader();
-                            if (!compareenteredcodereader.Read())
-                            {
-                                MessageBox.Show($"Товар под названием {Data.Products.Rename.EnteredName} не найден!", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                                readen = false;
-                            }
-                            else
-                            {
-                                readen = true;
-                                counternames = 1;
-                                do
-                                {
-                                    Array.Resize(ref Data.Products.Rename.SelectedNames, counternames);
-                                    Data.Products.Rename.SelectedNames[counternames - 1] = Convert.ToString(compareenteredcodereader[5]);
-                                    counternames++;
-                                }
-                                while (compareenteredcodereader.Read());
-                                string codes = null;
-                                for (int f = 0; f < Data.Products.Rename.SelectedNames.Length; f++)
-                                {
-                                    codes = Data.Products.Rename.SelectedNames[f] + "\r\n";
-                                }
-                                if (readen)
-                                {
-                                    if (counternames == 1)
-                                    {
-                                        MessageBox.Show($"Обноружен {Convert.ToString(counternames - 1)} товар под именем {Data.Products.Rename.EnteredName}\r\nКод товара\r\n{codes}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show($"Обноружено {Convert.ToString(counternames - 1)} товаров под именем {Data.Products.Rename.EnteredName}\r\nКоды товаров\r\n{codes}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    }
-                                }
-                            }
-                            compareenteredcodereader.Close();
-                        }
-                        CHB_SelectAll_Rename.Checked = true;
-                        CHB_SelectAll_Rename.Enabled = true;
-                        break;
-                    }
-            }
-        }
-
-        private void B_CheckNewName_Click(object sender, EventArgs e)
-        {
-            Data.Products.Rename.NewName[0] = Convert.ToString(TB_NewName_Rename.Text);
-            Data.Products.ProductsCount = Connections.Direct.Queries.GetRowsCount(Options.Table[1], ConnectionMF);
-            if (Data.Products.Rename.NewName[0] == String.Empty)
-            {
-                DialogResult = MessageBox.Show("Пустое поле ввода", "Диспечер данных", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                if (DialogResult == DialogResult.OK)
-                {
-                    TB_NewName_Rename.Focus();
-                }
-            }
-            else
-            {
-                bool excaption;
-                int rowscount = Data.Products.ProductsCount;
-                switch (rowscount)
-                {
-                    case < 0:
-                        {
-                            excaption = true;
-                            break;
-                        }
-                    case 0:
-                        {
-                            excaption = false;
-                            Data.Products.NameExist[0] = false;
-                            break;
-                        }
-                    case > 0:
-                        {
-                            excaption = false;
-                            string getproductnamequery = $"SELECT @Column FROM {Options.Table[1]} WHERE ID > 0";
-                            try
-                            {
-                                using (OleDbCommand getproductnamecmd = new OleDbCommand(getproductnamequery, ConnectionMF))
-                                {
-                                    getproductnamecmd.Parameters.Add("@Column", OleDbType.VarChar).Value = Convert.ToString("Название");
-                                    OleDbDataReader getproductnamereader = getproductnamecmd.ExecuteReader();
-                                    if (!getproductnamereader.Read())
-                                    {
-                                        Data.Products.NameExist[0] = false;
-                                    }
-                                    else
-                                    {
-                                        Data.Products.NameExist[0] = true;
-                                        Data.Products.ProductNameOverOne[0] = true;
-                                        Data.Products.SameNameProductsCount = 0;
-                                        string selectquery = $"SELECT * FROM {Options.Table[1]} WHERE Название = @Name";
-                                        using (OleDbCommand selectcmd = new OleDbCommand(selectquery, ConnectionMF))
-                                        {
-                                            selectcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Rename.NewName[0]);
-                                            OleDbDataReader selectreader = selectcmd.ExecuteReader();
-                                            Data.Products.Rename.NameEpty = true;
-                                            while (selectreader.Read())
-                                            {
-                                                Data.Products.SameNameProductsCount++;
-                                                Data.Products.Rename.NameEpty = false;
-                                            }
-                                            selectreader.Close();
-                                        }
-
-                                    }
-                                    getproductnamereader.Close();
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
-                                excaption = true;
-                            }
-                            break;
-                        }
-                }
-                if (excaption)
-                {
-                    //Ошибка
-                }
-                else
-                {
-                    switch (Data.Products.Rename.NameEpty)
-                    {
-                        case true:
-                            {
-                                DialogResult = MessageBox.Show($"Не обноружен продукт под именем {Data.Products.EnteredName[0]}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                if (DialogResult == DialogResult.OK)
-                                {
-                                    B_GetCategoryData.Enabled = true;
-                                }
-                                break;
-                            }
-                        case false:
-                            {
-                                if (Data.Products.SameNameProductsCount == 1)
-                                {
-                                    DialogResult = MessageBox.Show($"Обноружен {Data.Products.SameNameProductsCount} продукт под именем {Data.Products.EnteredName[0]}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    if (DialogResult == DialogResult.OK)
-                                    {
-                                        B_GetCategoryData.Enabled = true;
-                                    }
-                                }
-                                else
-                                {
-                                    DialogResult = MessageBox.Show($"Обноружено {Data.Products.SameNameProductsCount} продуктов под именем {Data.Products.EnteredName[0]}", $"{Config.Managers[1]}", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    if (DialogResult == DialogResult.OK)
-                                    {
-                                        B_GetCategoryData.Enabled = true;
-                                    }
-                                }
-                                break;
-                            }
-                    }
-                }
-            }
-        }
-
-        private void CHB_SelectAll_Rename_CheckedChanged(object sender, EventArgs e)
-        {
-            switch (CHB_SelectAll_Rename.Checked)
-            {
-                case true:
-                    {
-                        Data.Products.Rename.RanameAll = true;
-                        break;
-                    }
-                case false:
-                    {
-                        Data.Products.Rename.RanameAll = false;
-                        break;
-                    }
-            }
-        }
-
         private void B_AcceptChoice_Delete_Click(object sender, EventArgs e)
         {
+            Connections.Direct.ConnectionStateReload(ConnectionMF);
             CB_Products_Delete.Items.Clear();
             switch (Data.Products.SearchWithUniqueCode[2])
             {
@@ -1497,6 +1194,7 @@ namespace Bookshop
 
         private void B_RedactChoosenProduct_Click(object sender, EventArgs e)
         {
+            Connections.Direct.ConnectionStateReload(ConnectionMF);
             bool IDreaden = false;
             Data.Products.Update.ChoosenName = Convert.ToString(CB_Products_Update.SelectedItem);
             string getIDbynamequery = $"SELECT * FROM {Options.Table[1]} WHERE Название = @Name";
@@ -1528,85 +1226,9 @@ namespace Bookshop
                 }
             }
         }
-
-        private void B_RenameProduct_Click(object sender, EventArgs e)
-        {
-            bool renamed = false;
-            try
-            {
-                switch (Data.Products.Rename.RanameAll)
-                {
-                    case false:
-                        {
-                            string updatequery = $"UPDATE {Options.Table[1]} SET Название = @NewName WHERE Код = @Code";
-                            using (OleDbCommand updatecmd = new OleDbCommand(updatequery, ConnectionMF))
-                            {
-                                updatecmd.Parameters.Add("@Code", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Rename.EnteredCode);
-                                updatecmd.Parameters.Add("@NewName", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Rename.NewName[0]);
-                                updatecmd.ExecuteNonQuery();
-                            }
-                            break;
-                        }
-                    case true:
-                        {
-                            string oldname = Convert.ToString(CB_Products_Rename.SelectedItem);
-                            string renamegetIDquery = $"SELECT * FROM {Options.Table[1]} WHERE Название = @Name";
-                            using (OleDbCommand renamegetIDcmd = new OleDbCommand(renamegetIDquery, ConnectionMF))
-                            {
-                                renamegetIDcmd.Parameters.Add("@Name", OleDbType.VarChar).Value = Convert.ToString(oldname);
-                                using (OleDbDataReader renamegetIDreader = renamegetIDcmd.ExecuteReader())
-                                {
-                                    if (renamegetIDreader.Read())
-                                    {
-                                        int count = 1;
-                                        Array.Resize(ref Data.Products.Rename.SelectedNamesIDs, 0);
-                                        do
-                                        {
-                                            Array.Resize(ref Data.Products.Rename.SelectedNamesIDs, count);
-                                            Data.Products.Rename.SelectedNamesIDs[count - 1] = Convert.ToInt32(renamegetIDreader[0]);
-                                            count++;
-                                        }
-                                        while (renamegetIDreader.Read());
-                                    }
-                                }
-                                for (int r = 0; r < Data.Products.Rename.SelectedNamesIDs.Length; r++)
-                                {
-                                    string updatequery = $"UPDATE {Options.Table[1]} SET Название = @NewName WHERE ID = @ID";
-                                    using (OleDbCommand updatecmd = new OleDbCommand(updatequery, ConnectionMF))
-                                    {
-                                        updatecmd.Parameters.Add("@NewName", OleDbType.VarChar).Value = Convert.ToString(Data.Products.Rename.NewName[0]);
-                                        updatecmd.Parameters.Add("@ID", OleDbType.Integer).Value = Convert.ToInt32(Data.Products.Rename.SelectedNamesIDs[r]);
-                                        updatecmd.ExecuteNonQuery();
-                                    }
-                                }
-                            }
-                            break;
-                        }
-                }
-                renamed = true;
-            }
-            catch (Exception ex)
-            {
-                Handlers.ErrorProvider.ExcaptionShowMessages(ex, 1);
-                renamed = false;
-            }
-            finally
-            {
-                int index1 = -1;
-                if (!renamed)
-                {
-                    index1 = 1;
-                }
-                else
-                {
-                    index1 = 0;
-                }
-                Handlers.InformationProvider.DataOperationState(index1, 1, 1);
-            }
-        }
-
         private void B_ProductDelete_Click(object sender, EventArgs e)
         {
+            Connections.Direct.ConnectionStateReload(ConnectionMF);
             switch (DialogResult = MessageBox.Show($"Удалить {Data.Products.Delete.EnteredName} из базы данных?\r\rПосле удаления данные нельзя востоновить!", $"{Config.Managers[1]}", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
             {
                 case DialogResult.Yes:
