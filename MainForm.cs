@@ -146,6 +146,7 @@ namespace Bookshop
             columnHeaderStyle.BackColor = Color.SandyBrown;
             columnHeaderStyle.ForeColor = Color.Black;
             SetDesignParameters();
+            L_Title.Location = new Point((PNL_Title.Width - L_Title.Width) / 2, (PNL_Title.Height - L_Title.Height) / 2);
         }
 
         private void TSMI_Category_Add_Click(object sender, EventArgs e)
@@ -263,6 +264,7 @@ namespace Bookshop
                 CB_CategorySearch_Update.Visible = false;
                 CB_Products_Update.Enabled = true;
                 TB_InputDataForSearch_Update.Clear();
+                TT_MainForm.ToolTipTitle = "Код для поиска товара";
             }
             else
             {
@@ -307,6 +309,7 @@ namespace Bookshop
                 CB_CategorySearch_Update.Visible = false;
                 CB_Products_Update.Enabled = true;
                 TB_InputDataForSearch_Update.Clear();
+                TT_MainForm.ToolTipTitle = "Название товара для поиска";
             }
             else
             {
@@ -327,6 +330,7 @@ namespace Bookshop
                 TB_InputDataForSearch_Delete.Enabled = true;
                 L_InfoCatregorySearch_Delete.Visible = false;
                 CB_CategorySearch_Delete.Visible = false;
+                TT_MainForm.ToolTipTitle = "Код для поиска товара";
             }
             else
             {
@@ -348,6 +352,7 @@ namespace Bookshop
                 L_InfoCatregorySearch_Delete.Visible = true;
                 CB_CategorySearch_Delete.Visible = true;
                 GetCategoriesforRedact(CB_CategorySearch_Delete);
+                TT_MainForm.ToolTipTitle = "Название товара для поиска";
             }
             else
             {
@@ -878,8 +883,7 @@ namespace Bookshop
                 B_SelectCategory.Enabled = false;
             }
         }
-
-        private void TSMI_Update_DGV_Click(object sender, EventArgs e)
+        public void UpdateProductsTable()
         {
             Connections.Direct.ConnectionStateReload(ConnectionMF);
             string script = $"SELECT * FROM {Options.Table[1]}";
@@ -888,7 +892,6 @@ namespace Bookshop
             adapter.Fill(table);
             DGV_MS_Product.DataSource = table;
         }
-
         private void B_DEBUG_ADDCATEGORY_Click(object sender, EventArgs e)
         {
             
@@ -1318,6 +1321,7 @@ namespace Bookshop
         private void B_SelectName_Delete_Click(object sender, EventArgs e)
         {
             Data.Products.Delete.SelectedName = Convert.ToString(CB_Products_Delete.SelectedItem);
+            B_ProductDelete.Enabled = true;
         }
 
         private void TSMI_ConnectionStatus_Click(object sender, EventArgs e)
@@ -1401,10 +1405,9 @@ namespace Bookshop
             }
         }
 
-        private void TSMI_Info_Click(object sender, EventArgs e)
+        private void B_UpdateTable_Click(object sender, EventArgs e)
         {
-            InfoBox IB = new InfoBox();
-            IB.Show();
+            UpdateProductsTable();
         }
     }
 }

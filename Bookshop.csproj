@@ -78,6 +78,7 @@
   <PropertyGroup>
     <ApplicationIcon>MainIcon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
@@ -102,12 +103,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutBox1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AboutBox1.Designer.cs">
-      <DependentUpon>AboutBox1.cs</DependentUpon>
-    </Compile>
     <Compile Include="BSDBDataSet.cs">
       <DependentUpon>BSDBDataSet.xsd</DependentUpon>
     </Compile>
@@ -141,9 +136,6 @@
     <Compile Include="Microsoft\Office\Interop\Access\Application.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AboutBox1.resx">
-      <DependentUpon>AboutBox1.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="CategoryManager.resx">
       <DependentUpon>CategoryManager.cs</DependentUpon>
     </EmbeddedResource>
@@ -193,7 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BSDB.mdb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MainIcon.ico" />
   </ItemGroup>
